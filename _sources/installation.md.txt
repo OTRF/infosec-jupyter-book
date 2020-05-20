@@ -38,9 +38,7 @@ docker exec -i jupyter-base jupyter notebook list
 
 ### Demo Video
 
-I put together the following video as a demo for the SANS Threat Hunting Summit 2019 to show you how to deploy a Jupyter Notebook server via Docker in less than 3 minutes. Enjoy!
-
-* https://www.youtube.com/watch?v=-FAqQkD_G8o 
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=KVR1_cVlLRE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## BinderHub
 
