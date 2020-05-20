@@ -1,2 +1,3 @@
-# jupyter-infosec-guide
-The Community Definitive Guide to Jupyter Notebooks for Infosec 
+# Infosec Jupyter Book
+
+The Infosec Community Definitive Guide to Jupyter Notebooks

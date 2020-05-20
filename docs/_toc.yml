@@ -1,0 +1,7 @@
+- file: introduction
+- header: Getting Started
+- file: installation
+- header: Tutorials
+- file: notebooks/tutorials/01_intro_to_python
+- file: notebooks/tutorials/02_intro_to_numpy_arrays
+- file: notebooks/tutorials/03_intro_to_pandas
