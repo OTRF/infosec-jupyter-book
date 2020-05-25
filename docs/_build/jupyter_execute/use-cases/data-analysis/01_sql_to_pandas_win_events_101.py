@@ -12,7 +12,7 @@ This notebook was created as part of the Open Threat Research (OTR) initiative t
 With more security analysts getting into data analysis with Python and Jupyter Notebooks, I figured it would be a good idea to create a notebook and share some of my experience with Pandas. Since many analysts in our community are familiar with SQL syntax to craft detection rules, I used it in this notebook to show how easy it is to translate SQL logic to pandas statements. I leveraged this doc "[Comparison with SQL](https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_sql.html)" to organize the notebook and make sure I align my queries and descriptions to official pandas resources.
 
 ### Pre-requisites - Reading
-* [Intro to Pandas](https://infosecjupyterbook.com/introduction.html)
+* [Intro to Pandas](https://infosecjupyterbook.com/fundamentals/libraries/pandas.html)
 
 ## Importing Libraries
 Pre-requisites:
@@ -36,15 +36,15 @@ pd.set_option('display.max_colwidth', None)
 Let's start by using the `getMordorZipFile` method from the `mordorutils` module to download and decompress the dataset:
 
 mordorUrl = 'https://github.com/OTRF/infosec-jupyter-book/blob/master/datasets/apt29_evals_day1_manual_demo.zip'
-mordorFilePath= mu.getMordorZipFile(mordorUrl)
+mordorFilePath = mu.getMordorZipFile(mordorUrl)
 
 ## Reading JSON Mordor File
 
 Next, we use the `read_json` method from `pandas` to read the JSON file (Decompressed dataset) that returns a DataFrame. We are going to use that variable throughout the notebook.
 
-apt29 = pd.read_json("apt29_evals_day1_manual_2020-05-01225525_demo.json")
+apt29 = pd.read_json(mordorFilePath)
 
-apt29.head()
+apt29.head(1)
 
 ## Leveraging Pandas for Security from a SQL perspective
 
