@@ -836,7 +836,7 @@
 </div></div></div>
 </div>
 <p>We can practice also combinations of <strong>AND</strong> and <strong>OR</strong> boolean operators with Sysmon registry events. Let’s use Event ID 12 (Object create and delete) and 13 (Value Set).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span> <span class="n">ProcessGuid</span><span class="p">,</span> <span class="n">ProcessId</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">TargetObject</span><span class="p">,</span> <span class="n">NewName</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span> <span class="n">ProcessGuid</span><span class="p">,</span> <span class="n">ProcessId</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">TargetObject</span>
 <span class="n">FROM</span> <span class="n">apt29</span>
 <span class="n">WHERE</span> <span class="n">Channel</span> <span class="o">=</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span> <span class="n">AND</span> <span class="p">(</span><span class="n">EventID</span> <span class="o">=</span> <span class="mi">12</span> <span class="n">OR</span> <span class="n">eventID</span> <span class="o">=</span> <span class="mi">13</span><span class="p">)</span>
 <span class="n">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
