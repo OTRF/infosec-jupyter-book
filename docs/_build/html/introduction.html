@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Jupyter Notebooks &#8212; Infosec Jupyter Book</title>
+    <title>Introduction &#8212; Infosec Jupyter Book</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
@@ -33,7 +33,7 @@
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Jupyter Server Installation" href="installation.html" />
+    <link rel="next" title="What Is Jupyter?" href="getting-started/what_is_jupyter.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -45,8 +45,8 @@
 <!-- Opengraph tags -->
 <meta property="og:url"         content="https://infosecjupyterbook.com/introduction.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Jupyter Notebooks" />
-<meta property="og:description" content="Jupyter Notebooks  What is a Notebook?  Think of a notebook as a document that you can access via a web interface that allows you to save input (i.e. live code)" />
+<meta property="og:title"       content="Introduction" />
+<meta property="og:description" content="Introduction  The Infosec Community Definitive Guide to Jupyter NotebooksAuthors  Roberto Rodriguez @Cyb3rWard0g  Jose Luis Rodriguez @Cyb3rPandaH          " />
 <meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
 
 <meta name="twitter:card" content="summary">
@@ -84,19 +84,43 @@
 <p class="margin-caption">Getting Started</p>
 </li>
   <li class="">
-    <a href="installation.html">Jupyter Server Installation</a>
+    <a href="getting-started/what_is_jupyter.html">What Is Jupyter?</a>
+  </li>
+  <li class="">
+    <a href="getting-started/architecture.html">Architecture</a>
+  </li>
+  <li class="">
+    <a href="getting-started/installation.html">Installation</a>
   </li>
 <li class="navbar-special">
-<p class="margin-caption">Tutorials</p>
+<p class="margin-caption">Fundamentals</p>
 </li>
   <li class="">
-    <a href="notebooks/tutorials/01_intro_to_python.html">Introduction to Python</a>
+    <a href="fundamentals/programming/intro.html">Programming Languages</a>
   </li>
   <li class="">
-    <a href="notebooks/tutorials/02_intro_to_numpy_arrays.html">Introduction to Python NumPy Arrays</a>
+    <a href="fundamentals/libraries/intro.html">Libraries</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Use Cases</p>
+</li>
+  <li class="">
+    <a href="use-cases/data-analysis/intro.html">Data Analysis</a>
   </li>
   <li class="">
-    <a href="notebooks/tutorials/03_intro_to_pandas.html">Introduction to Pandas</a>
+    <a href="use-cases/data-connectors/intro.html">Data Connectors</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Projects</p>
+</li>
+  <li class="">
+    <a href="community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Events</p>
+</li>
+  <li class="">
+    <a href="community-events/jupyterthon.html">Infosec Jupyterthon</a>
   </li>
 </ul>
 </nav>
@@ -147,38 +171,9 @@
         
     </div>
     <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#what-is-a-notebook" class="nav-link">What is a Notebook?</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#what-is-a-jupyter-notebook" class="nav-link">What is a Jupyter Notebook?</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#how-do-jupyter-notebooks-work" class="nav-link">How do Jupyter Notebooks work?</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#jupyter-client" class="nav-link">Jupyter Client</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#jupyter-kernel" class="nav-link">Jupyter Kernel</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#jupyter-notebook-document" class="nav-link">Jupyter Notebook Document</a>
-        </li>
-    
-            </ul>
-        </li>
     
     </ul>
 </nav>
@@ -198,52 +193,25 @@
         
               <div>
                 
-  <div class="section" id="jupyter-notebooks">
-<h1>Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="what-is-a-notebook">
-<h2>What is a Notebook?<a class="headerlink" href="#what-is-a-notebook" title="Permalink to this headline">¶</a></h2>
-<p>Think of a notebook as a document that you can access via a web interface that allows you to save input (i.e. live code) and output (i.e. code execution results / evaluated code output) of interactive sessions as well as important notes needed to explain the methodology and steps taken to perform specific tasks (i.e data analysis).</p>
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The Infosec Community Definitive Guide to Jupyter Notebooks</p>
 </div>
-<div class="section" id="what-is-a-jupyter-notebook">
-<h2>What is a Jupyter Notebook?<a class="headerlink" href="#what-is-a-jupyter-notebook" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>The Jupyter Notebook is an open-source web application that allows you to create and share documents that contain live code, equations, visualizations and narrative text. Uses include: data cleaning and transformation, numerical simulation, statistical modeling, data visualization, machine learning, and much more.</p>
-</div></blockquote>
-<p>The Jupyter Notebook project is the evolution of the IPython Notebook library which was developed primarily to enhance the default python interactive console by enabling scientific operations and advanced data analytics capabilities via sharable web documents.</p>
-<p><img alt="" src="_images/JUPYTER_IPYTHON.png" /></p>
-<p>Nowadays, the Jupyter Notebook project not only supports Python but also over 40 programming languages such as R, Julia, Scala and PySpark. In fact, its name was originally derived from three programming languages: Julia, Python and R which made it one of the first language-agnostic notebook applications, and now considered one of the most preferred environments for data scientists and engineers in the community to explore and analyze data.</p>
-</div>
-<div class="section" id="how-do-jupyter-notebooks-work">
-<h2>How do Jupyter Notebooks work?<a class="headerlink" href="#how-do-jupyter-notebooks-work" title="Permalink to this headline">¶</a></h2>
-<p>Jupyter Notebooks work with what is called a two-process model based on a kernel-client infrastructure. This model applies a similar concept to the Read-Evaluate-Print Loop (REPL) programming environment that takes a single user’s inputs, evaluates them, and returns the result to the user.</p>
-<p>Based on the two-process model concept, we can explain the main components of Jupyter in the following way:</p>
-<p><img alt="" src="_images/JUPYTER_ARCHITECTURE.png" /></p>
-<div class="section" id="jupyter-client">
-<h3>Jupyter Client<a class="headerlink" href="#jupyter-client" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="authors">
+<h1>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p>It allows a user to send code to the kernel in a form of a Qt Console or a browser via notebook documents.</p></li>
-<li><p>From a REPL perspective, the client does the read and print operations.</p></li>
-<li><p>Notebooks are hosted by a Jupyter web server which uses Tornado to serve HTTP requests.</p></li>
-</ul>
-</div>
-<div class="section" id="jupyter-kernel">
-<h3>Jupyter Kernel<a class="headerlink" href="#jupyter-kernel" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>It receives the code sent by the client, executes it, and returns the results back to the client for display. A kernel process can have multiple clients communicating with it which is why this model is also referred as the decoupled two-process model.</p></li>
-<li><p>From a REPL perspective, the kernel does the evaluate operation.</p></li>
-<li><p>kernel and clients communicate via an interactive computing protocol based on an asynchronous messaging library named ZeroMQ (low-level transport layer) and WebSockets (TCP-based)</p></li>
-</ul>
-</div>
-<div class="section" id="jupyter-notebook-document">
-<h3>Jupyter Notebook Document<a class="headerlink" href="#jupyter-notebook-document" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>Notebooks are automatically saved and stored on disk in the open source JavaScript Object Notation (JSON) format and with a .ipynb extension.</p></li>
+<li><p>Roberto Rodriguez <a class="reference external" href="https://twitter.com/Cyb3rWard0g">&#64;Cyb3rWard0g</a></p></li>
+<li><p>Jose Luis Rodriguez <a class="reference external" href="https://twitter.com/Cyb3rPandaH">&#64;Cyb3rPandaH</a></p></li>
 </ul>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
+<div class="toctree-wrapper compound">
 </div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
 </div>
 </div>
 
@@ -274,7 +242,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='right-next' id="next-link" href="installation.html" title="next page">Jupyter Server Installation</a>
+    <a class='right-next' id="next-link" href="getting-started/what_is_jupyter.html" title="next page">What Is Jupyter?</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

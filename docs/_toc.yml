@@ -1,7 +1,29 @@
 - file: introduction
 - header: Getting Started
-- file: installation
-- header: Tutorials
-- file: notebooks/tutorials/01_intro_to_python
-- file: notebooks/tutorials/02_intro_to_numpy_arrays
-- file: notebooks/tutorials/03_intro_to_pandas
+- file: getting-started/what_is_jupyter
+- file: getting-started/architecture
+- file: getting-started/installation
+  sections:
+  - file: getting-started/installation_docker
+  - file: getting-started/installation_binderhub
+- header: Fundamentals
+- file: fundamentals/programming/intro
+  sections:
+  - file: fundamentals/programming/python
+- file: fundamentals/libraries/intro
+  sections:
+  - file: fundamentals/libraries/numpy_arrays
+  - file: fundamentals/libraries/pandas
+- header: Use Cases
+- file: use-cases/data-analysis/intro
+  sections:
+  - file: use-cases/data-analysis/01_sql_to_pandas_win_events_101
+- file: use-cases/data-connectors/intro
+  sections:
+  - file: use-cases/data-connectors/elasticsearch
+  - file: use-cases/data-connectors/splunk
+  - file: use-cases/data-connectors/azure_sentinel
+- header: Community Projects
+- file: community-projects/threat-hunter-playbook
+- header: Community Events
+- file: community-events/jupyterthon
