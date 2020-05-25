@@ -136,7 +136,7 @@ apt29[['Hostname','Channel','EventTime','EventID','CommandLine']]
 We can practice also combinations of **AND** and **OR** boolean operators with Sysmon registry events. Let's use Event ID 12 (Object create and delete) and 13 (Value Set).
 
 ```
-SELECT Channel, EventID, ProcessGuid, ProcessId, Image, TargetObject, NewName
+SELECT Channel, EventID, ProcessGuid, ProcessId, Image, TargetObject
 FROM apt29
 WHERE Channel = 'Microsoft-Windows-Sysmon/Operational' AND (EventID = 12 OR eventID = 13)
 LIMIT 5;
