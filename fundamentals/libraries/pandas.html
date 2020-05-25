@@ -29,11 +29,12 @@
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script async="async" src="../../_static/thebelab.js"></script>
-    <link rel="canonical" href="https://infosecjupyterbook.com/notebooks/tutorials/03_intro_to_pandas.html" />
+    <link rel="canonical" href="https://infosecjupyterbook.com/fundamentals/libraries/pandas.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="Introduction to Python NumPy Arrays" href="02_intro_to_numpy_arrays.html" />
+    <link rel="next" title="Data Analysis" href="../../use-cases/data-analysis/intro.html" />
+    <link rel="prev" title="Introduction to NumPy Arrays" href="numpy_arrays.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -43,7 +44,7 @@
 
 
 <!-- Opengraph tags -->
-<meta property="og:url"         content="https://infosecjupyterbook.com/notebooks/tutorials/03_intro_to_pandas.html" />
+<meta property="og:url"         content="https://infosecjupyterbook.com/fundamentals/libraries/pandas.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Introduction to Pandas" />
 <meta property="og:description" content="Introduction to Pandas    Goals:  Learn how to use pandas dataframes  Plot basic charts using dataframes and matplotlib  Reference:  https://pandas.pydata.org/p" />
@@ -84,19 +85,51 @@
 <p class="margin-caption">Getting Started</p>
 </li>
   <li class="">
-    <a href="../../installation.html">Jupyter Server Installation</a>
+    <a href="../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
+  </li>
+  <li class="">
+    <a href="../../getting-started/architecture.html">Architecture</a>
+  </li>
+  <li class="">
+    <a href="../../getting-started/installation.html">Installation</a>
   </li>
 <li class="navbar-special">
-<p class="margin-caption">Tutorials</p>
+<p class="margin-caption">Fundamentals</p>
 </li>
   <li class="">
-    <a href="01_intro_to_python.html">Introduction to Python</a>
-  </li>
-  <li class="">
-    <a href="02_intro_to_numpy_arrays.html">Introduction to Python NumPy Arrays</a>
+    <a href="../programming/intro.html">Programming Languages</a>
   </li>
   <li class="active">
-    <a href="">Introduction to Pandas</a>
+    <a href="intro.html">Libraries</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="numpy_arrays.html">Introduction to NumPy Arrays</a>
+    </li>
+    <li class="active">
+      <a href="">Introduction to Pandas</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Use Cases</p>
+</li>
+  <li class="">
+    <a href="../../use-cases/data-analysis/intro.html">Data Analysis</a>
+  </li>
+  <li class="">
+    <a href="../../use-cases/data-connectors/intro.html">Data Connectors</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Projects</p>
+</li>
+  <li class="">
+    <a href="../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Events</p>
+</li>
+  <li class="">
+    <a href="../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
   </li>
 </ul>
 </nav>
@@ -128,7 +161,7 @@
                 <!-- ipynb file if we had a myst markdown file -->
                 
                 <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/notebooks/tutorials/03_intro_to_pandas.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <a class="dropdown-buttons" href="../../_sources/fundamentals/libraries/pandas.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
                 <!-- Download PDF via print -->
                 <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
             </div>
@@ -136,7 +169,7 @@
         </div>
 
         <!-- Edit this page -->
-        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/notebooks/tutorials/03_intro_to_pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/libraries/pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
 
         <!-- Full screen (wrap in <a> to have style consistency -->
         <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
@@ -147,7 +180,7 @@
             <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
             <div class="dropdown-buttons">
                 
-                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/notebooks/tutorials/03_intro_to_pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/fundamentals/libraries/pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
                 
                 
                 <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
@@ -230,7 +263,7 @@
 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/notebooks/tutorials/03_intro_to_pandas.ipynb">
+    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/libraries/pandas.ipynb">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -1776,7 +1809,7 @@ Name: breed, dtype: int64
 <div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f997c1d18d0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/03_intro_to_pandas_72_1.png" src="../../_images/03_intro_to_pandas_72_1.png" />
+<img alt="../../_images/pandas_72_1.png" src="../../_images/pandas_72_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1789,7 +1822,7 @@ Name: breed, dtype: int64
 <div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f997c1756a0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/03_intro_to_pandas_73_1.png" src="../../_images/03_intro_to_pandas_73_1.png" />
+<img alt="../../_images/pandas_73_1.png" src="../../_images/pandas_73_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1802,7 +1835,7 @@ Name: breed, dtype: int64
 <div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f997c0b8080&gt;
 </pre></div>
 </div>
-<img alt="../../_images/03_intro_to_pandas_74_1.png" src="../../_images/03_intro_to_pandas_74_1.png" />
+<img alt="../../_images/pandas_74_1.png" src="../../_images/pandas_74_1.png" />
 </div>
 </div>
 </div>
@@ -1822,7 +1855,7 @@ Name: breed, dtype: int64
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "notebooks/tutorials"
+            path: "fundamentals/libraries"
         }
     }
     </script>
@@ -1836,7 +1869,8 @@ Name: breed, dtype: int64
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="02_intro_to_numpy_arrays.html" title="previous page">Introduction to Python NumPy Arrays</a>
+    <a class='left-prev' id="prev-link" href="numpy_arrays.html" title="previous page">Introduction to NumPy Arrays</a>
+    <a class='right-next' id="next-link" href="../../use-cases/data-analysis/intro.html" title="next page">Data Analysis</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
