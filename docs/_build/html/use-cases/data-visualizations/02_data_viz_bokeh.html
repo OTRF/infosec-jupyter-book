@@ -1,0 +1,1215 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Data Visualization with Bokeh &#8212; Infosec Jupyter Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/mystnb.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../_static/thebelab.js"></script>
+    <link rel="canonical" href="https://infosecjupyterbook.com/use-cases/data-visualizations/02_data_viz_bokeh.html" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Threat Hunter Playbook" href="../../community-projects/threat-hunter-playbook.html" />
+    <link rel="prev" title="Data Visualization with Pandas and Matplotlib" href="01_data_viz_pandas.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://infosecjupyterbook.com/use-cases/data-visualizations/02_data_viz_bokeh.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Data Visualization with Bokeh" />
+<meta property="og:description" content="Data Visualization with Bokeh  Author: Pete Bryan (@MSSPete)  Project: Infosec Jupyter Book  Public Organization: Microsoft  License: Creative Commons Attributi" />
+<meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Infosec Jupyter Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+<li class="navbar-special">
+<p class="margin-caption">Getting Started</p>
+</li>
+  <li class="">
+    <a href="../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
+  </li>
+  <li class="">
+    <a href="../../getting-started/architecture.html">Architecture</a>
+  </li>
+  <li class="">
+    <a href="../../getting-started/installation.html">Installation</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Fundamentals</p>
+</li>
+  <li class="">
+    <a href="../../fundamentals/programming/intro.html">Programming Languages</a>
+  </li>
+  <li class="">
+    <a href="../../fundamentals/libraries/intro.html">Libraries</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Use Cases</p>
+</li>
+  <li class="">
+    <a href="../data-analysis/intro.html">Data Analysis</a>
+  </li>
+  <li class="">
+    <a href="../data-connectors/intro.html">Data Connectors</a>
+  </li>
+  <li class="active">
+    <a href="intro.html">Data Visualizations</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="01_data_viz_pandas.html">Data Visualization with Pandas and Matplotlib</a>
+    </li>
+    <li class="active">
+      <a href="">Data Visualization with Bokeh</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Projects</p>
+</li>
+  <li class="">
+    <a href="../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Events</p>
+</li>
+  <li class="">
+    <a href="../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../_sources/use-cases/data-visualizations/02_data_viz_bokeh.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-visualizations/02_data_viz_bokeh.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/use-cases/data-visualizations/02_data_viz_bokeh.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#description" class="nav-link">Description</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#pre-requisites-reading" class="nav-link">Pre-requisites - Reading</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#importing-libraries" class="nav-link">Importing Libraries</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#summary" class="nav-link">Summary</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-visualizations/02_data_viz_bokeh.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="data-visualization-with-bokeh">
+<h1>Data Visualization with Bokeh<a class="headerlink" href="#data-visualization-with-bokeh" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><strong>Author</strong>: Pete Bryan (&#64;MSSPete)</p></li>
+<li><p><strong>Project</strong>: Infosec Jupyter Book</p></li>
+<li><p><strong>Public Organization</strong>: Microsoft</p></li>
+<li><p><strong>License</strong>: <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p></li>
+<li><p><strong>Reference</strong>: https://bokeh.org/</p></li>
+</ul>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>Often the most effective visualizations are those that are highly customised to the dataset they are representing, and that allow a user to interact with the data to interrogate it further. <code class="xref any docutils literal notranslate"><span class="pre">Bokeh</span></code> is a highly flexible and effective data visualization library in Python that can be used to create rich interactive visualizations. Whilst it requires more work than other methods to plot data its customizability makes it ideal for more advanced users who are looking to create thier own visualizations.</p>
+<div class="section" id="pre-requisites-reading">
+<h3>Pre-requisites - Reading<a class="headerlink" href="#pre-requisites-reading" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://infosecjupyterbook.com/fundamentals/libraries/pandas.html">Intro to Pandas</a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="importing-libraries">
+<h2>Importing Libraries<a class="headerlink" href="#importing-libraries" title="Permalink to this headline">¶</a></h2>
+<p>Pre-requisites:</p>
+<ul class="simple">
+<li><p>pip install pandas</p></li>
+<li><p>pip install bokeh</p></li>
+<li><p>pip install networkx</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="kn">import</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span>
+<span class="kn">from</span> <span class="nn">bokeh.palettes</span> <span class="kn">import</span> <span class="n">Spectral10</span><span class="p">,</span> <span class="n">Category10</span><span class="p">,</span> <span class="n">Category20c</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">from_networkx</span>
+<span class="kn">from</span> <span class="nn">bokeh.transform</span> <span class="kn">import</span> <span class="n">factor_cmap</span><span class="p">,</span> <span class="n">cumsum</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="kn">import</span> <span class="n">RadioButtonGroup</span><span class="p">,</span> <span class="n">HoverTool</span><span class="p">,</span> <span class="n">Slider</span><span class="p">,</span> <span class="n">ColumnDataSource</span>
+<span class="kn">from</span> <span class="nn">bokeh.layouts</span> <span class="kn">import</span> <span class="n">column</span>
+
+<span class="c1"># Bokeh has a number of output options, as we want to output inline in the notebook we need to set output_notebook()</span>
+<span class="n">output_notebook</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Imports complete&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div class="bk-root">
+    <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
+    <span id="8037">Loading BokehJS ...</span>
+</div></div><script type="application/javascript">
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+  var JS_MIME_TYPE = 'application/javascript';
+  var HTML_MIME_TYPE = 'text/html';
+  var EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  var CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    var script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    var cell = handle.cell;
+
+    var id = cell.output_area._bokeh_element_id;
+    var server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      var cmd = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd, {
+        iopub: {
+          output: function(msg) {
+            var id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      var cmd = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    var output_area = handle.output_area;
+    var output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+      return
+    }
+
+    var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      var bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      var script_attrs = bk_div.children[0].attributes;
+      for (var i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      var toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+
+  
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  var NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    var el = document.getElementById("8037");
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error() {
+      console.error("failed to load " + url);
+    }
+
+    for (var i = 0; i < css_urls.length; i++) {
+      var url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    const hashes = {"https://cdn.bokeh.org/bokeh/release/bokeh-2.0.2.min.js": "ufR9RFnRs6lniiaFvtJziE0YeidtAgBRH6ux2oUItHw5WTvE1zuk9uzhUU/FJXDp", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.0.2.min.js": "8QM/PGWBT+IssZuRcDcjzwIh1mkOmJSoNMmyYDZbCfXJg3Ap1lEvdVgFuSAwhb/J", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.0.2.min.js": "Jm8cH3Rg0P6UeZhVY5cLy1WzKajUT9KImCY+76hEqrcJt59/d8GPvFHjCkYgnSIn", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.0.2.min.js": "Ozhzj+SI7ywm74aOI/UajcWz+C0NjsPunEVyVIrxzYkB+jA+2tUw8x5xJCbVtK5I"};
+
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      if (url in hashes) {
+        element.crossOrigin = "anonymous";
+        element.integrity = "sha384-" + hashes[url];
+      }
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  
+  var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.0.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.0.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.0.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.0.2.min.js"];
+  var css_urls = [];
+  
+
+  var inline_js = [
+    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+    function(Bokeh) {
+    
+    
+    }
+  ];
+
+  function run_inline_js() {
+    
+    if (root.Bokeh !== undefined || force === true) {
+      
+    for (var i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+    if (force === true) {
+        display_loaded();
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      var cell = $(document.getElementById("8037")).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));</script><div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Imports complete
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import our network data - originally from https://github.com/hunters-forge/mordor/tree/master/datasets/large/apt29/day1/zeek</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../../datasets/flow_logs.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data loaded&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Data loaded
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">total_b</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;src_bytes&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;dst_bytes&#39;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">total_p</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;src_packets&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;dst_packets&#39;</span><span class="p">]</span>
+
+<span class="c1"># Add some additional aggregated data fields to our table</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;total_bytes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">total_b</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;total_packets&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">total_p</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Clean some of our data to make plotting cleaner</span>
+<span class="n">clean_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">clean_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ts</th>
+      <th>src_ip</th>
+      <th>dst_ip</th>
+      <th>src_port</th>
+      <th>dst_port</th>
+      <th>proto</th>
+      <th>service</th>
+      <th>duration</th>
+      <th>src_bytes</th>
+      <th>dst_bytes</th>
+      <th>missed_bytes</th>
+      <th>src_packets</th>
+      <th>dst_packets</th>
+      <th>total_bytes</th>
+      <th>total_packets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.588205e+09</td>
+      <td>10.0.1.6</td>
+      <td>10.0.0.4</td>
+      <td>54243</td>
+      <td>53</td>
+      <td>udp</td>
+      <td>dns</td>
+      <td>0.001528</td>
+      <td>39.0</td>
+      <td>55.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>94.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.588205e+09</td>
+      <td>10.0.1.6</td>
+      <td>10.0.0.4</td>
+      <td>56880</td>
+      <td>445</td>
+      <td>tcp</td>
+      <td>gssapi,smb,krb</td>
+      <td>10.761077</td>
+      <td>4020.0</td>
+      <td>1681.0</td>
+      <td>0</td>
+      <td>12</td>
+      <td>11</td>
+      <td>5701.0</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.588205e+09</td>
+      <td>10.0.1.6</td>
+      <td>10.0.0.4</td>
+      <td>65108</td>
+      <td>53</td>
+      <td>udp</td>
+      <td>dns</td>
+      <td>0.001599</td>
+      <td>36.0</td>
+      <td>104.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>140.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.588206e+09</td>
+      <td>10.0.1.6</td>
+      <td>10.0.0.4</td>
+      <td>54192</td>
+      <td>53</td>
+      <td>udp</td>
+      <td>dns</td>
+      <td>0.001272</td>
+      <td>35.0</td>
+      <td>51.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>86.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1.588206e+09</td>
+      <td>10.0.1.6</td>
+      <td>10.0.0.4</td>
+      <td>56542</td>
+      <td>53</td>
+      <td>udp</td>
+      <td>dns</td>
+      <td>0.001223</td>
+      <td>36.0</td>
+      <td>104.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>140.0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Bokeh can be used to create simple static plots, of the same format that Pandas allows natively, however creating them is more involved. To create a plot a few basic elements are required:</p>
+<ul class="simple">
+<li><p>A figure: This is our visualizations canvas, where you can set the size, titles and other elements</p></li>
+<li><p>One or more Glyghs: These are the visual elements of or plot and vary depending on what sort of visualization you are creating.</p>
+<ul>
+<li><p>In the example below our glyph is a sinle vbar glyph</p></li>
+</ul>
+</li>
+</ul>
+</br>
+Once we have these elements we can customize a range of other elements regarding the visualization. Whilst Bokeh has defaults for many values such as colors, and chart axes you will want to manually set these for maximum impact.<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Take a subset of our data and groupby for categorical plotting</span>
+<span class="n">serv_data</span><span class="o">=</span> <span class="n">clean_data</span><span class="p">[</span><span class="n">clean_data</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">1023</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">serv_data</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">serv_data</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">serv_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;dst_port&#39;</span><span class="p">)</span>
+
+<span class="c1"># Apply a categorical color mapping to our datset</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">factor_cmap</span><span class="p">(</span><span class="s1">&#39;dst_port&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">Spectral10</span><span class="p">,</span> <span class="n">factors</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">serv_data</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+
+<span class="c1">#Create a Bokeh plot, set size and key elements of the blot</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">plot_height</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span> <span class="n">x_range</span><span class="o">=</span><span class="n">group</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Bytes by protocol&quot;</span><span class="p">,</span>
+           <span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c1">#Add vertical bars to our plot</span>
+<span class="n">p</span><span class="o">.</span><span class="n">vbar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;dst_port&#39;</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="s1">&#39;dst_bytes_mean&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
+       <span class="n">line_color</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">fill_color</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+
+<span class="c1"># Set our axes setting and labels</span>
+<span class="n">p</span><span class="o">.</span><span class="n">y_range</span><span class="o">.</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xgrid</span><span class="o">.</span><span class="n">grid_line_color</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Dst Port&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">major_label_orientation</span> <span class="o">=</span> <span class="mf">1.2</span>
+<span class="n">p</span><span class="o">.</span><span class="n">outline_line_color</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+
+
+
+
+
+<div class="bk-root" id="829a094b-fe42-4d82-befb-4cd99431ad79" data-root-id="11232"></div>
+</div><script type="application/javascript">(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"4c3a2093-750a-459b-a2a5-adcbb92328b7":{"roots":{"references":[{"attributes":{"below":[{"id":"11243"}],"center":[{"id":"11245"},{"id":"11249"}],"left":[{"id":"11246"}],"outline_line_color":null,"plot_height":350,"renderers":[{"id":"11255"}],"title":{"id":"11233"},"toolbar":{"id":"11250"},"toolbar_location":null,"x_range":{"id":"11235"},"x_scale":{"id":"11239"},"y_range":{"id":"11237"},"y_scale":{"id":"11241"}},"id":"11232","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"11241","type":"LinearScale"},{"attributes":{"start":0},"id":"11237","type":"DataRange1d"},{"attributes":{"text":"Bytes by protocol"},"id":"11233","type":"Title"},{"attributes":{"data_source":{"id":"11251"},"glyph":{"id":"11253"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"11254"},"selection_glyph":null,"view":{"id":"11256"}},"id":"11255","type":"GlyphRenderer"},{"attributes":{"factors":["135","137","445","53","88"],"palette":["#5e4fa2","#3288bd","#66c2a5","#abdda4","#e6f598","#fee08b","#fdae61","#f46d43","#d53e4f","#9e0142"]},"id":"11231","type":"CategoricalColorMapper"},{"attributes":{},"id":"11244","type":"CategoricalTicker"},{"attributes":{"source":{"id":"11251"}},"id":"11256","type":"CDSView"},{"attributes":{"axis_label":"Dst Port","formatter":{"id":"11682"},"major_label_orientation":1.2,"ticker":{"id":"11244"}},"id":"11243","type":"CategoricalAxis"},{"attributes":{"axis":{"id":"11243"},"grid_line_color":null,"ticker":null},"id":"11245","type":"Grid"},{"attributes":{"factors":["135","137","445","53","88"]},"id":"11235","type":"FactorRange"},{"attributes":{"formatter":{"id":"11680"},"ticker":{"id":"11247"}},"id":"11246","type":"LinearAxis"},{"attributes":{"data":{"dst_bytes_25%":{"__ndarray__":"AAAAAACAcUAAAAAAAAAAAAAAAAAARJlAAAAAAACAVUAAAAAAAMBmQA==","dtype":"float64","shape":[5]},"dst_bytes_50%":{"__ndarray__":"AAAAAACAcUAAAAAAAAAAAAAAAAAARJpAAAAAAAAAWkAAAAAAAOSWQA==","dtype":"float64","shape":[5]},"dst_bytes_75%":{"__ndarray__":"AAAAAADgdkAAAAAAAAAAAAAAAACA2M9AAAAAAAAgYkAAAAAAAPyXQA==","dtype":"float64","shape":[5]},"dst_bytes_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"dst_bytes_max":{"__ndarray__":"AAAAAABAfEAAAAAAAAAAAAAAAADAG95AAAAAAABQcEAAAAAAAPyXQA==","dtype":"float64","shape":[5]},"dst_bytes_mean":{"__ndarray__":"JUmSJEmSdEAAAAAAAAAAAIqd2ImdG8RASZIkSZIEXUCrqqqqqpKQQA==","dtype":"float64","shape":[5]},"dst_bytes_min":{"__ndarray__":"AAAAAACAcUAAAAAAAAAAAAAAAAAAmI1AAAAAAACASUAAAAAAAMBmQA==","dtype":"float64","shape":[5]},"dst_bytes_std":{"__ndarray__":"t8bXn1r7VEAAAAAAAAD4fzic7RT3RchAl67hz4fyS0A9MwTdkp2EQA==","dtype":"float64","shape":[5]},"dst_packets_25%":{"__ndarray__":"AAAAAAAAEEAAAAAAAAAAAAAAAAAAACZAAAAAAAAA8D8AAAAAAAAQQA==","dtype":"float64","shape":[5]},"dst_packets_50%":{"__ndarray__":"AAAAAAAAFEAAAAAAAAAAAAAAAAAAADlAAAAAAAAA8D8AAAAAAAAUQA==","dtype":"float64","shape":[5]},"dst_packets_75%":{"__ndarray__":"AAAAAAAAGEAAAAAAAAAAAAAAAAAAgFZAAAAAAAAA8D8AAAAAAAAYQA==","dtype":"float64","shape":[5]},"dst_packets_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"dst_packets_max":{"__ndarray__":"AAAAAAAAGEAAAAAAAAAAAAAAAAAAQF9AAAAAAAAA8D8AAAAAAAAYQA==","dtype":"float64","shape":[5]},"dst_packets_mean":{"__ndarray__":"27Zt27ZtE0AAAAAAAAAAANmJndiJnUhAAAAAAAAA8D8AAAAAAAAUQA==","dtype":"float64","shape":[5]},"dst_packets_min":{"__ndarray__":"AAAAAAAACEAAAAAAAAAAAAAAAAAAAAhAAAAAAAAA8D8AAAAAAAAQQA==","dtype":"float64","shape":[5]},"dst_packets_std":{"__ndarray__":"xlBE8ZRw8z8AAAAAAAD4f1pZAqS0H0ZAAAAAAAAAAACqTFjoerbrPw==","dtype":"float64","shape":[5]},"dst_port":["135","137","445","53","88"],"duration_25%":{"__ndarray__":"AAAA/IO0LUAAAADA+Ub4PwEAAKivniRAAAAAAECYVT8AAAAAAKFiPw==","dtype":"float64","shape":[5]},"duration_50%":{"__ndarray__":"AAAADGsCNUAAAADA+Ub4PwAAAIg6eyVAAAAAAACeWT8AAAAAAC9mPw==","dtype":"float64","shape":[5]},"duration_75%":{"__ndarray__":"AAAA8+kxRUAAAADA+Ub4PwEAALJ/0kpAAAAAAAB6Xz8AAAAAAD9rPw==","dtype":"float64","shape":[5]},"duration_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"duration_max":{"__ndarray__":"AAAArBn7TUAAAADA+Ub4PwEAgG4gZXJAAAAAoM51EEAAAAAAQLVwPw==","dtype":"float64","shape":[5]},"duration_mean":{"__ndarray__":"btu2YQKyPUAAAADA+Ub4PwAAAAARVklAAAAAAKwQ0z9VVVVV1etmPw==","dtype":"float64","shape":[5]},"duration_min":{"__ndarray__":"/////4zSKEAAAADA+Ub4PwAAAADAWnc///////+9Uz///////6tgPw==","dtype":"float64","shape":[5]},"duration_std":{"__ndarray__":"FaND3ql/MkAAAAAAAAD4f8TkzWWHClZAe3cPHD6U8T8ZH8Fw/URGPw==","dtype":"float64","shape":[5]},"missed_bytes_25%":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==","dtype":"float64","shape":[5]},"missed_bytes_50%":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==","dtype":"float64","shape":[5]},"missed_bytes_75%":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==","dtype":"float64","shape":[5]},"missed_bytes_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"missed_bytes_max":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAAAAAAAAYiDlBAAAAAAAAAAAAAAAAAAAAAA==","dtype":"float64","shape":[5]},"missed_bytes_mean":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAANmJndiZFANBAAAAAAAAAAAAAAAAAAAAAA==","dtype":"float64","shape":[5]},"missed_bytes_min":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==","dtype":"float64","shape":[5]},"missed_bytes_std":{"__ndarray__":"AAAAAAAAAAAAAAAAAAD4f4Ljo2hMRRxBAAAAAAAAAAAAAAAAAAAAAA==","dtype":"float64","shape":[5]},"src_bytes_25%":{"__ndarray__":"AAAAAACAdEAAAAAAAMBiQAAAAAAAaK9AAAAAAAAAQkAAAAAAAKBrQA==","dtype":"float64","shape":[5]},"src_bytes_50%":{"__ndarray__":"AAAAAACAdEAAAAAAAMBiQAAAAABAUtRAAAAAAADAQkAAAAAAANByQA==","dtype":"float64","shape":[5]},"src_bytes_75%":{"__ndarray__":"AAAAAADAeUAAAAAAAMBiQAAAAAD4qwdBAAAAAADATEAAAAAAAIyWQA==","dtype":"float64","shape":[5]},"src_bytes_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"src_bytes_max":{"__ndarray__":"AAAAAAAAf0AAAAAAAMBiQAAAAABKQVBBAAAAAACAZEAAAAAAAIyWQA==","dtype":"float64","shape":[5]},"src_bytes_mean":{"__ndarray__":"AAAAAACAd0AAAAAAAMBiQOzETux06BtBbtu2bdv2SkAAAAAAAHiEQA==","dtype":"float64","shape":[5]},"src_bytes_min":{"__ndarray__":"AAAAAACAdEAAAAAAAMBiQAAAAAAA0HJAAAAAAAAAPUAAAAAAAKBrQA==","dtype":"float64","shape":[5]},"src_bytes_std":{"__ndarray__":"iQmvVHB+VEAAAAAAAAD4fxobdvjirTFBLBHKidi+QUCQR7FnHYCCQA==","dtype":"float64","shape":[5]},"src_packets_25%":{"__ndarray__":"AAAAAAAAHEAAAAAAAAAIQAAAAAAAAChAAAAAAAAA8D8AAAAAAAAQQA==","dtype":"float64","shape":[5]},"src_packets_50%":{"__ndarray__":"AAAAAAAAHEAAAAAAAAAIQAAAAAAAgE5AAAAAAAAA8D8AAAAAAAAUQA==","dtype":"float64","shape":[5]},"src_packets_75%":{"__ndarray__":"AAAAAAAAHkAAAAAAAAAIQAAAAAAAAFlAAAAAAAAA8D8AAAAAAAAUQA==","dtype":"float64","shape":[5]},"src_packets_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"src_packets_max":{"__ndarray__":"AAAAAAAAIEAAAAAAAAAIQAAAAAAAQHFAAAAAAAAAEEAAAAAAAAAUQA==","dtype":"float64","shape":[5]},"src_packets_mean":{"__ndarray__":"JUmSJEmSHEAAAAAAAAAIQAAAAAAAgFFAJUmSJEmS9D+rqqqqqqoSQA==","dtype":"float64","shape":[5]},"src_packets_min":{"__ndarray__":"AAAAAAAAGEAAAAAAAAAIQAAAAAAAABRAAAAAAAAA8D8AAAAAAAAQQA==","dtype":"float64","shape":[5]},"src_packets_std":{"__ndarray__":"XhUvXgQV5j8AAAAAAAD4f9wthAsI+lJAblNj2Ndp6j8AAAAAAADgPw==","dtype":"float64","shape":[5]},"src_port_25%":{"__ndarray__":"AAAAAHDa60AAAAAAACBhQAAAAACA2+tAAAAAAJh36kAAAAAAINvrQA==","dtype":"float64","shape":[5]},"src_port_50%":{"__ndarray__":"AAAAAOCx7UAAAAAAACBhQAAAAADAsO1AAAAAADCz60AAAAAAYNzrQA==","dtype":"float64","shape":[5]},"src_port_75%":{"__ndarray__":"AAAAAFC17UAAAAAAACBhQAAAAAAAs+1AAAAAAFBR70AAAAAAwN/rQA==","dtype":"float64","shape":[5]},"src_port_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"src_port_max":{"__ndarray__":"AAAAAMC57UAAAAAAACBhQAAAAACgtu1AAAAAAIDK70AAAAAAAODrQA==","dtype":"float64","shape":[5]},"src_port_mean":{"__ndarray__":"SZIkSVLo7EAAAAAAACBhQBQ7sRPbHu1AkiRJktRv7EBVVVVVFd3rQA==","dtype":"float64","shape":[5]},"src_port_min":{"__ndarray__":"AAAAACDP60AAAAAAACBhQAAAAAAAxutAAAAAAEDh6EAAAAAA4NrrQA==","dtype":"float64","shape":[5]},"src_port_std":{"__ndarray__":"mr7oh2QAoEAAAAAAAAD4f4dd2SMd2ZxAx5Em1rbEtED5TWQ0g28xQA==","dtype":"float64","shape":[5]},"total_bytes_25%":{"__ndarray__":"AAAAAAAAg0AAAAAAAMBiQAAAAAAARbZAAAAAAAAwXUAAAAAAADB5QA==","dtype":"float64","shape":[5]},"total_bytes_50%":{"__ndarray__":"AAAAAAAAg0AAAAAAAMBiQAAAAABAH+JAAAAAAACAYUAAAAAAALCcQA==","dtype":"float64","shape":[5]},"total_bytes_75%":{"__ndarray__":"AAAAAABQiEAAAAAAAMBiQAAAAABwbwtBAAAAAACYaUAAAAAAALimQA==","dtype":"float64","shape":[5]},"total_bytes_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"total_bytes_max":{"__ndarray__":"AAAAAACgjUAAAAAAAMBiQAAAAMARRVBBAAAAAACQekAAAAAAALimQA==","dtype":"float64","shape":[5]},"total_bytes_mean":{"__ndarray__":"kiRJkiQJhkAAAAAAAMBiQNmJndhRiRxBAAAAAABAZUCrqqqqqs6aQA==","dtype":"float64","shape":[5]},"total_bytes_min":{"__ndarray__":"AAAAAAAAg0AAAAAAAMBiQAAAAAAAlJZAAAAAAACAVUAAAAAAADB5QA==","dtype":"float64","shape":[5]},"total_bytes_std":{"__ndarray__":"IGhDeuW8ZEAAAAAAAAD4f48RzN0vpzFBbwhbHeomVkCG182NxwGRQA==","dtype":"float64","shape":[5]},"total_packets_25%":{"__ndarray__":"AAAAAAAAKEAAAAAAAAAIQAAAAAAAADdAAAAAAAAAAEAAAAAAAAAgQA==","dtype":"float64","shape":[5]},"total_packets_50%":{"__ndarray__":"AAAAAAAAKEAAAAAAAAAIQAAAAAAAgFVAAAAAAAAAAEAAAAAAAAAkQA==","dtype":"float64","shape":[5]},"total_packets_75%":{"__ndarray__":"AAAAAAAAKkAAAAAAAAAIQAAAAAAA4GdAAAAAAAAAAEAAAAAAAAAmQA==","dtype":"float64","shape":[5]},"total_packets_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"total_packets_max":{"__ndarray__":"AAAAAAAAKkAAAAAAAAAIQAAAAAAAUHZAAAAAAAAAFEAAAAAAAAAmQA==","dtype":"float64","shape":[5]},"total_packets_mean":{"__ndarray__":"AAAAAAAAKEAAAAAAAAAIQOzETuzEzl1AkiRJkiRJAkBVVVVVVVUjQA==","dtype":"float64","shape":[5]},"total_packets_min":{"__ndarray__":"AAAAAAAAIkAAAAAAAAAIQAAAAAAAACBAAAAAAAAAAEAAAAAAAAAgQA==","dtype":"float64","shape":[5]},"total_packets_std":{"__ndarray__":"zTt/Zp6g9j8AAAAAAAD4f5hsQzs4E1xAblNj2Ndp6j/q+NKpfyr1Pw==","dtype":"float64","shape":[5]},"ts_25%":{"__ndarray__":"wmj/VYeq10GOzO5Kh6rXQRzPZlOHqtdBFh6Ec4aq10GPOL5lh6rXQQ==","dtype":"float64","shape":[5]},"ts_50%":{"__ndarray__":"VtlWeIeq10GOzO5Kh6rXQZp7glOHqtdBGEtsQoeq10H4/Zx9h6rXQQ==","dtype":"float64","shape":[5]},"ts_75%":{"__ndarray__":"ufy9kIeq10GOzO5Kh6rXQUPnU3iHqtdBW+OUXYeq10GTVO6ih6rXQQ==","dtype":"float64","shape":[5]},"ts_count":{"__ndarray__":"AAAAAAAAHEAAAAAAAADwPwAAAAAAACpAAAAAAAAALEAAAAAAAAAiQA==","dtype":"float64","shape":[5]},"ts_max":{"__ndarray__":"pyFA34eq10GOzO5Kh6rXQVa7mp2HqtdBLqfSmIeq10Gj/+6ih6rXQQ==","dtype":"float64","shape":[5]},"ts_mean":{"__ndarray__":"5juaX4eq10GOzO5Kh6rXQaBkDjaHqtdBJWhy7oaq10F3ghiCh6rXQQ==","dtype":"float64","shape":[5]},"ts_min":{"__ndarray__":"Wd0leIaq10GOzO5Kh6rXQfn49KOFqtdBesL0o4Wq10F0fL1lh6rXQQ==","dtype":"float64","shape":[5]},"ts_std":{"__ndarray__":"j6OJaO8kfEAAAAAAAAD4f5FQLMJpp4FAly1Da+HchUA3UCXzcrVaQA==","dtype":"float64","shape":[5]}},"selected":{"id":"11684"},"selection_policy":{"id":"11683"}},"id":"11251","type":"ColumnDataSource"},{"attributes":{},"id":"11684","type":"Selection"},{"attributes":{},"id":"11683","type":"UnionRenderers"},{"attributes":{},"id":"11247","type":"BasicTicker"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"dst_port","transform":{"id":"11231"}},"line_alpha":{"value":0.1},"line_color":{"field":"dst_port","transform":{"id":"11231"}},"top":{"field":"dst_bytes_mean"},"width":{"value":1},"x":{"field":"dst_port"}},"id":"11254","type":"VBar"},{"attributes":{},"id":"11682","type":"CategoricalTickFormatter"},{"attributes":{"axis":{"id":"11246"},"dimension":1,"ticker":null},"id":"11249","type":"Grid"},{"attributes":{},"id":"11680","type":"BasicTickFormatter"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto"},"id":"11250","type":"Toolbar"},{"attributes":{"fill_color":{"field":"dst_port","transform":{"id":"11231"}},"line_color":{"field":"dst_port","transform":{"id":"11231"}},"top":{"field":"dst_bytes_mean"},"width":{"value":1},"x":{"field":"dst_port"}},"id":"11253","type":"VBar"},{"attributes":{},"id":"11239","type":"CategoricalScale"}],"root_ids":["11232"]},"title":"Bokeh Application","version":"2.0.2"}};
+  var render_items = [{"docid":"4c3a2093-750a-459b-a2a5-adcbb92328b7","root_ids":["11232"],"roots":{"11232":"829a094b-fe42-4d82-befb-4cd99431ad79"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);</script></div>
+</div>
+<p>Once you have a visualization you can start to add interactivity, there are numerous ways to do this but the simplest is to all Bokeh’s pre-built tools to the figure. In the example below we have added the ‘hover’ tool which displays information about a datapoint as you hover over it.</br>
+Try this out by hovering over each section of the pie chart below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aggregate data for pie chart</span>
+<span class="n">pie_data</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;dst_bytes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+<span class="n">pie_data</span> <span class="o">=</span> <span class="n">pie_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bytes&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="s1">&#39;port&#39;</span><span class="p">})</span>
+
+<span class="c1"># Calculate angles for pie chart wedges</span>
+<span class="n">pie_data</span><span class="p">[</span><span class="s1">&#39;angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pie_data</span><span class="p">[</span><span class="s1">&#39;bytes&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">pie_data</span><span class="p">[</span><span class="s1">&#39;bytes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
+<span class="n">pie_data</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Category10</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">pie_data</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
+
+<span class="c1"># Set our Bokeh figure - enable hover over</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">plot_height</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Bytes by port&quot;</span><span class="p">,</span> <span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span> <span class="n">tooltips</span><span class="o">=</span><span class="s2">&quot;@dst_port: @bytes&quot;</span><span class="p">,</span> <span class="n">x_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+
+<span class="c1"># Add wedges to the plot</span>
+<span class="n">p</span><span class="o">.</span><span class="n">wedge</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">start_angle</span><span class="o">=</span><span class="n">cumsum</span><span class="p">(</span><span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="n">include_zero</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">end_angle</span><span class="o">=</span><span class="n">cumsum</span><span class="p">(</span><span class="s1">&#39;angle&#39;</span><span class="p">),</span>
+        <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">legend_field</span><span class="o">=</span><span class="s1">&#39;dst_port&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">pie_data</span><span class="p">)</span>
+
+<span class="c1"># Set axes</span>
+<span class="n">p</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">axis_label</span><span class="o">=</span><span class="kc">None</span>
+<span class="n">p</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">visible</span><span class="o">=</span><span class="kc">False</span>
+<span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">grid_line_color</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+
+
+
+
+
+<div class="bk-root" id="3efb4109-6458-4100-b9e8-41afa1858a6d" data-root-id="11727"></div>
+</div><script type="application/javascript">(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"2bc98cfc-8a0e-4407-9f8b-90e7c5e515f7":{"roots":{"references":[{"attributes":{"below":[{"id":"11738"}],"center":[{"id":"11741"},{"id":"11745"},{"id":"11762"}],"left":[{"id":"11742"}],"plot_height":250,"plot_width":300,"renderers":[{"id":"11755"}],"title":{"id":"11728"},"toolbar":{"id":"11747"},"toolbar_location":null,"x_range":{"id":"11730"},"x_scale":{"id":"11734"},"y_range":{"id":"11732"},"y_scale":{"id":"11736"}},"id":"11727","subtype":"Figure","type":"Plot"},{"attributes":{"end_angle":{"expr":{"id":"11750"},"units":"rad"},"fill_alpha":{"value":0.1},"fill_color":{"field":"color"},"line_alpha":{"value":0.1},"line_color":{"value":"white"},"radius":{"units":"data","value":0.5},"start_angle":{"expr":{"id":"11749"},"units":"rad"},"x":{"value":0},"y":{"value":1}},"id":"11754","type":"Wedge"},{"attributes":{"label":{"field":"dst_port"},"renderers":[{"id":"11755"}]},"id":"11763","type":"LegendItem"},{"attributes":{"end_angle":{"expr":{"id":"11750"},"units":"rad"},"fill_color":{"field":"color"},"line_color":{"value":"white"},"radius":{"units":"data","value":0.5},"start_angle":{"expr":{"id":"11749"},"units":"rad"},"x":{"value":0},"y":{"value":1}},"id":"11753","type":"Wedge"},{"attributes":{"source":{"id":"11751"}},"id":"11756","type":"CDSView"},{"attributes":{"text":"Bytes by port"},"id":"11728","type":"Title"},{"attributes":{"data":{"angle":{"__ndarray__":"31ktNV9uxj8AAAAAAAAAAO4x4DT57BVANhWRTCKkrz+IcQsJNxLiPw==","dtype":"float64","shape":[5]},"bytes":{"__ndarray__":"JUmSJEmSdEAAAAAAAAAAAIqd2ImdG8RASZIkSZIEXUCrqqqqqpKQQA==","dtype":"float64","shape":[5]},"color":["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd"],"dst_port":["135","137","445","53","88"],"index":[0,1,2,3,4]},"selected":{"id":"12198"},"selection_policy":{"id":"12197"}},"id":"11751","type":"ColumnDataSource"},{"attributes":{},"id":"11736","type":"LinearScale"},{"attributes":{"field":"angle"},"id":"11750","type":"CumSum"},{"attributes":{"start":-0.5},"id":"11730","type":"Range1d"},{"attributes":{},"id":"11734","type":"LinearScale"},{"attributes":{},"id":"12198","type":"Selection"},{"attributes":{},"id":"11732","type":"DataRange1d"},{"attributes":{},"id":"11761","type":"BasicTickFormatter"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"11746"}]},"id":"11747","type":"Toolbar"},{"attributes":{"callback":null,"tooltips":"@dst_port: @bytes"},"id":"11746","type":"HoverTool"},{"attributes":{"field":"angle","include_zero":true},"id":"11749","type":"CumSum"},{"attributes":{},"id":"11759","type":"BasicTickFormatter"},{"attributes":{},"id":"11743","type":"BasicTicker"},{"attributes":{"axis":{"id":"11742"},"dimension":1,"grid_line_color":null,"ticker":null},"id":"11745","type":"Grid"},{"attributes":{},"id":"12197","type":"UnionRenderers"},{"attributes":{"axis":{"id":"11738"},"grid_line_color":null,"ticker":null},"id":"11741","type":"Grid"},{"attributes":{"items":[{"id":"11763"}]},"id":"11762","type":"Legend"},{"attributes":{"axis_label":null,"formatter":{"id":"11759"},"ticker":{"id":"11743"},"visible":false},"id":"11742","type":"LinearAxis"},{"attributes":{"axis_label":null,"formatter":{"id":"11761"},"ticker":{"id":"11739"},"visible":false},"id":"11738","type":"LinearAxis"},{"attributes":{"data_source":{"id":"11751"},"glyph":{"id":"11753"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"11754"},"selection_glyph":null,"view":{"id":"11756"}},"id":"11755","type":"GlyphRenderer"},{"attributes":{},"id":"11739","type":"BasicTicker"}],"root_ids":["11727"]},"title":"Bokeh Application","version":"2.0.2"}};
+  var render_items = [{"docid":"2bc98cfc-8a0e-4407-9f8b-90e7c5e515f7","root_ids":["11727"],"roots":{"11727":"3efb4109-6458-4100-b9e8-41afa1858a6d"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);</script></div>
+</div>
+<p>Other interactions you can add to a visualization include the ability to pan and zoom in data. In the scatterplot below we have enabled some of these. </br>
+The tools are accessed via the toolbar in the bottom right of the visualization, try them out by selecting one and them clicking on the main body of the visualization.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add colors to our dataset based on the destination port</span>
+<span class="n">scatter_data</span> <span class="o">=</span> <span class="n">serv_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">ports</span> <span class="o">=</span> <span class="n">scatter_data</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">palette</span> <span class="o">=</span> <span class="n">Category20c</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">ports</span><span class="p">)]</span>
+<span class="n">colormap</span> <span class="o">=</span> <span class="p">{</span><span class="n">ports</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">palette</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ports</span><span class="p">))}</span>
+<span class="n">scatter_data</span><span class="p">[</span><span class="s1">&#39;colors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">colormap</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">scatter_data</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]]</span>
+
+<span class="c1"># Create a figure and add a number of tools</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">plot_height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Protocol bytes vs packets&quot;</span><span class="p">,</span>
+           <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;pan,wheel_zoom,box_zoom,reset,hover&quot;</span><span class="p">,</span> 
+           <span class="n">tooltips</span><span class="o">=</span><span class="s2">&quot;Bytes = @dst_bytes - Packets = @dst_packets, Port = @dst_port&quot;</span><span class="p">,</span> 
+           <span class="n">toolbar_location</span><span class="o">=</span><span class="s2">&quot;below&quot;</span><span class="p">)</span>
+
+<span class="c1"># format our data in a ColumnDataSource format</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">scatter_data</span><span class="p">)</span>
+<span class="c1"># Add scatter object </span>
+<span class="n">p</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;dst_bytes&quot;</span><span class="p">,</span> <span class="s2">&quot;dst_packets&quot;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">legend_field</span><span class="o">=</span><span class="s2">&quot;dst_port&quot;</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+          <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;colors&#39;</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s1">&#39;colors&#39;</span><span class="p">)</span>
+
+<span class="c1"># Format axes</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s1">&#39;Bytes&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s1">&#39;Packets&#39;</span>
+
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+
+
+
+
+
+<div class="bk-root" id="4d0f15a2-b17d-4057-8719-f8bc4d2e54de" data-root-id="12241"></div>
+</div><script type="application/javascript">(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"2deeb712-4dc5-4f83-bc56-524568adfbae":{"roots":{"references":[{"attributes":{"below":[{"id":"12252"}],"center":[{"id":"12255"},{"id":"12259"},{"id":"12284"}],"left":[{"id":"12256"}],"plot_height":800,"plot_width":800,"renderers":[{"id":"12276"}],"title":{"id":"12242"},"toolbar":{"id":"12266"},"toolbar_location":"below","x_range":{"id":"12244"},"x_scale":{"id":"12248"},"y_range":{"id":"12246"},"y_scale":{"id":"12250"}},"id":"12241","subtype":"Figure","type":"Plot"},{"attributes":{"callback":null,"tooltips":"Bytes = @dst_bytes - Packets = @dst_packets, Port = @dst_port"},"id":"12264","type":"HoverTool"},{"attributes":{"axis":{"id":"12252"},"ticker":null},"id":"12255","type":"Grid"},{"attributes":{},"id":"12727","type":"UnionRenderers"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"12260"},{"id":"12261"},{"id":"12262"},{"id":"12263"},{"id":"12264"}]},"id":"12266","type":"Toolbar"},{"attributes":{"source":{"id":"12272"}},"id":"12277","type":"CDSView"},{"attributes":{},"id":"12280","type":"BasicTickFormatter"},{"attributes":{},"id":"12282","type":"BasicTickFormatter"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"render_mode":"css","right_units":"screen","top_units":"screen"},"id":"12265","type":"BoxAnnotation"},{"attributes":{"items":[{"id":"12285"}]},"id":"12284","type":"Legend"},{"attributes":{},"id":"12253","type":"BasicTicker"},{"attributes":{"label":{"field":"dst_port"},"renderers":[{"id":"12276"}]},"id":"12285","type":"LegendItem"},{"attributes":{},"id":"12260","type":"PanTool"},{"attributes":{},"id":"12728","type":"Selection"},{"attributes":{},"id":"12250","type":"LinearScale"},{"attributes":{"fill_alpha":{"value":0.8},"fill_color":{"field":"colors"},"line_color":{"field":"colors"},"size":{"units":"screen","value":7},"x":{"field":"dst_bytes"},"y":{"field":"dst_packets"}},"id":"12274","type":"Scatter"},{"attributes":{"data":{"colors":["#3182bd","#6baed6","#3182bd","#3182bd","#3182bd","#9ecae1","#6baed6","#3182bd","#3182bd","#3182bd","#3182bd","#3182bd","#c6dbef","#3182bd","#6baed6","#9ecae1","#6baed6","#6baed6","#6baed6","#6baed6","#3182bd","#e6550d","#e6550d","#e6550d","#6baed6","#9ecae1","#6baed6","#3182bd","#e6550d","#e6550d","#e6550d","#9ecae1","#6baed6","#9ecae1","#6baed6","#6baed6","#3182bd","#3182bd","#e6550d","#e6550d","#e6550d","#9ecae1","#9ecae1","#6baed6"],"dst_bytes":{"__ndarray__":"AAAAAACAS0AAAAAAAESaQAAAAAAAAFpAAAAAAACASUAAAAAAAABaQAAAAAAAgHFAAAAAAAB0yEAAAAAAAABaQAAAAAAAoGRAAAAAAABQcEAAAAAAAMBjQAAAAAAAwF9AAAAAAAAAAAAAAAAAAIBbQAAAAACA2M9AAAAAAACAcUAAAAAAAESZQAAAAAAAPq5AAAAAAACYjUAAAAAAAEyZQAAAAAAAgElAAAAAAADAZkAAAAAAAPyXQAAAAAAA5JZAAAAAAABEmkAAAAAAAEB8QAAAAADAh91AAAAAAAAAWkAAAAAAAMBmQAAAAAAA/JdAAAAAAADklkAAAAAAAEB8QAAAAADAh91AAAAAAACAcUAAAAAAAOCRQAAAAAAA4JFAAAAAAADgYkAAAAAAAABUQAAAAAAAwGZAAAAAAAD8l0AAAAAAAOSWQAAAAAAAgHFAAAAAAACAcUAAAAAAwBveQA==","dtype":"float64","shape":[44]},"dst_ip":["10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.255","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.6","10.0.1.6","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.6","10.0.1.6","10.0.0.4","10.0.1.6","10.0.1.6","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.6","10.0.1.6","10.0.1.6"],"dst_packets":[1,11,1,1,1,6,70,1,1,1,1,1,0,1,125,6,25,81,5,25,1,4,5,6,11,4,90,1,4,5,6,4,91,6,3,3,1,1,4,5,6,5,3,100],"dst_port":["53","445","53","53","53","135","445","53","53","53","53","53","137","53","445","135","445","445","445","445","53","88","88","88","445","135","445","53","88","88","88","135","445","135","445","445","53","53","88","88","88","135","135","445"],"duration":{"__ndarray__":"AAAAAAAJWT8BAADgq4UlQP//////Mlo/AAAAAADXVD///////wlUPwAAABC1bC1AAAAA7CPgZkACAAAAAPNePwAAAAAAyWI/AAAAoM51EEAAAAAAAJxWPwAAAAAAaF4/AAAAwPlG+D///////71TPwEAALA3eSVA/////4zSKED///831p0kQAAAAIg6eyVAAAAAMMieJEABAACor54kQAAAAAAAUVU/AAAAAIBlZj8AAAAAAAphPwAAAAAAoWI/AAAAAPvYJUAAAAB89zlFQAAAANgq00pAAAAAAACnXz///////6tgPwAAAAAAP2s/AQAAAACuaz////9p3ClFQAEAALJ/0kpAAAAA6FL8LUAAAAAAkFWaPwAAAADAWnc/AAAAAKC9oj8BAAAAAG5WPwAAAABAtXA/AAAAAAAvZj8AAAAAgAdlPwAAAKwZ+01AAAAADGsCNUABAIBuIGVyQA==","dtype":"float64","shape":[44]},"index":[0,1,2,5,6,9,14,16,17,23,27,28,29,30,31,32,34,35,36,37,43,47,48,49,52,54,55,58,63,64,65,69,70,71,73,77,84,85,92,93,94,150,476,477],"missed_bytes":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,297780,1673240,0,60974,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proto":["udp","tcp","udp","udp","udp","tcp","tcp","udp","udp","udp","udp","udp","udp","udp","tcp","tcp","tcp","tcp","tcp","tcp","udp","tcp","tcp","tcp","tcp","tcp","tcp","udp","tcp","tcp","tcp","tcp","tcp","tcp","tcp","tcp","udp","udp","tcp","tcp","tcp","tcp","tcp","tcp"],"service":["dns","gssapi,smb,krb","dns","dns","dns","dce_rpc","gssapi,smb,krb","dns","dns","dns","dns","dns","dns","dns","gssapi,smb,krb,dce_rpc","dce_rpc","gssapi,smb,krb","gssapi","gssapi,smb,krb","gssapi,smb,krb","dns","krb_tcp","krb_tcp","krb_tcp","gssapi,smb,krb","dce_rpc","gssapi","dns","krb_tcp","krb_tcp","krb_tcp","dce_rpc","gssapi","dce_rpc","gssapi","gssapi","dns","dns","krb_tcp","krb_tcp","krb_tcp","dce_rpc","dce_rpc","gssapi"],"src_bytes":{"__ndarray__":"AAAAAACAQ0AAAAAAAGivQAAAAAAAAEJAAAAAAACAQUAAAAAAAABCQAAAAAAAgHRAAAAAAACSzkAAAAAAAABCQAAAAAAAgEdAAAAAAACAZEAAAAAAAIBWQAAAAAAAgE1AAAAAAADAYkAAAAAAAIBKQAAAAABAUtRAAAAAAACAdEAAAAAAEBggQQAAAABKQVBBAAAAAABIoEAAAAAAiBcgQQAAAAAAgEFAAAAAAACga0AAAAAAANByQAAAAAAAjJZAAAAAAABor0AAAAAAAAB/QAAAAADYogdBAAAAAAAAQkAAAAAAAKBrQAAAAAAA0HJAAAAAAACMlkAAAAAAAAB/QAAAAADYogdBAAAAAACAdEAAAAAAANByQAAAAAAA0HJAAAAAAAAATkAAAAAAAAA9QAAAAAAAoGtAAAAAAADQckAAAAAAAIyWQAAAAAAAgHRAAAAAAACAdEAAAAAA+KsHQQ==","dtype":"float64","shape":[44]},"src_ip":["10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.4","10.0.1.4","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.4"],"src_packets":[1,12,1,1,1,7,71,1,1,4,1,1,3,1,126,7,31,276,8,61,1,4,5,5,12,8,96,1,4,5,5,8,100,7,5,5,2,1,4,5,5,7,6,107],"src_port":[54243,56880,65108,54192,56542,56953,56957,56622,64909,56837,58829,52350,137,64562,57026,57024,60807,60803,60805,60806,64173,57047,57048,57049,57052,60815,60811,51985,57058,57059,57060,60828,60824,57063,60838,60843,50954,64035,57086,57087,57088,60857,60878,60853],"total_bytes":{"__ndarray__":"AAAAAACAV0AAAAAAAEW2QAAAAAAAgGFAAAAAAACAVUAAAAAAAIBhQAAAAAAAAINAAAAAAACD20AAAAAAAIBhQAAAAAAAgGpAAAAAAACQekAAAAAAAABvQAAAAAAAQGdAAAAAAADAYkAAAAAAAGBkQAAAAABAH+JAAAAAAAAAg0AAAAAAsiQgQQAAAMARRVBBAAAAAACup0AAAAAALiQgQQAAAAAAgFVAAAAAAAAweUAAAAAAALCcQAAAAAAAuKZAAAAAAABFtkAAAAAAAKCNQAAAAADQUwtBAAAAAACAYUAAAAAAADB5QAAAAAAAsJxAAAAAAAC4pkAAAAAAAKCNQAAAAADQUwtBAAAAAAAAg0AAAAAAAJSWQAAAAAAAlJZAAAAAAABgakAAAAAAAEBbQAAAAAAAMHlAAAAAAACwnEAAAAAAALimQAAAAAAAAINAAAAAAAAAg0AAAAAAcG8LQQ==","dtype":"float64","shape":[44]},"total_packets":[2,23,2,2,2,13,141,2,2,5,2,2,3,2,251,13,56,357,13,86,2,8,10,11,23,12,186,2,8,10,11,12,191,13,8,8,3,2,8,10,11,12,9,207],"ts":{"__ndarray__":"esL0o4Wq10H5+PSjharXQU4M/beFqtdBG2fTJoaq10GtUgNOhqrXQVndJXiGqtdB16JSeIaq10FOgAbkhqrXQXBA2yqHqtdBPQvqOYeq10H0iu5Kh6rXQc6p7kqHqtdBjszuSoeq10EsSZJLh6rXQUNViEuHqtdB32mHS4eq10Gae4JTh6rXQRzPZlOHqtdByF2CU4eq10G6Y4JTh6rXQWrBlWOHqtdBdHy9ZYeq10EKFL5lh6rXQY84vmWHqtdBOiADZoeq10GlZ3dgh6rXQT3TdGCHqtdBnSgNeoeq10G8dpx9h6rXQfj9nH2HqtdBOSqdfYeq10FW2VZ4h6rXQUPnU3iHqtdB0LXeg4eq10GDN6aTh6rXQVVR8JiHqtdBRE7ImIeq10Eup9KYh6rXQZNU7qKHqtdBBtruooeq10Gj/+6ih6rXQaJDnZ2HqtdBpyFA34eq10FWu5qdh6rXQQ==","dtype":"float64","shape":[44]}},"selected":{"id":"12728"},"selection_policy":{"id":"12727"}},"id":"12272","type":"ColumnDataSource"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"colors"},"line_alpha":{"value":0.1},"line_color":{"field":"colors"},"size":{"units":"screen","value":7},"x":{"field":"dst_bytes"},"y":{"field":"dst_packets"}},"id":"12275","type":"Scatter"},{"attributes":{"axis":{"id":"12256"},"dimension":1,"ticker":null},"id":"12259","type":"Grid"},{"attributes":{},"id":"12257","type":"BasicTicker"},{"attributes":{},"id":"12261","type":"WheelZoomTool"},{"attributes":{"text":"Protocol bytes vs packets"},"id":"12242","type":"Title"},{"attributes":{},"id":"12244","type":"DataRange1d"},{"attributes":{},"id":"12263","type":"ResetTool"},{"attributes":{"axis_label":"Packets","formatter":{"id":"12280"},"ticker":{"id":"12257"}},"id":"12256","type":"LinearAxis"},{"attributes":{},"id":"12248","type":"LinearScale"},{"attributes":{"axis_label":"Bytes","formatter":{"id":"12282"},"ticker":{"id":"12253"}},"id":"12252","type":"LinearAxis"},{"attributes":{"overlay":{"id":"12265"}},"id":"12262","type":"BoxZoomTool"},{"attributes":{},"id":"12246","type":"DataRange1d"},{"attributes":{"data_source":{"id":"12272"},"glyph":{"id":"12274"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"12275"},"selection_glyph":null,"view":{"id":"12277"}},"id":"12276","type":"GlyphRenderer"}],"root_ids":["12241"]},"title":"Bokeh Application","version":"2.0.2"}};
+  var render_items = [{"docid":"2deeb712-4dc5-4f83-bc56-524568adfbae","root_ids":["12241"],"roots":{"12241":"4d0f15a2-b17d-4057-8719-f8bc4d2e54de"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);</script></div>
+</div>
+<p>In the visualizations we have created so far we have had a single glyph showing all our data, this has limited the level of interactivity we can enable. In the scatter plot below rather than plotting all the points as a scatter glyph we instead plot each point as individual circle glyphs. </br>
+This means that we use an interactive legend to show or hide certain data points. Try this out by clicking on each item in the legend to toggle it in the main plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Format data, including timeseries</span>
+<span class="n">scatter_data_2</span> <span class="o">=</span> <span class="n">serv_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">scatter_data_2</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scatter_data_2</span><span class="p">[</span><span class="s1">&#39;ts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">scatter_data_2</span> <span class="o">=</span> <span class="n">scatter_data_2</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;dst_port&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create our Bokeh Figure</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">450</span><span class="p">,</span> <span class="n">x_axis_type</span><span class="o">=</span><span class="s2">&quot;datetime&quot;</span><span class="p">)</span>
+<span class="c1"># Add a title after</span>
+<span class="n">p</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Click on legend entries to hide the corresponding points&#39;</span>
+
+<span class="c1"># Add our scatter points as seperate circle items so we can filter</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">Category10</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> 
+<span class="n">col_i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">scatter_data_2</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">c_data</span> <span class="o">=</span> <span class="n">scatter_data_2</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+    <span class="n">c_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">col_i</span><span class="p">]</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">c_data</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">],</span> <span class="n">c_data</span><span class="p">[</span><span class="s1">&#39;total_packets&#39;</span><span class="p">],</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">legend_label</span><span class="o">=</span><span class="n">group</span><span class="p">,</span> <span class="n">muted_alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+    <span class="n">col_i</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+<span class="c1"># Set our interactive legend action</span>
+<span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">click_policy</span><span class="o">=</span><span class="s2">&quot;mute&quot;</span>
+<span class="c1"># Set our axes settings</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s1">&#39;Time&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s1">&#39;Total Packets&#39;</span> 
+    
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+
+
+
+
+
+<div class="bk-root" id="e7b36469-e996-4bd7-a759-8e79b29425f2" data-root-id="12777"></div>
+</div><script type="application/javascript">(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"a0ac2567-a881-41d4-a2e1-963496878f41":{"roots":{"references":[{"attributes":{"below":[{"id":"12786"}],"center":[{"id":"12789"},{"id":"12793"},{"id":"12834"}],"left":[{"id":"12790"}],"plot_height":450,"plot_width":800,"renderers":[{"id":"12813"},{"id":"12840"},{"id":"12868"},{"id":"12898"},{"id":"12930"}],"title":{"id":"12808"},"toolbar":{"id":"12801"},"x_range":{"id":"12778"},"x_scale":{"id":"12782"},"y_range":{"id":"12780"},"y_scale":{"id":"12784"}},"id":"12777","subtype":"Figure","type":"Plot"},{"attributes":{"data_source":{"id":"12894"},"glyph":{"id":"12895"},"hover_glyph":null,"muted_glyph":{"id":"12897"},"nonselection_glyph":{"id":"12896"},"selection_glyph":null,"view":{"id":"12899"}},"id":"12898","type":"GlyphRenderer"},{"attributes":{},"id":"12784","type":"LinearScale"},{"attributes":{},"id":"12850","type":"Selection"},{"attributes":{},"id":"12778","type":"DataRange1d"},{"attributes":{},"id":"12782","type":"LinearScale"},{"attributes":{"data":{"x":{"__ndarray__":"wzPVFnAcd0I=","dtype":"float64","shape":[1]},"y":[3]},"selected":{"id":"12880"},"selection_policy":{"id":"12879"}},"id":"12836","type":"ColumnDataSource"},{"attributes":{"fill_alpha":{"value":0.8},"fill_color":{"value":"#ff7f0e"},"line_alpha":{"value":0.8},"line_color":{"value":"#ff7f0e"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12837","type":"Circle"},{"attributes":{"source":{"id":"12894"}},"id":"12899","type":"CDSView"},{"attributes":{"label":{"value":"137"},"renderers":[{"id":"12840"}]},"id":"12863","type":"LegendItem"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.2},"line_color":{"value":"#1f77b4"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12812","type":"Circle"},{"attributes":{"days":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]},"id":"12825","type":"DaysTicker"},{"attributes":{},"id":"12911","type":"UnionRenderers"},{"attributes":{"axis":{"id":"12790"},"dimension":1,"ticker":null},"id":"12793","type":"Grid"},{"attributes":{},"id":"12912","type":"Selection"},{"attributes":{},"id":"13418","type":"UnionRenderers"},{"attributes":{"source":{"id":"12809"}},"id":"12814","type":"CDSView"},{"attributes":{"axis_label":"Total Packets","formatter":{"id":"12818"},"ticker":{"id":"12791"}},"id":"12790","type":"LinearAxis"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"#2ca02c"},"line_alpha":{"value":0.1},"line_color":{"value":"#2ca02c"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12866","type":"Circle"},{"attributes":{"data_source":{"id":"12836"},"glyph":{"id":"12837"},"hover_glyph":null,"muted_glyph":{"id":"12839"},"nonselection_glyph":{"id":"12838"},"selection_glyph":null,"view":{"id":"12841"}},"id":"12840","type":"GlyphRenderer"},{"attributes":{"data":{"x":{"__ndarray__":"IzvFeW4cd0IGsyhJbxx3QkQjaxdwHHdCtGw1H3Acd0JCZhofcBx3QpZPNR9wHHdCZFU1H3Acd0J5DUcxcBx3QkoW2itwHHdC1+8pQ3Acd0I1UthdcBx3Qm2vAmNwHHdC8hqRZ3Acd0I=","dtype":"float64","shape":[13]},"y":[23,141,251,56,357,13,86,23,186,191,8,8,207]},"selected":{"id":"12912"},"selection_policy":{"id":"12911"}},"id":"12864","type":"ColumnDataSource"},{"attributes":{"label":{"value":"53"},"renderers":[{"id":"12898"}]},"id":"12925","type":"LegendItem"},{"attributes":{},"id":"12795","type":"WheelZoomTool"},{"attributes":{},"id":"12791","type":"BasicTicker"},{"attributes":{"data":{"x":{"__ndarray__":"Kfr8SG8cd0JkPWoXcBx3Qjeb3CtwHHdCPdAsQ3Acd0KNfW9OcBx3QgyUk2dwHHdC3aCsp3Acd0I=","dtype":"float64","shape":[7]},"y":[13,13,12,12,13,12,9]},"selected":{"id":"12850"},"selection_policy":{"id":"12849"}},"id":"12809","type":"ColumnDataSource"},{"attributes":{"fill_alpha":{"value":0.8},"fill_color":{"value":"#2ca02c"},"line_alpha":{"value":0.8},"line_color":{"value":"#2ca02c"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12865","type":"Circle"},{"attributes":{},"id":"12849","type":"UnionRenderers"},{"attributes":{"axis":{"id":"12786"},"ticker":null},"id":"12789","type":"Grid"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"#ff7f0e"},"line_alpha":{"value":0.1},"line_color":{"value":"#ff7f0e"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12838","type":"Circle"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#2ca02c"},"line_alpha":{"value":0.2},"line_color":{"value":"#2ca02c"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12867","type":"Circle"},{"attributes":{"data":{"x":{"__ndarray__":"iQsDMXAcd0KRnwMxcBx3QjvDAzFwHHdC9MtSSHAcd0IEUFNIcBx3Qjt7U0hwHHdCmL7EbHAcd0LpQMVscBx3QqZlxWxwHHdC","dtype":"float64","shape":[9]},"y":[8,10,11,8,10,11,8,10,11]},"selected":{"id":"13419"},"selection_policy":{"id":"13418"}},"id":"12926","type":"ColumnDataSource"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"#9467bd"},"line_alpha":{"value":0.1},"line_color":{"value":"#9467bd"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12928","type":"Circle"},{"attributes":{"axis_label":"Time","formatter":{"id":"12820"},"ticker":{"id":"12787"}},"id":"12786","type":"DatetimeAxis"},{"attributes":{"days":[1,4,7,10,13,16,19,22,25,28]},"id":"12826","type":"DaysTicker"},{"attributes":{"data_source":{"id":"12864"},"glyph":{"id":"12865"},"hover_glyph":null,"muted_glyph":{"id":"12867"},"nonselection_glyph":{"id":"12866"},"selection_glyph":null,"view":{"id":"12869"}},"id":"12868","type":"GlyphRenderer"},{"attributes":{},"id":"12794","type":"PanTool"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#ff7f0e"},"line_alpha":{"value":0.2},"line_color":{"value":"#ff7f0e"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12839","type":"Circle"},{"attributes":{"fill_alpha":{"value":0.8},"fill_color":{"value":"#9467bd"},"line_alpha":{"value":0.8},"line_color":{"value":"#9467bd"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12927","type":"Circle"},{"attributes":{"base":60,"mantissas":[1,2,5,10,15,20,30],"max_interval":1800000.0,"min_interval":1000.0,"num_minor_ticks":0},"id":"12823","type":"AdaptiveTicker"},{"attributes":{},"id":"12818","type":"BasicTickFormatter"},{"attributes":{"source":{"id":"12864"}},"id":"12869","type":"CDSView"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#9467bd"},"line_alpha":{"value":0.2},"line_color":{"value":"#9467bd"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12929","type":"Circle"},{"attributes":{"months":[0,2,4,6,8,10]},"id":"12830","type":"MonthsTicker"},{"attributes":{"base":24,"mantissas":[1,2,4,6,8,12],"max_interval":43200000.0,"min_interval":3600000.0,"num_minor_ticks":0},"id":"12824","type":"AdaptiveTicker"},{"attributes":{"fill_alpha":{"value":0.8},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.8},"line_color":{"value":"#1f77b4"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12810","type":"Circle"},{"attributes":{},"id":"12879","type":"UnionRenderers"},{"attributes":{"data_source":{"id":"12926"},"glyph":{"id":"12927"},"hover_glyph":null,"muted_glyph":{"id":"12929"},"nonselection_glyph":{"id":"12928"},"selection_glyph":null,"view":{"id":"12931"}},"id":"12930","type":"GlyphRenderer"},{"attributes":{},"id":"12798","type":"ResetTool"},{"attributes":{},"id":"13419","type":"Selection"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"render_mode":"css","right_units":"screen","top_units":"screen"},"id":"12800","type":"BoxAnnotation"},{"attributes":{},"id":"12880","type":"Selection"},{"attributes":{"days":[1,8,15,22]},"id":"12827","type":"DaysTicker"},{"attributes":{},"id":"12833","type":"YearsTicker"},{"attributes":{"source":{"id":"12836"}},"id":"12841","type":"CDSView"},{"attributes":{},"id":"12799","type":"HelpTool"},{"attributes":{"source":{"id":"12926"}},"id":"12931","type":"CDSView"},{"attributes":{},"id":"12780","type":"DataRange1d"},{"attributes":{"label":{"value":"445"},"renderers":[{"id":"12868"}]},"id":"12893","type":"LegendItem"},{"attributes":{"days":[1,15]},"id":"12828","type":"DaysTicker"},{"attributes":{},"id":"12797","type":"SaveTool"},{"attributes":{"text":"Click on legend entries to hide the corresponding points"},"id":"12808","type":"Title"},{"attributes":{},"id":"12945","type":"UnionRenderers"},{"attributes":{"months":[0,1,2,3,4,5,6,7,8,9,10,11]},"id":"12829","type":"MonthsTicker"},{"attributes":{"overlay":{"id":"12800"}},"id":"12796","type":"BoxZoomTool"},{"attributes":{},"id":"12946","type":"Selection"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"#d62728"},"line_alpha":{"value":0.1},"line_color":{"value":"#d62728"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12896","type":"Circle"},{"attributes":{"label":{"value":"135"},"renderers":[{"id":"12813"}]},"id":"12835","type":"LegendItem"},{"attributes":{"mantissas":[1,2,5],"max_interval":500.0,"num_minor_ticks":0},"id":"12822","type":"AdaptiveTicker"},{"attributes":{"data":{"x":{"__ndarray__":"7AXFeW4cd0IEHlWNbhx3QrBykvluHHdCvD7XH28cd0JMWVaybxx3Qu4cgvdvHHdC+o42BnAcd0Ky89QWcBx3QtMR1RZwHHdCddt0F3Acd0LhPugucBx3QqrZ2ERwHHdCb5zbYnAcd0JEt+VicBx3Qg==","dtype":"float64","shape":[14]},"y":[2,2,2,2,2,2,5,2,2,2,2,2,3,2]},"selected":{"id":"12946"},"selection_policy":{"id":"12945"}},"id":"12894","type":"ColumnDataSource"},{"attributes":{"label":{"value":"88"},"renderers":[{"id":"12930"}]},"id":"12959","type":"LegendItem"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12811","type":"Circle"},{"attributes":{"months":[0,4,8]},"id":"12831","type":"MonthsTicker"},{"attributes":{},"id":"12820","type":"DatetimeTickFormatter"},{"attributes":{"fill_alpha":{"value":0.8},"fill_color":{"value":"#d62728"},"line_alpha":{"value":0.8},"line_color":{"value":"#d62728"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12895","type":"Circle"},{"attributes":{"months":[0,6]},"id":"12832","type":"MonthsTicker"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"12794"},{"id":"12795"},{"id":"12796"},{"id":"12797"},{"id":"12798"},{"id":"12799"}]},"id":"12801","type":"Toolbar"},{"attributes":{"click_policy":"mute","items":[{"id":"12835"},{"id":"12863"},{"id":"12893"},{"id":"12925"},{"id":"12959"}]},"id":"12834","type":"Legend"},{"attributes":{"data_source":{"id":"12809"},"glyph":{"id":"12810"},"hover_glyph":null,"muted_glyph":{"id":"12812"},"nonselection_glyph":{"id":"12811"},"selection_glyph":null,"view":{"id":"12814"}},"id":"12813","type":"GlyphRenderer"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#d62728"},"line_alpha":{"value":0.2},"line_color":{"value":"#d62728"},"line_width":{"value":2},"x":{"field":"x"},"y":{"field":"y"}},"id":"12897","type":"Circle"},{"attributes":{"num_minor_ticks":5,"tickers":[{"id":"12822"},{"id":"12823"},{"id":"12824"},{"id":"12825"},{"id":"12826"},{"id":"12827"},{"id":"12828"},{"id":"12829"},{"id":"12830"},{"id":"12831"},{"id":"12832"},{"id":"12833"}]},"id":"12787","type":"DatetimeTicker"}],"root_ids":["12777"]},"title":"Bokeh Application","version":"2.0.2"}};
+  var render_items = [{"docid":"a0ac2567-a881-41d4-a2e1-963496878f41","root_ids":["12777"],"roots":{"12777":"e7b36469-e996-4bd7-a759-8e79b29425f2"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);</script></div>
+</div>
+<p>Bokeh has a wide range of pre-built interactive elements you can enable, however you can also create your own using <code class="xref any docutils literal notranslate"><span class="pre">widgets</span></code>. These widgets are similar to iPython widgets and can do a range of things such as select items in a list, enter values, or in the example below set a value in a list.</br>
+One a widget has been set you can <code class="xref any docutils literal notranslate"><span class="pre">link</span> <span class="pre">the</span> <span class="pre">widget</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">visualization</span></code> and set the value of the widget to a variable in our plots.</br>
+In the example below we link the value of the slider to the value assigned to size of our data points on the plot, adjust the slider and see how the plot changes in real time.</br>
+As well as linking widgets and plots you can link multiple plots together so that a change made to one is reflected in others, this can be useful when looking at the same data set from multiple perspectives.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set a slider object</span>
+<span class="n">slider</span> <span class="o">=</span> <span class="n">Slider</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">bar_color</span><span class="o">=</span><span class="s1">&#39;#37c6ed&#39;</span><span class="p">,</span> <span class="n">show_value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Move the slider to adjust point size&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create our Bokeh figure</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">plot_height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Protocol bytes vs packets&quot;</span><span class="p">,</span>
+           <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;pan,wheel_zoom,box_zoom,reset,hover&quot;</span><span class="p">,</span> 
+           <span class="n">tooltips</span><span class="o">=</span><span class="s2">&quot;Bytes = @dst_bytes - Packets = @dst_packets, Port = @dst_port&quot;</span><span class="p">,</span> 
+           <span class="n">toolbar_location</span><span class="o">=</span><span class="s2">&quot;below&quot;</span><span class="p">)</span>
+<span class="c1"># Add scatter object to our figure</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;dst_bytes&quot;</span><span class="p">,</span> <span class="s2">&quot;dst_packets&quot;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">scatter_data</span><span class="p">),</span> <span class="n">legend_field</span><span class="o">=</span><span class="s2">&quot;dst_port&quot;</span><span class="p">,</span> <span class="n">fill_alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+          <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;colors&#39;</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s1">&#39;colors&#39;</span><span class="p">)</span>
+
+<span class="c1"># Format axes</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s1">&#39;Bytes&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s1">&#39;Packets&#39;</span>
+
+<span class="c1"># Link the value of our slider to the size value in our scatter object</span>
+<span class="n">slider</span><span class="o">.</span><span class="n">js_link</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">glyph</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">)</span>
+
+<span class="c1"># Display the slider and plot togeher in a column layout</span>
+<span class="n">show</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="n">slider</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+
+
+
+
+
+<div class="bk-root" id="a0656d37-b0cd-49b2-b351-5f3918ebc2ac" data-root-id="9676"></div>
+</div><script type="application/javascript">(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"314692cb-83ee-4372-be44-53e0abc0bc47":{"roots":{"references":[{"attributes":{"children":[{"id":"9629"},{"id":"9630"}]},"id":"9676","type":"Column"},{"attributes":{},"id":"9637","type":"LinearScale"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"render_mode":"css","right_units":"screen","top_units":"screen"},"id":"9654","type":"BoxAnnotation"},{"attributes":{"axis_label":"Packets","formatter":{"id":"9669"},"ticker":{"id":"9646"}},"id":"9645","type":"LinearAxis"},{"attributes":{},"id":"10068","type":"Selection"},{"attributes":{},"id":"9646","type":"BasicTicker"},{"attributes":{"args":{"other":{"id":"9663"}},"code":"other.size = this.value"},"id":"9675","type":"CustomJS"},{"attributes":{"fill_alpha":{"value":0.8},"fill_color":{"field":"colors"},"line_color":{"field":"colors"},"size":{"units":"screen","value":7},"x":{"field":"dst_bytes"},"y":{"field":"dst_packets"}},"id":"9663","type":"Scatter"},{"attributes":{"axis_label":"Bytes","formatter":{"id":"9671"},"ticker":{"id":"9642"}},"id":"9641","type":"LinearAxis"},{"attributes":{},"id":"10067","type":"UnionRenderers"},{"attributes":{},"id":"9642","type":"BasicTicker"},{"attributes":{"callback":null,"tooltips":"Bytes = @dst_bytes - Packets = @dst_packets, Port = @dst_port"},"id":"9653","type":"HoverTool"},{"attributes":{},"id":"9639","type":"LinearScale"},{"attributes":{"label":{"field":"dst_port"},"renderers":[{"id":"9665"}]},"id":"9674","type":"LegendItem"},{"attributes":{"axis":{"id":"9645"},"dimension":1,"ticker":null},"id":"9648","type":"Grid"},{"attributes":{"overlay":{"id":"9654"}},"id":"9651","type":"BoxZoomTool"},{"attributes":{"items":[{"id":"9674"}]},"id":"9673","type":"Legend"},{"attributes":{"text":"Protocol bytes vs packets"},"id":"9631","type":"Title"},{"attributes":{"axis":{"id":"9641"},"ticker":null},"id":"9644","type":"Grid"},{"attributes":{"source":{"id":"9661"}},"id":"9666","type":"CDSView"},{"attributes":{},"id":"9635","type":"DataRange1d"},{"attributes":{},"id":"9650","type":"WheelZoomTool"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"9649"},{"id":"9650"},{"id":"9651"},{"id":"9652"},{"id":"9653"}]},"id":"9655","type":"Toolbar"},{"attributes":{},"id":"9649","type":"PanTool"},{"attributes":{},"id":"9669","type":"BasicTickFormatter"},{"attributes":{},"id":"9652","type":"ResetTool"},{"attributes":{"data":{"colors":["#3182bd","#6baed6","#3182bd","#3182bd","#3182bd","#9ecae1","#6baed6","#3182bd","#3182bd","#3182bd","#3182bd","#3182bd","#c6dbef","#3182bd","#6baed6","#9ecae1","#6baed6","#6baed6","#6baed6","#6baed6","#3182bd","#e6550d","#e6550d","#e6550d","#6baed6","#9ecae1","#6baed6","#3182bd","#e6550d","#e6550d","#e6550d","#9ecae1","#6baed6","#9ecae1","#6baed6","#6baed6","#3182bd","#3182bd","#e6550d","#e6550d","#e6550d","#9ecae1","#9ecae1","#6baed6"],"dst_bytes":{"__ndarray__":"AAAAAACAS0AAAAAAAESaQAAAAAAAAFpAAAAAAACASUAAAAAAAABaQAAAAAAAgHFAAAAAAAB0yEAAAAAAAABaQAAAAAAAoGRAAAAAAABQcEAAAAAAAMBjQAAAAAAAwF9AAAAAAAAAAAAAAAAAAIBbQAAAAACA2M9AAAAAAACAcUAAAAAAAESZQAAAAAAAPq5AAAAAAACYjUAAAAAAAEyZQAAAAAAAgElAAAAAAADAZkAAAAAAAPyXQAAAAAAA5JZAAAAAAABEmkAAAAAAAEB8QAAAAADAh91AAAAAAAAAWkAAAAAAAMBmQAAAAAAA/JdAAAAAAADklkAAAAAAAEB8QAAAAADAh91AAAAAAACAcUAAAAAAAOCRQAAAAAAA4JFAAAAAAADgYkAAAAAAAABUQAAAAAAAwGZAAAAAAAD8l0AAAAAAAOSWQAAAAAAAgHFAAAAAAACAcUAAAAAAwBveQA==","dtype":"float64","shape":[44]},"dst_ip":["10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.255","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.6","10.0.1.6","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.6","10.0.1.6","10.0.0.4","10.0.1.6","10.0.1.6","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.0.4","10.0.1.6","10.0.1.6","10.0.1.6"],"dst_packets":[1,11,1,1,1,6,70,1,1,1,1,1,0,1,125,6,25,81,5,25,1,4,5,6,11,4,90,1,4,5,6,4,91,6,3,3,1,1,4,5,6,5,3,100],"dst_port":["53","445","53","53","53","135","445","53","53","53","53","53","137","53","445","135","445","445","445","445","53","88","88","88","445","135","445","53","88","88","88","135","445","135","445","445","53","53","88","88","88","135","135","445"],"duration":{"__ndarray__":"AAAAAAAJWT8BAADgq4UlQP//////Mlo/AAAAAADXVD///////wlUPwAAABC1bC1AAAAA7CPgZkACAAAAAPNePwAAAAAAyWI/AAAAoM51EEAAAAAAAJxWPwAAAAAAaF4/AAAAwPlG+D///////71TPwEAALA3eSVA/////4zSKED///831p0kQAAAAIg6eyVAAAAAMMieJEABAACor54kQAAAAAAAUVU/AAAAAIBlZj8AAAAAAAphPwAAAAAAoWI/AAAAAPvYJUAAAAB89zlFQAAAANgq00pAAAAAAACnXz///////6tgPwAAAAAAP2s/AQAAAACuaz////9p3ClFQAEAALJ/0kpAAAAA6FL8LUAAAAAAkFWaPwAAAADAWnc/AAAAAKC9oj8BAAAAAG5WPwAAAABAtXA/AAAAAAAvZj8AAAAAgAdlPwAAAKwZ+01AAAAADGsCNUABAIBuIGVyQA==","dtype":"float64","shape":[44]},"index":[0,1,2,5,6,9,14,16,17,23,27,28,29,30,31,32,34,35,36,37,43,47,48,49,52,54,55,58,63,64,65,69,70,71,73,77,84,85,92,93,94,150,476,477],"missed_bytes":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,297780,1673240,0,60974,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"proto":["udp","tcp","udp","udp","udp","tcp","tcp","udp","udp","udp","udp","udp","udp","udp","tcp","tcp","tcp","tcp","tcp","tcp","udp","tcp","tcp","tcp","tcp","tcp","tcp","udp","tcp","tcp","tcp","tcp","tcp","tcp","tcp","tcp","udp","udp","tcp","tcp","tcp","tcp","tcp","tcp"],"service":["dns","gssapi,smb,krb","dns","dns","dns","dce_rpc","gssapi,smb,krb","dns","dns","dns","dns","dns","dns","dns","gssapi,smb,krb,dce_rpc","dce_rpc","gssapi,smb,krb","gssapi","gssapi,smb,krb","gssapi,smb,krb","dns","krb_tcp","krb_tcp","krb_tcp","gssapi,smb,krb","dce_rpc","gssapi","dns","krb_tcp","krb_tcp","krb_tcp","dce_rpc","gssapi","dce_rpc","gssapi","gssapi","dns","dns","krb_tcp","krb_tcp","krb_tcp","dce_rpc","dce_rpc","gssapi"],"src_bytes":{"__ndarray__":"AAAAAACAQ0AAAAAAAGivQAAAAAAAAEJAAAAAAACAQUAAAAAAAABCQAAAAAAAgHRAAAAAAACSzkAAAAAAAABCQAAAAAAAgEdAAAAAAACAZEAAAAAAAIBWQAAAAAAAgE1AAAAAAADAYkAAAAAAAIBKQAAAAABAUtRAAAAAAACAdEAAAAAAEBggQQAAAABKQVBBAAAAAABIoEAAAAAAiBcgQQAAAAAAgEFAAAAAAACga0AAAAAAANByQAAAAAAAjJZAAAAAAABor0AAAAAAAAB/QAAAAADYogdBAAAAAAAAQkAAAAAAAKBrQAAAAAAA0HJAAAAAAACMlkAAAAAAAAB/QAAAAADYogdBAAAAAACAdEAAAAAAANByQAAAAAAA0HJAAAAAAAAATkAAAAAAAAA9QAAAAAAAoGtAAAAAAADQckAAAAAAAIyWQAAAAAAAgHRAAAAAAACAdEAAAAAA+KsHQQ==","dtype":"float64","shape":[44]},"src_ip":["10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.4","10.0.1.4","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.4","10.0.1.4","10.0.1.4"],"src_packets":[1,12,1,1,1,7,71,1,1,4,1,1,3,1,126,7,31,276,8,61,1,4,5,5,12,8,96,1,4,5,5,8,100,7,5,5,2,1,4,5,5,7,6,107],"src_port":[54243,56880,65108,54192,56542,56953,56957,56622,64909,56837,58829,52350,137,64562,57026,57024,60807,60803,60805,60806,64173,57047,57048,57049,57052,60815,60811,51985,57058,57059,57060,60828,60824,57063,60838,60843,50954,64035,57086,57087,57088,60857,60878,60853],"total_bytes":{"__ndarray__":"AAAAAACAV0AAAAAAAEW2QAAAAAAAgGFAAAAAAACAVUAAAAAAAIBhQAAAAAAAAINAAAAAAACD20AAAAAAAIBhQAAAAAAAgGpAAAAAAACQekAAAAAAAABvQAAAAAAAQGdAAAAAAADAYkAAAAAAAGBkQAAAAABAH+JAAAAAAAAAg0AAAAAAsiQgQQAAAMARRVBBAAAAAACup0AAAAAALiQgQQAAAAAAgFVAAAAAAAAweUAAAAAAALCcQAAAAAAAuKZAAAAAAABFtkAAAAAAAKCNQAAAAADQUwtBAAAAAACAYUAAAAAAADB5QAAAAAAAsJxAAAAAAAC4pkAAAAAAAKCNQAAAAADQUwtBAAAAAAAAg0AAAAAAAJSWQAAAAAAAlJZAAAAAAABgakAAAAAAAEBbQAAAAAAAMHlAAAAAAACwnEAAAAAAALimQAAAAAAAAINAAAAAAAAAg0AAAAAAcG8LQQ==","dtype":"float64","shape":[44]},"total_packets":[2,23,2,2,2,13,141,2,2,5,2,2,3,2,251,13,56,357,13,86,2,8,10,11,23,12,186,2,8,10,11,12,191,13,8,8,3,2,8,10,11,12,9,207],"ts":{"__ndarray__":"esL0o4Wq10H5+PSjharXQU4M/beFqtdBG2fTJoaq10GtUgNOhqrXQVndJXiGqtdB16JSeIaq10FOgAbkhqrXQXBA2yqHqtdBPQvqOYeq10H0iu5Kh6rXQc6p7kqHqtdBjszuSoeq10EsSZJLh6rXQUNViEuHqtdB32mHS4eq10Gae4JTh6rXQRzPZlOHqtdByF2CU4eq10G6Y4JTh6rXQWrBlWOHqtdBdHy9ZYeq10EKFL5lh6rXQY84vmWHqtdBOiADZoeq10GlZ3dgh6rXQT3TdGCHqtdBnSgNeoeq10G8dpx9h6rXQfj9nH2HqtdBOSqdfYeq10FW2VZ4h6rXQUPnU3iHqtdB0LXeg4eq10GDN6aTh6rXQVVR8JiHqtdBRE7ImIeq10Eup9KYh6rXQZNU7qKHqtdBBtruooeq10Gj/+6ih6rXQaJDnZ2HqtdBpyFA34eq10FWu5qdh6rXQQ==","dtype":"float64","shape":[44]}},"selected":{"id":"10068"},"selection_policy":{"id":"10067"}},"id":"9661","type":"ColumnDataSource"},{"attributes":{},"id":"9671","type":"BasicTickFormatter"},{"attributes":{"bar_color":"#37c6ed","end":50,"format":"0[.]00","js_property_callbacks":{"change:value":[{"id":"9675"}]},"show_value":false,"start":1,"title":"Move the slider to adjust point size","value":7},"id":"9629","type":"Slider"},{"attributes":{"below":[{"id":"9641"}],"center":[{"id":"9644"},{"id":"9648"},{"id":"9673"}],"left":[{"id":"9645"}],"plot_height":800,"plot_width":800,"renderers":[{"id":"9665"}],"title":{"id":"9631"},"toolbar":{"id":"9655"},"toolbar_location":"below","x_range":{"id":"9633"},"x_scale":{"id":"9637"},"y_range":{"id":"9635"},"y_scale":{"id":"9639"}},"id":"9630","subtype":"Figure","type":"Plot"},{"attributes":{"data_source":{"id":"9661"},"glyph":{"id":"9663"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"9664"},"selection_glyph":null,"view":{"id":"9666"}},"id":"9665","type":"GlyphRenderer"},{"attributes":{},"id":"9633","type":"DataRange1d"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"colors"},"line_alpha":{"value":0.1},"line_color":{"field":"colors"},"size":{"units":"screen","value":7},"x":{"field":"dst_bytes"},"y":{"field":"dst_packets"}},"id":"9664","type":"Scatter"}],"root_ids":["9676"]},"title":"Bokeh Application","version":"2.0.2"}};
+  var render_items = [{"docid":"314692cb-83ee-4372-be44-53e0abc0bc47","root_ids":["9676"],"roots":{"9676":"a0656d37-b0cd-49b2-b351-5f3918ebc2ac"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);</script></div>
+</div>
+<p>Bokeh also has a number of integrations to make plotting simple. One of these that is particularly useful when investigating network data is <code class="xref any docutils literal notranslate"><span class="pre">integration</span> <span class="pre">with</span> <span class="pre">Networkx</span></code>.</br> Bokeh can take a Networkx graph and plot it on a figure, in addition you can apply a number of Bokeh’s interactive options to this allowing for interactive networkx plots.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a edgelist from our dataset</span>
+<span class="n">edgelist</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">clean_data</span><span class="p">[</span><span class="s1">&#39;src_ip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="n">clean_data</span><span class="p">[</span><span class="s1">&#39;dst_ip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="n">clean_data</span><span class="p">[</span><span class="s1">&#39;total_bytes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()})</span>
+<span class="c1"># Create networkx graph from our edgelist</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">from_pandas_edgelist</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span>
+
+<span class="c1"># Create our Bokeh figure</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Network node communication graph&quot;</span><span class="p">,</span> <span class="n">x_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">2.5</span><span class="p">,</span><span class="mf">2.5</span><span class="p">),</span> <span class="n">y_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">2.5</span><span class="p">,</span><span class="mf">2.5</span><span class="p">))</span>
+<span class="c1"># Set our hover items and add it to the plot</span>
+<span class="n">node_hover_tool</span> <span class="o">=</span> <span class="n">HoverTool</span><span class="p">(</span><span class="n">tooltips</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;IP address&quot;</span><span class="p">,</span> <span class="s2">&quot;@index&quot;</span><span class="p">)])</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_tools</span><span class="p">(</span><span class="n">node_hover_tool</span><span class="p">,</span> <span class="n">BoxZoomTool</span><span class="p">(),</span> <span class="n">ResetTool</span><span class="p">())</span>
+
+<span class="c1"># Generate the graph from networkx and add it to the figure</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">from_networkx</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">circular_layout</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+
+<span class="c1"># Hide all axes</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xgrid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">p</span><span class="o">.</span><span class="n">ygrid</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+
+
+
+
+
+<div class="bk-root" id="186d856c-6068-4f60-a95b-df38af2f3ae4" data-root-id="10117"></div>
+</div><script type="application/javascript">(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"33a77d49-5d23-4ee3-bbac-06bdd9f161ae":{"roots":{"references":[{"attributes":{"below":[{"id":"10128"}],"center":[{"id":"10131"},{"id":"10135"}],"left":[{"id":"10132"}],"renderers":[{"id":"10156"}],"title":{"id":"10118"},"toolbar":{"id":"10143"},"x_range":{"id":"10120"},"x_scale":{"id":"10124"},"y_range":{"id":"10122"},"y_scale":{"id":"10126"}},"id":"10117","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"10577","type":"UnionRenderers"},{"attributes":{},"id":"10137","type":"WheelZoomTool"},{"attributes":{"source":{"id":"10158"}},"id":"10160","type":"CDSView"},{"attributes":{},"id":"10578","type":"Selection"},{"attributes":{"overlay":{"id":"10142"}},"id":"10138","type":"BoxZoomTool"},{"attributes":{"graph_layout":{"10.0.0.4":[0.6180339208489761,1.9021131617208689],"10.0.1.255":[-1.6180341890698824,1.175570437471338],"10.0.1.4":[-1.618033950651299,-1.1755706997317796],"10.0.1.6":[1.9999999999999998,4.76837166729638e-08],"192.168.0.4":[0.6180342188722053,-1.9021129471441436]}},"id":"10165","type":"StaticLayoutProvider"},{"attributes":{"data":{"index":["10.0.1.6","10.0.0.4","10.0.1.255","10.0.1.4","192.168.0.4"]},"selected":{"id":"10576"},"selection_policy":{"id":"10575"}},"id":"10158","type":"ColumnDataSource"},{"attributes":{},"id":"10136","type":"PanTool"},{"attributes":{},"id":"10561","type":"NodesOnly"},{"attributes":{},"id":"10139","type":"SaveTool"},{"attributes":{"source":{"id":"10162"}},"id":"10164","type":"CDSView"},{"attributes":{},"id":"10140","type":"ResetTool"},{"attributes":{"text":"Network node communication graph"},"id":"10118","type":"Title"},{"attributes":{},"id":"10157","type":"Circle"},{"attributes":{},"id":"10566","type":"NodesOnly"},{"attributes":{},"id":"10141","type":"HelpTool"},{"attributes":{},"id":"10576","type":"Selection"},{"attributes":{},"id":"10572","type":"BasicTickFormatter"},{"attributes":{"data":{"end":["10.0.0.4","10.0.1.255","10.0.1.4","192.168.0.4"],"start":["10.0.1.6","10.0.1.6","10.0.1.6","10.0.1.6"]},"selected":{"id":"10578"},"selection_policy":{"id":"10577"}},"id":"10162","type":"ColumnDataSource"},{"attributes":{"end":2.5,"start":-2.5},"id":"10122","type":"Range1d"},{"attributes":{"data_source":{"id":"10162"},"glyph":{"id":"10161"},"hover_glyph":null,"muted_glyph":null,"view":{"id":"10164"}},"id":"10163","type":"GlyphRenderer"},{"attributes":{"callback":null,"tooltips":[["IP address","@index"]]},"id":"10150","type":"HoverTool"},{"attributes":{},"id":"10129","type":"BasicTicker"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"render_mode":"css","right_units":"screen","top_units":"screen"},"id":"10574","type":"BoxAnnotation"},{"attributes":{},"id":"10560","type":"BasicTickFormatter"},{"attributes":{"end":2.5,"start":-2.5},"id":"10120","type":"Range1d"},{"attributes":{},"id":"10124","type":"LinearScale"},{"attributes":{},"id":"10161","type":"MultiLine"},{"attributes":{},"id":"10126","type":"LinearScale"},{"attributes":{"formatter":{"id":"10572"},"ticker":{"id":"10129"},"visible":false},"id":"10128","type":"LinearAxis"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"10136"},{"id":"10137"},{"id":"10138"},{"id":"10139"},{"id":"10140"},{"id":"10141"},{"id":"10150"},{"id":"10151"},{"id":"10152"}]},"id":"10143","type":"Toolbar"},{"attributes":{"data_source":{"id":"10158"},"glyph":{"id":"10157"},"hover_glyph":null,"muted_glyph":null,"view":{"id":"10160"}},"id":"10159","type":"GlyphRenderer"},{"attributes":{},"id":"10575","type":"UnionRenderers"},{"attributes":{"axis":{"id":"10128"},"ticker":null,"visible":false},"id":"10131","type":"Grid"},{"attributes":{"axis":{"id":"10132"},"dimension":1,"ticker":null,"visible":false},"id":"10135","type":"Grid"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"render_mode":"css","right_units":"screen","top_units":"screen"},"id":"10142","type":"BoxAnnotation"},{"attributes":{"formatter":{"id":"10560"},"ticker":{"id":"10133"},"visible":false},"id":"10132","type":"LinearAxis"},{"attributes":{"overlay":{"id":"10574"}},"id":"10151","type":"BoxZoomTool"},{"attributes":{"edge_renderer":{"id":"10163"},"inspection_policy":{"id":"10561"},"layout_provider":{"id":"10165"},"node_renderer":{"id":"10159"},"selection_policy":{"id":"10566"}},"id":"10156","type":"GraphRenderer"},{"attributes":{},"id":"10133","type":"BasicTicker"},{"attributes":{},"id":"10152","type":"ResetTool"}],"root_ids":["10117"]},"title":"Bokeh Application","version":"2.0.2"}};
+  var render_items = [{"docid":"33a77d49-5d23-4ee3-bbac-06bdd9f161ae","root_ids":["10117"],"roots":{"10117":"186d856c-6068-4f60-a95b-df38af2f3ae4"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);</script></div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>This is just a small sample of what you can do with Bokeh when investigating network data, there is a huge range of customization options avaliable to you. If you want to learn more Bokeh has some excellent <code class="xref any docutils literal notranslate"><span class="pre">documentation</span></code> and if you are searching for inspiration thier <code class="xref any docutils literal notranslate"><span class="pre">gallery</span></code> has some excellent and innovative examples.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "OTRF/infosec-jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "use-cases/data-visualizations"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="01_data_viz_pandas.html" title="previous page">Data Visualization with Pandas and Matplotlib</a>
+    <a class='right-next' id="next-link" href="../../community-projects/threat-hunter-playbook.html" title="next page">Threat Hunter Playbook</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
+    </p>
+  </div>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

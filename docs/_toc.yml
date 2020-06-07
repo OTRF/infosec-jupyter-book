@@ -23,6 +23,10 @@
   - file: use-cases/data-connectors/elasticsearch
   - file: use-cases/data-connectors/splunk
   - file: use-cases/data-connectors/azure_sentinel
+- file: use-cases/data-visualizations/intro
+  sections:
+  - file: use-cases/data-visualizations/01_data_viz_pandas
+  - file: use-cases/data-visualizations/02_data_viz_bokeh
 - header: Community Projects
 - file: community-projects/threat-hunter-playbook
 - header: Community Events
