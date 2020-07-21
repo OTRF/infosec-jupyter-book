@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# Analyzing Windows RPC Methods and Other Functions Via GraphFrames"
+    "# Analyzing Windows RPC Methods & Other Functions Via GraphFrames"
    ]
   },
   {
@@ -72,7 +72,7 @@
        "        <div>\n",
        "            <p><b>SparkContext</b></p>\n",
        "\n",
-       "            <p><a href=\"http://f0f21641e59f:4040\">Spark UI</a></p>\n",
+       "            <p><a href=\"http://192.168.1.232:4040\">Spark UI</a></p>\n",
        "\n",
        "            <dl>\n",
        "              <dt>Version</dt>\n",
@@ -88,7 +88,7 @@
        "        "
       ],
       "text/plain": [
-       "<pyspark.sql.session.SparkSession at 0x7f31cac84150>"
+       "<pyspark.sql.session.SparkSession at 0x11a219250>"
       ]
      },
      "execution_count": 3,
@@ -109,18 +109,50 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 4,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "--2020-07-21 15:01:41--  https://github.com/Cyb3rWard0g/WinRpcFunctions/raw/master/win10_1909/AllRpcFuncMaps.zip\n",
+      "Resolving github.com (github.com)... 140.82.113.3\n",
+      "Connecting to github.com (github.com)|140.82.113.3|:443... connected.\n",
+      "HTTP request sent, awaiting response... 302 Found\n",
+      "Location: https://raw.githubusercontent.com/Cyb3rWard0g/WinRpcFunctions/master/win10_1909/AllRpcFuncMaps.zip [following]\n",
+      "--2020-07-21 15:01:41--  https://raw.githubusercontent.com/Cyb3rWard0g/WinRpcFunctions/master/win10_1909/AllRpcFuncMaps.zip\n",
+      "Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.0.133, 151.101.64.133, 151.101.128.133, ...\n",
+      "Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.0.133|:443... connected.\n",
+      "HTTP request sent, awaiting response... 200 OK\n",
+      "Length: 26891116 (26M) [application/zip]\n",
+      "Saving to: ‘AllRpcFuncMaps.zip’\n",
+      "\n",
+      "AllRpcFuncMaps.zip  100%[===================>]  25.64M  4.33MB/s    in 6.1s    \n",
+      "\n",
+      "2020-07-21 15:01:47 (4.22 MB/s) - ‘AllRpcFuncMaps.zip’ saved [26891116/26891116]\n",
+      "\n"
+     ]
+    }
+   ],
    "source": [
-    "! wget https://github.com/Cyb3rWard0g/WinRpcFunctions/blob/master/win10_1909/AllRpcFuncMaps.zip"
+    "! wget https://github.com/Cyb3rWard0g/WinRpcFunctions/raw/master/win10_1909/AllRpcFuncMaps.zip"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 5,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Archive:  AllRpcFuncMaps.zip\n",
+      "  inflating: AllRpcFuncMaps.json     \n"
+     ]
+    }
+   ],
    "source": [
     "! unzip AllRpcFuncMaps.zip"
    ]
@@ -134,15 +166,15 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "CPU times: user 16.5 ms, sys: 15.1 ms, total: 31.7 ms\n",
-      "Wall time: 1min 29s\n"
+      "CPU times: user 9.34 ms, sys: 5.12 ms, total: 14.5 ms\n",
+      "Wall time: 1min 8s\n"
      ]
     }
    ],
@@ -160,7 +192,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -176,7 +208,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 8,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -191,7 +223,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -205,7 +237,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -214,7 +246,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
@@ -223,7 +255,7 @@
        "GraphFrame(v:[id: string, FunctionType: string ... 1 more field], e:[src: string, dst: string])"
       ]
      },
-     "execution_count": 9,
+     "execution_count": 11,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -264,7 +296,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 12,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -276,7 +308,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 13,
    "metadata": {},
    "outputs": [
     {
@@ -299,8 +331,8 @@
       "+---------------------------------------+----------------------------------------+----------+--------------+\n",
       "only showing top 10 rows\n",
       "\n",
-      "CPU times: user 9.27 ms, sys: 10.9 ms, total: 20.1 ms\n",
-      "Wall time: 51.1 s\n"
+      "CPU times: user 6.63 ms, sys: 3.24 ms, total: 9.87 ms\n",
+      "Wall time: 37.8 s\n"
      ]
     }
    ],
@@ -318,7 +350,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 14,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -331,7 +363,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 15,
    "metadata": {},
    "outputs": [
     {
@@ -354,8 +386,8 @@
       "+------------------------------+----------------------------------+-------------------------+--------------+\n",
       "only showing top 10 rows\n",
       "\n",
-      "CPU times: user 15.9 ms, sys: 8.99 ms, total: 24.9 ms\n",
-      "Wall time: 37.6 s\n"
+      "CPU times: user 4.95 ms, sys: 2.65 ms, total: 7.6 ms\n",
+      "Wall time: 23 s\n"
      ]
     }
    ],
@@ -382,7 +414,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 14,
+   "execution_count": 16,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -394,7 +426,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": 17,
    "metadata": {},
    "outputs": [
     {
@@ -417,8 +449,8 @@
       "+--------------------------------------+--------------------------------------------+\n",
       "only showing top 10 rows\n",
       "\n",
-      "CPU times: user 1.68 ms, sys: 8.01 ms, total: 9.68 ms\n",
-      "Wall time: 19.3 s\n"
+      "CPU times: user 2.73 ms, sys: 1.58 ms, total: 4.31 ms\n",
+      "Wall time: 13.5 s\n"
      ]
     }
    ],

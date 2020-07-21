@@ -1,4 +1,4 @@
-# Analyzing Windows RPC Methods and Other Functions Via GraphFrames
+# Analyzing Windows RPC Methods & Other Functions Via GraphFrames
 
 * **Author:** Roberto Rodriguez (@Cyb3rWard0g)
 * **Project:** Infosec Jupyter Book
@@ -25,7 +25,7 @@ spark
 
 ## Download and Decompress JSON File
 
-! wget https://github.com/Cyb3rWard0g/WinRpcFunctions/blob/master/win10_1909/AllRpcFuncMaps.zip
+! wget https://github.com/Cyb3rWard0g/WinRpcFunctions/raw/master/win10_1909/AllRpcFuncMaps.zip
 
 ! unzip AllRpcFuncMaps.zip
 
