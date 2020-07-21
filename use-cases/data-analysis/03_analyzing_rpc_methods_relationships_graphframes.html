@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Analyzing Windows RPC Methods and Other Functions Via GraphFrames &#8212; Infosec Jupyter Book</title>
+    <title>Analyzing Windows RPC Methods &amp; Other Functions Via GraphFrames &#8212; Infosec Jupyter Book</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
@@ -33,6 +33,8 @@
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Connectors" href="../data-connectors/intro.html" />
+    <link rel="prev" title="Explore Kerberoastable Users with BloodHound" href="02_bloodhound_explore_kerberoastable_users.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -44,8 +46,8 @@
 <!-- Opengraph tags -->
 <meta property="og:url"         content="https://infosecjupyterbook.com/use-cases/data-analysis/03_analyzing_rpc_methods_relationships_graphframes.html" />
 <meta property="og:type"        content="article" />
-<meta property="og:title"       content="Analyzing Windows RPC Methods and Other Functions Via GraphFrames" />
-<meta property="og:description" content="Analyzing Windows RPC Methods and Other Functions Via GraphFrames  Author: Roberto Rodriguez (@Cyb3rWard0g)  Project: Infosec Jupyter Book  Public Organization:" />
+<meta property="og:title"       content="Analyzing Windows RPC Methods &amp; Other Functions Via GraphFrames" />
+<meta property="og:description" content="Analyzing Windows RPC Methods & Other Functions Via GraphFrames  Author: Roberto Rodriguez (@Cyb3rWard0g)  Project: Infosec Jupyter Book  Public Organization: O" />
 <meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
 
 <meta name="twitter:card" content="summary">
@@ -103,8 +105,19 @@
 <li class="navbar-special">
 <p class="margin-caption">Use Cases</p>
 </li>
-  <li class="">
+  <li class="active">
     <a href="intro.html">Data Analysis</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="01_sql_to_pandas_win_events_101.html">SQL to Pandas with Windows Events 101</a>
+    </li>
+    <li class="">
+      <a href="02_bloodhound_explore_kerberoastable_users.html">Explore Kerberoastable Users with BloodHound</a>
+    </li>
+    <li class="active">
+      <a href="">Analyzing Windows RPC Methods & Other Functions Via GraphFrames</a>
+    </li>
+  </ul>
   </li>
   <li class="">
     <a href="../data-connectors/intro.html">Data Connectors</a>
@@ -252,8 +265,8 @@
         
               <div>
                 
-  <div class="section" id="analyzing-windows-rpc-methods-and-other-functions-via-graphframes">
-<h1>Analyzing Windows RPC Methods and Other Functions Via GraphFrames<a class="headerlink" href="#analyzing-windows-rpc-methods-and-other-functions-via-graphframes" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="analyzing-windows-rpc-methods-other-functions-via-graphframes">
+<h1>Analyzing Windows RPC Methods &amp; Other Functions Via GraphFrames<a class="headerlink" href="#analyzing-windows-rpc-methods-other-functions-via-graphframes" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p><strong>Author:</strong> Roberto Rodriguez (&#64;Cyb3rWard0g)</p></li>
 <li><p><strong>Project:</strong> Infosec Jupyter Book</p></li>
@@ -301,7 +314,7 @@
 <div>
     <p><b>SparkContext</b></p>
 
-    <p><a href="http://f0f21641e59f:4040">Spark UI</a></p>
+    <p><a href="http://192.168.1.232:4040">Spark UI</a></p>
 
     <dl>
       <dt>Version</dt>
@@ -321,7 +334,27 @@
 <h2>Download and Decompress JSON File<a class="headerlink" href="#download-and-decompress-json-file" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! wget https://github.com/Cyb3rWard0g/WinRpcFunctions/blob/master/win10_1909/AllRpcFuncMaps.zip
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! wget https://github.com/Cyb3rWard0g/WinRpcFunctions/raw/master/win10_1909/AllRpcFuncMaps.zip
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>--2020-07-21 15:01:41--  https://github.com/Cyb3rWard0g/WinRpcFunctions/raw/master/win10_1909/AllRpcFuncMaps.zip
+Resolving github.com (github.com)... 140.82.113.3
+Connecting to github.com (github.com)|140.82.113.3|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/Cyb3rWard0g/WinRpcFunctions/master/win10_1909/AllRpcFuncMaps.zip [following]
+--2020-07-21 15:01:41--  https://raw.githubusercontent.com/Cyb3rWard0g/WinRpcFunctions/master/win10_1909/AllRpcFuncMaps.zip
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.0.133, 151.101.64.133, 151.101.128.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.0.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 26891116 (26M) [application/zip]
+Saving to: ‘AllRpcFuncMaps.zip’
+
+AllRpcFuncMaps.zip  100%[===================&gt;]  25.64M  4.33MB/s    in 6.1s    
+
+2020-07-21 15:01:47 (4.22 MB/s) - ‘AllRpcFuncMaps.zip’ saved [26891116/26891116]
+
 </pre></div>
 </div>
 </div>
@@ -329,6 +362,12 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! unzip AllRpcFuncMaps.zip
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Archive:  AllRpcFuncMaps.zip
+  inflating: AllRpcFuncMaps.json     
 </pre></div>
 </div>
 </div>
@@ -344,8 +383,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>CPU times: user 16.5 ms, sys: 15.1 ms, total: 31.7 ms
-Wall time: 1min 29s
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>CPU times: user 9.34 ms, sys: 5.12 ms, total: 14.5 ms
+Wall time: 1min 8s
 </pre></div>
 </div>
 </div>
@@ -450,8 +489,8 @@ Wall time: 1min 29s
 +---------------------------------------+----------------------------------------+----------+--------------+
 only showing top 10 rows
 
-CPU times: user 9.27 ms, sys: 10.9 ms, total: 20.1 ms
-Wall time: 51.1 s
+CPU times: user 6.63 ms, sys: 3.24 ms, total: 9.87 ms
+Wall time: 37.8 s
 </pre></div>
 </div>
 </div>
@@ -492,8 +531,8 @@ Wall time: 51.1 s
 +------------------------------+----------------------------------+-------------------------+--------------+
 only showing top 10 rows
 
-CPU times: user 15.9 ms, sys: 8.99 ms, total: 24.9 ms
-Wall time: 37.6 s
+CPU times: user 4.95 ms, sys: 2.65 ms, total: 7.6 ms
+Wall time: 23 s
 </pre></div>
 </div>
 </div>
@@ -538,8 +577,8 @@ Wall time: 37.6 s
 +--------------------------------------+--------------------------------------------+
 only showing top 10 rows
 
-CPU times: user 1.68 ms, sys: 8.01 ms, total: 9.68 ms
-Wall time: 19.3 s
+CPU times: user 2.73 ms, sys: 1.58 ms, total: 4.31 ms
+Wall time: 13.5 s
 </pre></div>
 </div>
 </div>
@@ -575,6 +614,8 @@ Wall time: 19.3 s
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="02_bloodhound_explore_kerberoastable_users.html" title="previous page">Explore Kerberoastable Users with BloodHound</a>
+    <a class='right-next' id="next-link" href="../data-connectors/intro.html" title="next page">Data Connectors</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
