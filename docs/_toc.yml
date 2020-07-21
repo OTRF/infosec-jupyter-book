@@ -18,6 +18,8 @@
 - file: use-cases/data-analysis/intro
   sections:
   - file: use-cases/data-analysis/01_sql_to_pandas_win_events_101
+  - file: use-cases/data-analysis/02_bloodhound_explore_kerberoastable_users
+  - file: use-cases/data-analysis/03_analyzing_rpc_methods_relationships_graphframes
 - file: use-cases/data-connectors/intro
   sections:
   - file: use-cases/data-connectors/elasticsearch
@@ -27,6 +29,7 @@
   sections:
   - file: use-cases/data-visualizations/01_data_viz_pandas
   - file: use-cases/data-visualizations/02_data_viz_bokeh
+  - file: use-cases/data-visualizations/03_altair_bloodhound_results
 - header: Community Projects
 - file: community-projects/threat-hunter-playbook
 - header: Community Events
