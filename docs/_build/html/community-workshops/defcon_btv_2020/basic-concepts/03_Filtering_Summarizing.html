@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Data Analysis with Spark.SQL: Filtering &amp; Summarizing &#8212; Infosec Jupyter Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/mystnb.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../../_static/thebelab.js"></script>
+    <link rel="canonical" href="https://infosecjupyterbook.com/community-workshops/defcon_btv_2020/basic-concepts/03_Filtering_Summarizing.html" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Data Analysis with Spark.SQL: Transforming" href="04_Transforming.html" />
+    <link rel="prev" title="Creating a Spark SQL View from a Mordor Dataset" href="02_Spark_SQL_View_From_Mordor_dataset.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://infosecjupyterbook.com/community-workshops/defcon_btv_2020/basic-concepts/03_Filtering_Summarizing.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Data Analysis with Spark.SQL: Filtering &amp; Summarizing" />
+<meta property="og:description" content="Data Analysis with Spark.SQL: Filtering & Summarizing  Author: Jose Rodriguez (@Cyb3rPandah)  Project: Infosec Jupyter Book  Public Organization: Open Threat Re" />
+<meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Infosec Jupyter Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+<li class="navbar-special">
+<p class="margin-caption">Getting Started</p>
+</li>
+  <li class="">
+    <a href="../../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
+  </li>
+  <li class="">
+    <a href="../../../getting-started/architecture.html">Architecture</a>
+  </li>
+  <li class="">
+    <a href="../../../getting-started/installation.html">Installation</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Fundamentals</p>
+</li>
+  <li class="">
+    <a href="../../../fundamentals/programming/intro.html">Programming Languages</a>
+  </li>
+  <li class="">
+    <a href="../../../fundamentals/libraries/intro.html">Libraries</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Use Cases</p>
+</li>
+  <li class="">
+    <a href="../../../use-cases/data-analysis/intro.html">Data Analysis</a>
+  </li>
+  <li class="">
+    <a href="../../../use-cases/data-connectors/intro.html">Data Connectors</a>
+  </li>
+  <li class="">
+    <a href="../../../use-cases/data-visualizations/intro.html">Data Visualizations</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Projects</p>
+</li>
+  <li class="">
+    <a href="../../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Workshops</p>
+</li>
+  <li class="active">
+    <a href="../intro.html">Defcon BTV 2020</a>
+  <ul class="nav sidenav_l2">
+    <li class="active">
+      <a href="intro.html">Basic Data Analysis Concepts</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="01_Creating_A_Spark_DataFrame.html">Creating a Spark Dataframe</a>
+      </li>
+      <li class="">
+        <a href="02_Spark_SQL_View_From_Mordor_dataset.html">Creating a Spark SQL View from a Mordor Dataset</a>
+      </li>
+      <li class="active">
+        <a href="">Data Analysis with Spark.SQL: Filtering & Summarizing</a>
+      </li>
+      <li class="">
+        <a href="04_Transforming.html">Data Analysis with Spark.SQL: Transforming</a>
+      </li>
+      <li class="">
+        <a href="05_Correlating.html">Data Analysis with Spark.SQL: Correlating</a>
+      </li>
+      <li class="">
+        <a href="06_Visualizing.html">Data Analysis with Spark.SQL: Visualizing</a>
+      </li>
+    </ul>
+    </li>
+    <li class="">
+      <a href="../use-cases/intro.html">Use Cases</a>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Events</p>
+</li>
+  <li class="">
+    <a href="../../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../../_sources/community-workshops/defcon_btv_2020/basic-concepts/03_Filtering_Summarizing.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/community-workshops/defcon_btv_2020/basic-concepts/03_Filtering_Summarizing.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/community-workshops/defcon_btv_2020/basic-concepts/03_Filtering_Summarizing.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#creating-sql-view-from-mordor-apt29-dataset" class="nav-link">Creating SQL view from Mordor APT29 dataset</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#create-spark-session" class="nav-link">Create Spark session</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#expose-the-dataframe-as-a-sql-view" class="nav-link">Expose the dataframe as a SQL view</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#filtering-summarizing-data" class="nav-link">Filtering & Summarizing data</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#filter-sysmon-event-8-create-remote-thread-data" class="nav-link">Filter Sysmon event 8 (Create Remote Thread) data</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#filter-powershell-processes-within-sysmon-event-8-create-remote-thread-data" class="nav-link">Filter PowerShell processes within Sysmon event 8 (Create Remote Thread) data</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#summarizing-data" class="nav-link">SUMMARIZING data</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#stack-count-event-logs-by-source-of-data-and-event-id" class="nav-link">Stack Count event logs by source of data and event id</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#filtering-event-logs-groups-with-frequency-less-or-equal-to-500" class="nav-link">Filtering event logs groups with frequency less or equal to 500</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#thank-you-i-hope-you-enjoyed-it" class="nav-link">Thank you! I hope you enjoyed it!</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/community-workshops/defcon_btv_2020/basic-concepts/03_Filtering_Summarizing.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="data-analysis-with-spark-sql-filtering-summarizing">
+<h1>Data Analysis with Spark.SQL: Filtering &amp; Summarizing<a class="headerlink" href="#data-analysis-with-spark-sql-filtering-summarizing" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><strong>Author</strong>: Jose Rodriguez (&#64;Cyb3rPandah)</p></li>
+<li><p><strong>Project</strong>: Infosec Jupyter Book</p></li>
+<li><p><strong>Public Organization</strong>: <a class="reference external" href="https://github.com/OTRF">Open Threat Research</a></p></li>
+<li><p><strong>License</strong>: <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p></li>
+<li><p><strong>Reference</strong>: https://spark.apache.org/docs/latest/api/python/pyspark.sql.html</p></li>
+</ul>
+<div class="section" id="creating-sql-view-from-mordor-apt29-dataset">
+<h2>Creating SQL view from Mordor APT29 dataset<a class="headerlink" href="#creating-sql-view-from-mordor-apt29-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-spark-session">
+<h3>Create Spark session<a class="headerlink" href="#create-spark-session" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Spark_Data_Analysis&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.caseSensitive&quot;</span><span class="p">,</span><span class="s2">&quot;True&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="expose-the-dataframe-as-a-sql-view">
+<h3>Expose the dataframe as a SQL view<a class="headerlink" href="#expose-the-dataframe-as-a-sql-view" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt29Json</span> <span class="o">=</span> <span class="s1">&#39;datasets/apt29_evals_day1_manual_2020-05-01225525.json&#39;</span>
+
+<span class="n">apt29Df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">apt29Json</span><span class="p">)</span>
+
+<span class="n">apt29Df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s1">&#39;apt29&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="filtering-summarizing-data">
+<h2>Filtering &amp; Summarizing data<a class="headerlink" href="#filtering-summarizing-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="filter-sysmon-event-8-create-remote-thread-data">
+<h3>Filter Sysmon event 8 (Create Remote Thread) data<a class="headerlink" href="#filter-sysmon-event-8-create-remote-thread-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sysmon8</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">SELECT SourceImage, TargetImage, StartFunction</span>
+<span class="sd">FROM apt29</span>
+<span class="sd">WHERE Channel = &#39;Microsoft-Windows-Sysmon/Operational&#39; AND EventID = 8</span>
+<span class="sd">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This dataframe has </span><span class="si">{}</span><span class="s1"> records!!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sysmon8</span><span class="o">.</span><span class="n">count</span><span class="p">()))</span>
+<span class="n">sysmon8</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This dataframe has 95 records!!
++---------------------------------------------------------+-------------------------------+-------------+
+|SourceImage                                              |TargetImage                    |StartFunction|
++---------------------------------------------------------+-------------------------------+-------------+
+|C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe|C:\Windows\System32\lsass.exe  |-            |
+|C:\Windows\System32\csrss.exe                            |C:\Windows\System32\svchost.exe|CtrlRoutine  |
+|C:\Windows\System32\csrss.exe                            |C:\Windows\System32\svchost.exe|CtrlRoutine  |
+|C:\Windows\System32\csrss.exe                            |C:\Windows\System32\svchost.exe|CtrlRoutine  |
+|C:\Windows\System32\csrss.exe                            |C:\Windows\System32\svchost.exe|CtrlRoutine  |
++---------------------------------------------------------+-------------------------------+-------------+
+only showing top 5 rows
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="filter-powershell-processes-within-sysmon-event-8-create-remote-thread-data">
+<h3>Filter PowerShell processes within Sysmon event 8 (Create Remote Thread) data<a class="headerlink" href="#filter-powershell-processes-within-sysmon-event-8-create-remote-thread-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sysmon8</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">SELECT SourceImage, TargetImage, StartFunction</span>
+<span class="sd">FROM apt29</span>
+<span class="sd">WHERE Channel = &#39;Microsoft-Windows-Sysmon/Operational&#39;</span>
+<span class="sd">    AND EventID = 8</span>
+<span class="sd">    AND SourceImage LIKE &#39;%powershell.exe%&#39;</span>
+<span class="sd">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This dataframe has </span><span class="si">{}</span><span class="s1"> records!!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sysmon8</span><span class="o">.</span><span class="n">count</span><span class="p">()))</span>
+<span class="n">sysmon8</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This dataframe has 1 records!!
++---------------------------------------------------------+-----------------------------+-------------+
+|SourceImage                                              |TargetImage                  |StartFunction|
++---------------------------------------------------------+-----------------------------+-------------+
+|C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe|C:\Windows\System32\lsass.exe|-            |
++---------------------------------------------------------+-----------------------------+-------------+
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="summarizing-data">
+<h2>SUMMARIZING data<a class="headerlink" href="#summarizing-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="stack-count-event-logs-by-source-of-data-and-event-id">
+<h3>Stack Count event logs by source of data and event id<a class="headerlink" href="#stack-count-event-logs-by-source-of-data-and-event-id" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogs</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">SELECT Channel, EventID, COUNT(*)</span>
+<span class="sd">FROM apt29</span>
+<span class="sd">GROUP BY Channel, EventID</span>
+<span class="sd">ORDER BY COUNT(*) DESC</span>
+<span class="sd">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This dataframe has </span><span class="si">{}</span><span class="s1"> records!!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">eventLogs</span><span class="o">.</span><span class="n">count</span><span class="p">()))</span>
+<span class="n">eventLogs</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This dataframe has 203 records!!
++----------------------------------------+-------+--------+
+|Channel                                 |EventID|count(1)|
++----------------------------------------+-------+--------+
+|Microsoft-Windows-Sysmon/Operational    |12     |61151   |
+|Microsoft-Windows-Sysmon/Operational    |10     |39283   |
+|Microsoft-Windows-Sysmon/Operational    |7      |20259   |
+|Microsoft-Windows-Sysmon/Operational    |13     |17541   |
+|Security                                |4658   |8561    |
+|Windows PowerShell                      |800    |5113    |
+|Microsoft-Windows-PowerShell/Operational|4103   |5080    |
+|Security                                |4690   |4269    |
+|Security                                |4656   |4260    |
+|Security                                |4663   |4197    |
+|Security                                |5156   |2679    |
+|security                                |5447   |2579    |
+|security                                |4658   |2412    |
+|Microsoft-Windows-Sysmon/Operational    |11     |1649    |
+|Security                                |5158   |1465    |
+|security                                |4656   |1237    |
+|Microsoft-Windows-Sysmon/Operational    |3      |1229    |
+|security                                |4690   |1202    |
+|security                                |4663   |1140    |
+|Security                                |4703   |902     |
++----------------------------------------+-------+--------+
+only showing top 20 rows
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="filtering-event-logs-groups-with-frequency-less-or-equal-to-500">
+<h3>Filtering event logs groups with frequency less or equal to 500<a class="headerlink" href="#filtering-event-logs-groups-with-frequency-less-or-equal-to-500" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogsLess</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">SELECT Channel, EventID, COUNT(*) as Count</span>
+<span class="sd">FROM apt29</span>
+<span class="sd">GROUP BY Channel, EventID</span>
+<span class="sd">HAVING Count &lt;= 500</span>
+<span class="sd">ORDER BY Count DESC</span>
+<span class="sd">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This dataframe has </span><span class="si">{}</span><span class="s1"> records!!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">eventLogsLess</span><span class="o">.</span><span class="n">count</span><span class="p">()))</span>
+<span class="n">eventLogsLess</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This dataframe has 180 records!!
++----------------------------------------+-------+-----+
+|Channel                                 |EventID|Count|
++----------------------------------------+-------+-----+
+|security                                |5156   |484  |
+|Microsoft-Windows-Sysmon/Operational    |1      |447  |
+|security                                |5158   |431  |
+|Microsoft-Windows-Sysmon/Operational    |23     |422  |
+|Microsoft-Windows-PowerShell/Operational|4104   |414  |
+|security                                |4673   |409  |
+|Microsoft-Windows-Sysmon/Operational    |5      |401  |
+|Microsoft-Windows-Sysmon/Operational    |18     |362  |
+|security                                |5154   |362  |
+|security                                |4688   |279  |
+|Security                                |4689   |238  |
+|Security                                |4627   |234  |
+|Security                                |4624   |234  |
+|Security                                |4634   |233  |
+|Microsoft-Windows-Sysmon/Operational    |2      |209  |
+|Security                                |4688   |181  |
+|security                                |4945   |176  |
+|security                                |4689   |160  |
+|Security                                |4672   |154  |
+|Windows PowerShell                      |600    |138  |
++----------------------------------------+-------+-----+
+only showing top 20 rows
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="thank-you-i-hope-you-enjoyed-it">
+<h2>Thank you! I hope you enjoyed it!<a class="headerlink" href="#thank-you-i-hope-you-enjoyed-it" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "OTRF/infosec-jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "community-workshops/defcon_btv_2020/basic-concepts"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="02_Spark_SQL_View_From_Mordor_dataset.html" title="previous page">Creating a Spark SQL View from a Mordor Dataset</a>
+    <a class='right-next' id="next-link" href="04_Transforming.html" title="next page">Data Analysis with Spark.SQL: Transforming</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
+    </p>
+  </div>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../../_static/js/index.js"></script>
+    
+  </body>
+</html>

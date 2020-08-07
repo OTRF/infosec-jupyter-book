@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Remote Create Instance - dcerpc - wmi &#8212; Infosec Jupyter Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/mystnb.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="../../../_static/thebelab.js"></script>
+    <link rel="canonical" href="https://infosecjupyterbook.com/community-workshops/defcon_btv_2020/use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi.html" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Infosec Jupyterthon" href="../../../community-events/jupyterthon.html" />
+    <link rel="prev" title="DCSync dcerpc dcerpc" href="02_Data_Analysis_DCSync_dcerpc.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+<!-- Put requirejs at the end so it's always after bootstrap -->
+<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://infosecjupyterbook.com/community-workshops/defcon_btv_2020/use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Remote Create Instance - dcerpc - wmi" />
+<meta property="og:description" content="Remote Create Instance - dcerpc - wmi  Author: Jose Rodriguez (@Cyb3rPandah)  Project: Infosec Jupyter Book  Public Organization: Open Threat Research  License:" />
+<meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
+
+<meta name="twitter:card" content="summary">
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Infosec Jupyter Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+<li class="navbar-special">
+<p class="margin-caption">Getting Started</p>
+</li>
+  <li class="">
+    <a href="../../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
+  </li>
+  <li class="">
+    <a href="../../../getting-started/architecture.html">Architecture</a>
+  </li>
+  <li class="">
+    <a href="../../../getting-started/installation.html">Installation</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Fundamentals</p>
+</li>
+  <li class="">
+    <a href="../../../fundamentals/programming/intro.html">Programming Languages</a>
+  </li>
+  <li class="">
+    <a href="../../../fundamentals/libraries/intro.html">Libraries</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Use Cases</p>
+</li>
+  <li class="">
+    <a href="../../../use-cases/data-analysis/intro.html">Data Analysis</a>
+  </li>
+  <li class="">
+    <a href="../../../use-cases/data-connectors/intro.html">Data Connectors</a>
+  </li>
+  <li class="">
+    <a href="../../../use-cases/data-visualizations/intro.html">Data Visualizations</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Projects</p>
+</li>
+  <li class="">
+    <a href="../../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Workshops</p>
+</li>
+  <li class="active">
+    <a href="../intro.html">Defcon BTV 2020</a>
+  <ul class="nav sidenav_l2">
+    <li class="">
+      <a href="../basic-concepts/intro.html">Basic Data Analysis Concepts</a>
+    </li>
+    <li class="active">
+      <a href="intro.html">Use Cases</a>
+      <ul class="nav sidenav_l3">
+      <li class="">
+        <a href="01_Data_Analysis_Process_Injection.html">Process Injection - CreatRemoteThread</a>
+      </li>
+      <li class="">
+        <a href="02_Data_Analysis_DCSync_dcerpc.html">DCSync dcerpc dcerpc</a>
+      </li>
+      <li class="active">
+        <a href="">Remote Create Instance - dcerpc - wmi</a>
+      </li>
+    </ul>
+    </li>
+  </ul>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Community Events</p>
+</li>
+  <li class="">
+    <a href="../../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
+  </li>
+</ul>
+</nav>
+<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../../../_sources/community-workshops/defcon_btv_2020/use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Edit this page -->
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/community-workshops/defcon_btv_2020/use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+            <div class="dropdown-buttons">
+                
+                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/community-workshops/defcon_btv_2020/use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
+                
+                
+                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
+                
+            </div>
+        </div>
+        
+
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#creating-sql-view-from-mordor-process-injection-dataset" class="nav-link">Creating SQL view from Mordor Process Injection dataset</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#create-spark-session" class="nav-link">Create Spark session</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#expose-the-dataframe-as-a-sql-view" class="nav-link">Expose the dataframe as a SQL view</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#technical-description" class="nav-link">Technical Description</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#filtering-data" class="nav-link">Filtering data</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#look-for-wmiprvse-exe-spawning-processes-that-are-part-of-non-system-account-sessions" class="nav-link">Look for wmiprvse.exe spawning processes that are part of non-system account sessions.</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#correlating-data" class="nav-link">Correlating data</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#look-for-non-system-accounts-leveraging-wmi-over-the-netwotk-to-execute-code" class="nav-link">Look for non-system accounts leveraging WMI over the netwotk to execute code</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#thank-you-i-hope-you-enjoyed-it" class="nav-link">Thank you! I hope you enjoyed it!</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/community-workshops/defcon_btv_2020/use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi.ipynb">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="remote-create-instance-dcerpc-wmi">
+<h1>Remote Create Instance - dcerpc - wmi<a class="headerlink" href="#remote-create-instance-dcerpc-wmi" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><strong>Author</strong>: Jose Rodriguez (&#64;Cyb3rPandah)</p></li>
+<li><p><strong>Project</strong>: Infosec Jupyter Book</p></li>
+<li><p><strong>Public Organization</strong>: <a class="reference external" href="https://github.com/OTRF">Open Threat Research</a></p></li>
+<li><p><strong>License</strong>: <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p></li>
+<li><p><strong>Reference</strong>:</p>
+<ul>
+<li><p>https://spark.apache.org/docs/latest/api/python/pyspark.sql.html</p></li>
+<li><p>https://threathunterplaybook.com/notebooks/windows/08_lateral_movement/WIN-190810201010.html</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="creating-sql-view-from-mordor-process-injection-dataset">
+<h2>Creating SQL view from Mordor Process Injection dataset<a class="headerlink" href="#creating-sql-view-from-mordor-process-injection-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-spark-session">
+<h3>Create Spark session<a class="headerlink" href="#create-spark-session" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+    <span class="o">.</span><span class="n">builder</span> \
+    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Spark_Data_Analysis&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.caseSensitive&quot;</span><span class="p">,</span><span class="s2">&quot;True&quot;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="expose-the-dataframe-as-a-sql-view">
+<h3>Expose the dataframe as a SQL view<a class="headerlink" href="#expose-the-dataframe-as-a-sql-view" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wmiJson</span> <span class="o">=</span> <span class="s1">&#39;datasets/covenant_sharpwmi_dcerpc_wmi_remotecreateinstance_2020-08-06035621.json&#39;</span>
+
+<span class="n">wmiDf</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">wmiJson</span><span class="p">)</span>
+
+<span class="n">wmiDf</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s1">&#39;wmi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="technical-description">
+<h2>Technical Description<a class="headerlink" href="#technical-description" title="Permalink to this headline">¶</a></h2>
+<p>WMI is the Microsoft implementation of the Web-Based Enterprise Management (WBEM) and Common Information Model (CIM).
+Both standards aim to provide an industry-agnostic means of collecting and transmitting information related to any managed component in an enterprise.
+An example of a managed component in WMI would be a running process, registry key, installed service, file information, etc.
+At a high level, Microsoft’s implementation of these standards can be summarized as follows &gt; Managed Components Managed components are represented as WMI objects — class instances representing highly structured operating system data. Microsoft provides a wealth of WMI objects that communicate information related to the operating system. E.g. Win32_Process, Win32_Service, AntiVirusProduct, Win32_StartupCommand, etc.</p>
+<p>One well known lateral movement technique is performed via the WMI object — class Win32_Process and its method Create.
+This is because the Create method allows a user to create a process either locally or remotely.
+One thing to notice is that when the Create method is used on a remote system, the method is run under a host process named “Wmiprvse.exe”.</p>
+<p>The process WmiprvSE.exe is what spawns the process defined in the CommandLine parameter of the Create method. Therefore, the new process created remotely will have Wmiprvse.exe as a parent. WmiprvSE.exe is a DCOM server and it is spawned underneath the DCOM service host svchost.exe with the following parameters C:\WINDOWS\system32\svchost.exe -k DcomLaunch -p.
+From a logon session perspective, on the target, WmiprvSE.exe is spawned in a different logon session by the DCOM service host. However, whatever is executed by WmiprvSE.exe occurs on the new network type (3) logon session created by the user that authenticated from the network.</p>
+<p>Additional Reading</p>
+<ul class="simple">
+<li><p>https://github.com/hunters-forge/ThreatHunter-Playbook/tree/master/docs/library/logon_session.md</p></li>
+</ul>
+</div>
+<div class="section" id="filtering-data">
+<h2>Filtering data<a class="headerlink" href="#filtering-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="look-for-wmiprvse-exe-spawning-processes-that-are-part-of-non-system-account-sessions">
+<h3>Look for wmiprvse.exe spawning processes that are part of non-system account sessions.<a class="headerlink" href="#look-for-wmiprvse-exe-spawning-processes-that-are-part-of-non-system-account-sessions" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">processCreation</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">SELECT `@timestamp`, Hostname, SubjectUserName, TargetUserName, NewProcessName, CommandLine</span>
+<span class="sd">FROM wmi</span>
+<span class="sd">WHERE lower(Channel) = &quot;security&quot;</span>
+<span class="sd">    AND EventID = 4688</span>
+<span class="sd">    AND lower(ParentProcessName) LIKE &quot;%wmiprvse.exe&quot;</span>
+<span class="sd">    AND NOT TargetLogonId = &quot;0x3e7&quot;</span>
+<span class="sd">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This dataframe has </span><span class="si">{}</span><span class="s1"> records!!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">processCreation</span><span class="o">.</span><span class="n">count</span><span class="p">()))</span>
+<span class="n">processCreation</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">vertical</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This dataframe has 1 records!!
+-RECORD 0--------------------------------------------------
+ @timestamp      | 2020-08-06T07:56:43.178Z                
+ Hostname        | WORKSTATION6.theshire.local             
+ SubjectUserName | WORKSTATION6$                           
+ TargetUserName  | pgustavo                                
+ NewProcessName  | C:\Windows\System32\GruntHTTP2.exe      
+ CommandLine     | &quot;C:\\Windows\\System32\\GruntHTTP2.exe&quot; 
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="correlating-data">
+<h2>Correlating data<a class="headerlink" href="#correlating-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="look-for-non-system-accounts-leveraging-wmi-over-the-netwotk-to-execute-code">
+<h3>Look for non-system accounts leveraging WMI over the netwotk to execute code<a class="headerlink" href="#look-for-non-system-accounts-leveraging-wmi-over-the-netwotk-to-execute-code" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">authenticationNetwork</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">SELECT o.`@timestamp`, o.Hostname, o.SubjectUserName, o.TargetUserName, o.NewProcessName, o.CommandLine, a.IpAddress</span>
+<span class="sd">FROM wmi o</span>
+<span class="sd">INNER JOIN (</span>
+<span class="sd">    SELECT Hostname,TargetUserName,TargetLogonId,IpAddress</span>
+<span class="sd">    FROM wmi</span>
+<span class="sd">    WHERE lower(Channel) = &quot;security&quot;</span>
+<span class="sd">        AND LogonType = 3</span>
+<span class="sd">        AND IpAddress IS NOT NULL</span>
+<span class="sd">        AND NOT TargetUserName LIKE &quot;%$&quot;</span>
+<span class="sd">    ) a</span>
+<span class="sd">ON o.TargetLogonId = a.TargetLogonId</span>
+<span class="sd">WHERE lower(o.Channel) = &quot;security&quot;</span>
+<span class="sd">    AND o.EventID = 4688</span>
+<span class="sd">    AND lower(o.ParentProcessName) LIKE &quot;%wmiprvse.exe&quot;</span>
+<span class="sd">    AND NOT o.TargetLogonId = &quot;0x3e7&quot;</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This dataframe has </span><span class="si">{}</span><span class="s1"> records!!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">authenticationNetwork</span><span class="o">.</span><span class="n">count</span><span class="p">()))</span>
+<span class="n">authenticationNetwork</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">vertical</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This dataframe has 1 records!!
+-RECORD 0--------------------------------------------------
+ @timestamp      | 2020-08-06T07:56:43.178Z                
+ Hostname        | WORKSTATION6.theshire.local             
+ SubjectUserName | WORKSTATION6$                           
+ TargetUserName  | pgustavo                                
+ NewProcessName  | C:\Windows\System32\GruntHTTP2.exe      
+ CommandLine     | &quot;C:\\Windows\\System32\\GruntHTTP2.exe&quot; 
+ IpAddress       | 172.18.39.5                             
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="thank-you-i-hope-you-enjoyed-it">
+<h2>Thank you! I hope you enjoyed it!<a class="headerlink" href="#thank-you-i-hope-you-enjoyed-it" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "OTRF/infosec-jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "community-workshops/defcon_btv_2020/use-cases"
+        }
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="02_Data_Analysis_DCSync_dcerpc.html" title="previous page">DCSync dcerpc dcerpc</a>
+    <a class='right-next' id="next-link" href="../../../community-events/jupyterthon.html" title="next page">Infosec Jupyterthon</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
+    </p>
+  </div>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../../_static/js/index.js"></script>
+    
+  </body>
+</html>

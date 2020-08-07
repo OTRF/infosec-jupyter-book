@@ -32,5 +32,21 @@
   - file: use-cases/data-visualizations/03_altair_bloodhound_results
 - header: Community Projects
 - file: community-projects/threat-hunter-playbook
+- header: Community Workshops
+- file: community-workshops/defcon_btv_2020/intro
+  sections:
+  - file: community-workshops/defcon_btv_2020/basic-concepts/intro
+    sections:
+    - file: community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame
+    - file: community-workshops/defcon_btv_2020/basic-concepts/02_Spark_SQL_View_From_Mordor_dataset
+    - file: community-workshops/defcon_btv_2020/basic-concepts/03_Filtering_Summarizing
+    - file: community-workshops/defcon_btv_2020/basic-concepts/04_Transforming
+    - file: community-workshops/defcon_btv_2020/basic-concepts/05_Correlating
+    - file: community-workshops/defcon_btv_2020/basic-concepts/06_Visualizing
+  - file: community-workshops/defcon_btv_2020/use-cases/intro
+    sections:
+    - file: community-workshops/defcon_btv_2020/use-cases/01_Data_Analysis_Process_Injection
+    - file: community-workshops/defcon_btv_2020/use-cases/02_Data_Analysis_DCSync_dcerpc
+    - file: community-workshops/defcon_btv_2020/use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi
 - header: Community Events
 - file: community-events/jupyterthon
