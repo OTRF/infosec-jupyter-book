@@ -19,9 +19,13 @@ spark = SparkSession \
     .config("spark.sql.caseSensitive","True") \
     .getOrCreate()
 
+### Unzip Mordor Dataset
+
+! unzip -o ../datasets/empire_psinject.zip -d ../datasets/
+
 ### Expose the dataframe as a SQL view
 
-processInjectionJson = 'datasets/empire_psinject_2020-08-07143205.json'
+processInjectionJson = '../datasets/empire_psinject_2020-08-07143205.json'
 
 processInjectionDf = spark.read.json(processInjectionJson)
 
@@ -158,3 +162,4 @@ print('This dataframe has {} records!!'.format(networkConnection.count()))
 networkConnection.show(truncate = 40)
 
 ## Thank you! I hope you enjoyed it!
+

@@ -220,10 +220,14 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#creating-sql-view-from-mordor-process-injection-dataset" class="nav-link">Creating SQL view from Mordor Process Injection dataset</a><ul class="nav section-nav flex-column">
+            <a href="#creating-sql-view-from-mordor-dcsync-dataset" class="nav-link">Creating SQL view from Mordor DCSync dataset</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
             <a href="#create-spark-session" class="nav-link">Create Spark session</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#unzip-mordor-dataset" class="nav-link">Unzip Mordor Dataset</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
@@ -241,7 +245,7 @@
             <a href="#filtering-summarizing-data" class="nav-link">Filtering & Summarizing data</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#get-most-frequent-access-flags-bitmask-of-processes-accessing-other-processes" class="nav-link">Get most frequent Access Flags (Bitmask) of Processes accessing other Processes</a>
+            <a href="#what-users-used-replication-request-rights" class="nav-link">What Users used replication request rights</a>
         </li>
     
             </ul>
@@ -251,7 +255,7 @@
             <a href="#correlating-data" class="nav-link">Correlating data</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#find-source-processes-that-used-createremotethread-apis" class="nav-link">Find Source Processes that used CreateRemoteThread APIs</a>
+            <a href="#get-more-information-about-the-endpoint-that-requested-the-replication" class="nav-link">Get more information about the Endpoint that requested the replication</a>
         </li>
     
             </ul>
@@ -293,8 +297,8 @@
 </ul>
 </li>
 </ul>
-<div class="section" id="creating-sql-view-from-mordor-process-injection-dataset">
-<h2>Creating SQL view from Mordor Process Injection dataset<a class="headerlink" href="#creating-sql-view-from-mordor-process-injection-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creating-sql-view-from-mordor-dcsync-dataset">
+<h2>Creating SQL view from Mordor DCSync dataset<a class="headerlink" href="#creating-sql-view-from-mordor-dcsync-dataset" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="create-spark-session">
 <h3>Create Spark session<a class="headerlink" href="#create-spark-session" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
@@ -306,6 +310,22 @@
     <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Spark_Data_Analysis&quot;</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.caseSensitive&quot;</span><span class="p">,</span><span class="s2">&quot;True&quot;</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="unzip-mordor-dataset">
+<h3>Unzip Mordor Dataset<a class="headerlink" href="#unzip-mordor-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! unzip -o ../datasets/covenant_dcsync_dcerpc_drsuapi_DsGetNCChanges.zip -d ../datasets/
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Archive:  ../datasets/covenant_dcsync_dcerpc_drsuapi_DsGetNCChanges.zip
+  inflating: ../datasets/covenant_dcsync_dcerpc_drsuapi_DsGetNCChanges_2020-08-05020926.json  
 </pre></div>
 </div>
 </div>
@@ -361,8 +381,8 @@ Therefore, it might be abnormal to see other non-dc-accounts doing it.</p>
 </div>
 <div class="section" id="filtering-summarizing-data">
 <h2>Filtering &amp; Summarizing data<a class="headerlink" href="#filtering-summarizing-data" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="get-most-frequent-access-flags-bitmask-of-processes-accessing-other-processes">
-<h3>Get most frequent Access Flags (Bitmask) of Processes accessing other Processes<a class="headerlink" href="#get-most-frequent-access-flags-bitmask-of-processes-accessing-other-processes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="what-users-used-replication-request-rights">
+<h3>What Users used replication request rights<a class="headerlink" href="#what-users-used-replication-request-rights" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">operationObject</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
@@ -387,13 +407,13 @@ Therefore, it might be abnormal to see other non-dc-accounts doing it.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This dataframe has 3 records!!
-+------------------------+-----------------------+---------------+--------------+
-|@timestamp              |Hostname               |SubjectUserName|SubjectLogonId|
-+------------------------+-----------------------+---------------+--------------+
-|2020-08-05T06:10:03.798Z|MORDORDC.theshire.local|pgustavo       |0x824909      |
-|2020-08-05T06:10:03.799Z|MORDORDC.theshire.local|pgustavo       |0x824909      |
-|2020-08-05T06:10:03.799Z|MORDORDC.theshire.local|pgustavo       |0x824909      |
-+------------------------+-----------------------+---------------+--------------+
++-----------------------+-----------------------+---------------+--------------+
+|@timestamp             |Hostname               |SubjectUserName|SubjectLogonId|
++-----------------------+-----------------------+---------------+--------------+
+|2020-08-05 02:10:03.798|MORDORDC.theshire.local|pgustavo       |0x824909      |
+|2020-08-05 02:10:03.799|MORDORDC.theshire.local|pgustavo       |0x824909      |
+|2020-08-05 02:10:03.799|MORDORDC.theshire.local|pgustavo       |0x824909      |
++-----------------------+-----------------------+---------------+--------------+
 
 </pre></div>
 </div>
@@ -403,8 +423,8 @@ Therefore, it might be abnormal to see other non-dc-accounts doing it.</p>
 </div>
 <div class="section" id="correlating-data">
 <h2>Correlating data<a class="headerlink" href="#correlating-data" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="find-source-processes-that-used-createremotethread-apis">
-<h3>Find Source Processes that used CreateRemoteThread APIs<a class="headerlink" href="#find-source-processes-that-used-createremotethread-apis" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="get-more-information-about-the-endpoint-that-requested-the-replication">
+<h3>Get more information about the Endpoint that requested the replication<a class="headerlink" href="#get-more-information-about-the-endpoint-that-requested-the-replication" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">authentication</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
@@ -441,13 +461,13 @@ Therefore, it might be abnormal to see other non-dc-accounts doing it.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>This dataframe has 3 records!!
-+------------------------+-----------------------+---------------+--------------+-----------+
-|@timestamp              |Hostname               |SubjectUserName|SubjectLogonId|IpAddress  |
-+------------------------+-----------------------+---------------+--------------+-----------+
-|2020-08-05T06:10:03.798Z|MORDORDC.theshire.local|pgustavo       |0x824909      |172.18.39.5|
-|2020-08-05T06:10:03.799Z|MORDORDC.theshire.local|pgustavo       |0x824909      |172.18.39.5|
-|2020-08-05T06:10:03.799Z|MORDORDC.theshire.local|pgustavo       |0x824909      |172.18.39.5|
-+------------------------+-----------------------+---------------+--------------+-----------+
++-----------------------+-----------------------+---------------+--------------+-----------+
+|@timestamp             |Hostname               |SubjectUserName|SubjectLogonId|IpAddress  |
++-----------------------+-----------------------+---------------+--------------+-----------+
+|2020-08-05 02:10:03.798|MORDORDC.theshire.local|pgustavo       |0x824909      |172.18.39.5|
+|2020-08-05 02:10:03.799|MORDORDC.theshire.local|pgustavo       |0x824909      |172.18.39.5|
+|2020-08-05 02:10:03.799|MORDORDC.theshire.local|pgustavo       |0x824909      |172.18.39.5|
++-----------------------+-----------------------+---------------+--------------+-----------+
 
 </pre></div>
 </div>

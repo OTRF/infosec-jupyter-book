@@ -10,7 +10,7 @@
 
 ### Get compressed Zip file
 
-We are using the **wget** command and the **-O** (output document file) option to save the file in **datasets** folder
+We could use the **wget** command and the **-O** (output document file) option to save the file in a **datasets** folder. However, to keep it simple for this workshop, we already downloaded the dataset for you.
 
 ! wget https://raw.githubusercontent.com/hunters-forge/mordor/master/datasets/large/apt29/day1/apt29_evals_day1_manual.zip  -O datasets/apt29_evals_day1_manual.zip
 
@@ -18,11 +18,11 @@ We are using the **wget** command and the **-O** (output document file) option t
 
 We are using the **unzip** command and **-o** (Overwrite) and **-d** (different directory) options to save the file in **datasets** folder
 
-! unzip -o datasets/apt29_evals_day1_manual.zip -d datasets/
+! unzip -o ../datasets/apt29_evals_day1_manual.zip -d ../datasets/
 
 We will store the **path** of the json file in a variable to facilitate our code
 
-apt29Json = 'datasets/apt29_evals_day1_manual_2020-05-01225525.json'
+apt29Json = '../datasets/apt29_evals_day1_manual_2020-05-01225525.json'
 
 ## Creating a SQL View
 
@@ -38,9 +38,10 @@ spark = SparkSession \
 
 ### Read JSON file
 
+%%time
 apt29Df = spark.read.json(apt29Json)
 
-apt29Df.show(n = 5, vertical = True)
+apt29Df.show(n = 1, vertical = True)
 
 ### Expose the dataframe as a SQL view
 

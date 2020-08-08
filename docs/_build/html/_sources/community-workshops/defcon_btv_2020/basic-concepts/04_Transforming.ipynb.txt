@@ -54,7 +54,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "apt29Json = 'datasets/apt29_evals_day1_manual_2020-05-01225525.json'\n",
+    "apt29Json = '../datasets/apt29_evals_day1_manual_2020-05-01225525.json'\n",
     "\n",
     "apt29Df = spark.read.json(apt29Json)\n",
     "\n",

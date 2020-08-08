@@ -19,9 +19,13 @@ spark = SparkSession \
     .config("spark.sql.caseSensitive","True") \
     .getOrCreate()
 
+### Unzip Mordor Dataset
+
+! unzip -o ../datasets/covenant_sharpwmi_dcerpc_wmi_remotecreateinstance.zip -d ../datasets/
+
 ### Expose the dataframe as a SQL view
 
-wmiJson = 'datasets/covenant_sharpwmi_dcerpc_wmi_remotecreateinstance_2020-08-06035621.json'
+wmiJson = '../datasets/covenant_sharpwmi_dcerpc_wmi_remotecreateinstance_2020-08-06035621.json'
 
 wmiDf = spark.read.json(wmiJson)
 

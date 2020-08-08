@@ -7,7 +7,7 @@
     * https://spark.apache.org/docs/latest/api/python/pyspark.sql.html
     * https://threathunterplaybook.com/notebooks/windows/06_credential_access/WIN-180815210510.html
 
-## Creating SQL view from Mordor Process Injection dataset
+## Creating SQL view from Mordor DCSync dataset
 
 ### Create Spark session
 
@@ -18,6 +18,10 @@ spark = SparkSession \
     .appName("Spark_Data_Analysis") \
     .config("spark.sql.caseSensitive","True") \
     .getOrCreate()
+
+### Unzip Mordor Dataset
+
+! unzip -o ../datasets/covenant_dcsync_dcerpc_drsuapi_DsGetNCChanges.zip -d ../datasets/
 
 ### Expose the dataframe as a SQL view
 
@@ -49,7 +53,7 @@ Additional reading
 
 ## Filtering & Summarizing data
 
-### Get most frequent Access Flags (Bitmask) of Processes accessing other Processes
+### What Users used replication request rights
 
 operationObject = spark.sql(
 '''
@@ -71,7 +75,7 @@ operationObject.show(truncate = False)
 
 ## Correlating data
 
-### Find Source Processes that used CreateRemoteThread APIs
+### Get more information about the Endpoint that requested the replication
 
 authentication = spark.sql(
     '''

@@ -227,6 +227,10 @@
         </li>
     
         <li class="nav-item toc-entry toc-h3">
+            <a href="#unzip-mordor-dataset" class="nav-link">Unzip Mordor Dataset</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
             <a href="#expose-the-dataframe-as-a-sql-view" class="nav-link">Expose the dataframe as a SQL view</a>
         </li>
     
@@ -325,11 +329,27 @@
 </div>
 </div>
 </div>
+<div class="section" id="unzip-mordor-dataset">
+<h3>Unzip Mordor Dataset<a class="headerlink" href="#unzip-mordor-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! unzip -o ../datasets/empire_psinject.zip -d ../datasets/
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Archive:  ../datasets/empire_psinject.zip
+  inflating: ../datasets/empire_psinject_2020-08-07143205.json  
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="expose-the-dataframe-as-a-sql-view">
 <h3>Expose the dataframe as a SQL view<a class="headerlink" href="#expose-the-dataframe-as-a-sql-view" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">processInjectionJson</span> <span class="o">=</span> <span class="s1">&#39;datasets/empire_psinject_2020-08-07143205.json&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">processInjectionJson</span> <span class="o">=</span> <span class="s1">&#39;../datasets/empire_psinject_2020-08-07143205.json&#39;</span>
 
 <span class="n">processInjectionDf</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">processInjectionJson</span><span class="p">)</span>
 
@@ -376,8 +396,8 @@
 |       0x1400|    2|
 |       0x1410|    2|
 |       0x1478|    2|
-|     0x100000|    1|
 |     0x1f3fff|    1|
+|     0x100000|    1|
 |     0x101541|    1|
 +-------------+-----+
 
@@ -468,12 +488,12 @@
 |       0x1000|                                             [PROCESS_QUERY_LIMITED_INFORMATION]|  463|
 |       0x3000|            [PROCESS_QUERY_LIMITED_INFORMATION, PROCESS_SET_LIMITED_INFORMATION]|   83|
 |         0x40|                                                            [PROCESS_DUP_HANDLE]|    4|
-|       0x1478|[PROCESS_DUP_HANDLE, PROCESS_QUERY_INFORMATION, PROCESS_QUERY_LIMITED_INFORMA...|    2|
 |       0x1400|                  [PROCESS_QUERY_INFORMATION, PROCESS_QUERY_LIMITED_INFORMATION]|    2|
 |       0x1410| [PROCESS_QUERY_INFORMATION, PROCESS_QUERY_LIMITED_INFORMATION, PROCESS_VM_READ]|    2|
+|       0x1478|[PROCESS_DUP_HANDLE, PROCESS_QUERY_INFORMATION, PROCESS_QUERY_LIMITED_INFORMA...|    2|
 |     0x1fffff|[PROCESS_CREATE_PROCESS, PROCESS_CREATE_THREAD, PROCESS_DUP_HANDLE, PROCESS_Q...|    2|
-|     0x100000|                                                                   [SYNCHRONIZE]|    1|
 |     0x1f3fff|[PROCESS_CREATE_PROCESS, PROCESS_CREATE_THREAD, PROCESS_DUP_HANDLE, PROCESS_Q...|    1|
+|     0x100000|                                                                   [SYNCHRONIZE]|    1|
 |     0x101541|[PROCESS_DUP_HANDLE, PROCESS_QUERY_INFORMATION, PROCESS_QUERY_LIMITED_INFORMA...|    1|
 +-------------+--------------------------------------------------------------------------------+-----+
 

@@ -19,7 +19,7 @@ spark = SparkSession \
 
 ### Expose the dataframe as a SQL view
 
-apt29Json = 'datasets/apt29_evals_day1_manual_2020-05-01225525.json'
+apt29Json = '../datasets/apt29_evals_day1_manual_2020-05-01225525.json'
 
 apt29Df = spark.read.json(apt29Json)
 
