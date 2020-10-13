@@ -1,52 +1,57 @@
 - file: introduction
-- header: Getting Started
-- file: getting-started/what_is_jupyter
-- file: getting-started/architecture
-- file: getting-started/installation
-  sections:
-  - file: getting-started/installation_docker
-  - file: getting-started/installation_binderhub
-- header: Fundamentals
-- file: fundamentals/programming/intro
-  sections:
-  - file: fundamentals/programming/python
-- file: fundamentals/libraries/intro
-  sections:
-  - file: fundamentals/libraries/numpy_arrays
-  - file: fundamentals/libraries/pandas
-- header: Use Cases
-- file: use-cases/data-analysis/intro
-  sections:
-  - file: use-cases/data-analysis/01_sql_to_pandas_win_events_101
-  - file: use-cases/data-analysis/02_bloodhound_explore_kerberoastable_users
-  - file: use-cases/data-analysis/03_analyzing_rpc_methods_relationships_graphframes
-- file: use-cases/data-connectors/intro
-  sections:
-  - file: use-cases/data-connectors/elasticsearch
-  - file: use-cases/data-connectors/splunk
-  - file: use-cases/data-connectors/azure_sentinel
-- file: use-cases/data-visualizations/intro
-  sections:
-  - file: use-cases/data-visualizations/01_data_viz_pandas
-  - file: use-cases/data-visualizations/02_data_viz_bokeh
-  - file: use-cases/data-visualizations/03_altair_bloodhound_results
-- header: Community Projects
-- file: community-projects/threat-hunter-playbook
-- header: Community Workshops
-- file: community-workshops/defcon_btv_2020/intro
-  sections:
-  - file: community-workshops/defcon_btv_2020/basic-concepts/intro
+- part: Getting Started
+  chapters:
+  - file: getting-started/what_is_jupyter
+  - file: getting-started/architecture
+  - file: getting-started/installation
     sections:
-    - file: community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame
-    - file: community-workshops/defcon_btv_2020/basic-concepts/02_Spark_SQL_View_From_Mordor_dataset
-    - file: community-workshops/defcon_btv_2020/basic-concepts/03_Filtering_Summarizing
-    - file: community-workshops/defcon_btv_2020/basic-concepts/04_Transforming
-    - file: community-workshops/defcon_btv_2020/basic-concepts/05_Correlating
-    - file: community-workshops/defcon_btv_2020/basic-concepts/06_Visualizing
-  - file: community-workshops/defcon_btv_2020/use-cases/intro
+    - file: getting-started/installation_docker
+    - file: getting-started/installation_binderhub
+- part: Fundamentals
+  chapters:
+  - file: fundamentals/programming/intro
     sections:
-    - file: community-workshops/defcon_btv_2020/use-cases/01_Data_Analysis_Process_Injection
-    - file: community-workshops/defcon_btv_2020/use-cases/02_Data_Analysis_DCSync_dcerpc
-    - file: community-workshops/defcon_btv_2020/use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi
-- header: Community Events
-- file: community-events/jupyterthon
+    - file: fundamentals/programming/python
+  - file: fundamentals/libraries/intro
+    sections:
+    - file: fundamentals/libraries/numpy_arrays
+    - file: fundamentals/libraries/pandas
+- part: Use Cases
+  chapters:
+  - file: use-cases/data-analysis/intro
+    sections:
+    - file: use-cases/data-analysis/01_sql_to_pandas_win_events_101
+    - file: use-cases/data-analysis/02_bloodhound_explore_kerberoastable_users
+    - file: use-cases/data-analysis/03_analyzing_rpc_methods_relationships_graphframes
+  - file: use-cases/data-connectors/intro
+    sections:
+    - file: use-cases/data-connectors/elasticsearch
+    - file: use-cases/data-connectors/splunk
+    - file: use-cases/data-connectors/azure_sentinel
+  - file: use-cases/data-visualizations/intro
+    sections:
+    - file: use-cases/data-visualizations/01_data_viz_pandas
+    - file: use-cases/data-visualizations/02_data_viz_bokeh
+    - file: use-cases/data-visualizations/03_altair_bloodhound_results
+- part: Community Projects
+  chapters:
+  - file: community-projects/threat-hunter-playbook
+  - header: Community Workshops
+  - file: community-workshops/defcon_btv_2020/intro
+    sections:
+    - file: community-workshops/defcon_btv_2020/basic-concepts/intro
+      sections:
+      - file: community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame
+      - file: community-workshops/defcon_btv_2020/basic-concepts/02_Spark_SQL_View_From_Mordor_dataset
+      - file: community-workshops/defcon_btv_2020/basic-concepts/03_Filtering_Summarizing
+      - file: community-workshops/defcon_btv_2020/basic-concepts/04_Transforming
+      - file: community-workshops/defcon_btv_2020/basic-concepts/05_Correlating
+      - file: community-workshops/defcon_btv_2020/basic-concepts/06_Visualizing
+    - file: community-workshops/defcon_btv_2020/use-cases/intro
+      sections:
+      - file: community-workshops/defcon_btv_2020/use-cases/01_Data_Analysis_Process_Injection
+      - file: community-workshops/defcon_btv_2020/use-cases/02_Data_Analysis_DCSync_dcerpc
+      - file: community-workshops/defcon_btv_2020/use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi
+- part: Community Events
+  chapters:
+  - file: community-events/jupyterthon
