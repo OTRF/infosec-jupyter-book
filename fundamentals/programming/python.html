@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Python 101 &#8212; Infosec Jupyter Book</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
@@ -13,9 +14,9 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/sphinx-book-theme.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
@@ -23,12 +24,15 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../_static/thebelab.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://infosecjupyterbook.com/fundamentals/programming/python.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -38,9 +42,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -50,7 +51,7 @@
 <meta property="og:description" content="Python 101    Goals:  Learn basic Python operations  Understand differences in data structures  Get familiarized with conditional statements and loops  Learn to" />
 <meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
 
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary" />
 
 
   </head>
@@ -60,9 +61,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../../index.html">
   
   <img src="../../_static/logo.png" class="logo" alt="logo">
@@ -79,67 +80,119 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-<li class="navbar-special">
-<p class="margin-caption">Getting Started</p>
-</li>
-  <li class="">
-    <a href="../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/architecture.html">Architecture</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/installation.html">Installation</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Fundamentals</p>
-</li>
-  <li class="active">
-    <a href="intro.html">Programming Languages</a>
-  <ul class="nav sidenav_l2">
-    <li class="active">
-      <a href="">Python 101</a>
-    </li>
-  </ul>
-  </li>
-  <li class="">
-    <a href="../libraries/intro.html">Libraries</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Use Cases</p>
-</li>
-  <li class="">
-    <a href="../../use-cases/data-analysis/intro.html">Data Analysis</a>
-  </li>
-  <li class="">
-    <a href="../../use-cases/data-connectors/intro.html">Data Connectors</a>
-  </li>
-  <li class="">
-    <a href="../../use-cases/data-visualizations/intro.html">Data Visualizations</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Projects</p>
-</li>
-  <li class="">
-    <a href="../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Workshops</p>
-</li>
-  <li class="">
-    <a href="../../community-workshops/defcon_btv_2020/intro.html">Defcon BTV 2020</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Events</p>
-</li>
-  <li class="">
-    <a href="../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
-  </li>
+  <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/what_is_jupyter.html">
+   What Is Jupyter?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/installation.html">
+   Installation
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="intro.html">
+   Programming Languages
+  </a>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Python 101
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../libraries/intro.html">
+   Libraries
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Use Cases
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-analysis/intro.html">
+   Data Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-connectors/intro.html">
+   Data Connectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-visualizations/intro.html">
+   Data Visualizations
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-projects/threat-hunter-playbook.html">
+   Threat Hunter Playbook
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Workshops
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-workshops/defcon_btv_2020/intro.html">
+   Defcon BTV 2020
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Events
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-events/jupyterthon.html">
+   Infosec Jupyterthon
+  </a>
+ </li>
+</ul>
+
 </nav>
-<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -154,158 +207,208 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/fundamentals/programming/python.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/fundamentals/programming/python.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Edit this page -->
-        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/programming/python.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/OTRF/infosec-jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/OTRF/infosec-jupyter-book/issues/new?title=Issue%20on%20page%20%2Ffundamentals/programming/python.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/programming/python.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-        
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/fundamentals/programming/python.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
-                
-            </div>
-        </div>
-        
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/fundamentals/programming/python.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/OTRF/infosec-jupyter-book/blob/master/docs/fundamentals/programming/python.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
         
     </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#goals" class="nav-link">Goals:</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#indentation" class="nav-link">Indentation</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#everything-is-an-object" class="nav-link">Everything is an Object</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#variables" class="nav-link">Variables</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#data-types" class="nav-link">Data Types</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#combining-variables-and-operations" class="nav-link">Combining variables and operations</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#binary-operators-and-comparisons" class="nav-link">Binary Operators and Comparisons</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#the-respective-print-statement" class="nav-link">The Respective Print statement</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#control-flows" class="nav-link">Control Flows</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#if-elif-else-statements" class="nav-link">If,elif,else statements</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#loops" class="nav-link">Loops</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#for" class="nav-link">For</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#while" class="nav-link">While</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#data-structures" class="nav-link">Data structures</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#lists" class="nav-link">Lists</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#dictionaries" class="nav-link">Dictionaries</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#tuples" class="nav-link">Tuples</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#slicing" class="nav-link">Slicing</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#functions" class="nav-link">Functions</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#modules" class="nav-link">Modules</a>
-        </li>
-    
-    </ul>
-</nav>
-
-
-
-<div class="tocsection editthispage">
-    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/programming/python.ipynb">
-        <i class="fas fa-pencil-alt"></i> Edit this page
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#goals">
+   Goals:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#indentation">
+   Indentation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#everything-is-an-object">
+   Everything is an Object
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variables">
+   Variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-types">
+   Data Types
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#combining-variables-and-operations">
+   Combining variables and operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#binary-operators-and-comparisons">
+   Binary Operators and Comparisons
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-respective-print-statement">
+   The Respective Print statement
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#control-flows">
+   Control Flows
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#if-elif-else-statements">
+     If,elif,else statements
     </a>
-</div>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loops">
+   Loops
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#for">
+     For
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#while">
+     While
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-structures">
+   Data structures
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lists">
+     Lists
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dictionaries">
+     Dictionaries
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tuples">
+     Tuples
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#slicing">
+   Slicing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#functions">
+   Functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modules">
+   Modules
+  </a>
+ </li>
+</ul>
 
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -327,7 +430,7 @@
 <p>Python code is structured by indentation (tabs or spaces) instead of braces which is what other languages normally use. In addition, a colon (:) is used to define the start of an indented code block.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;One number per loop..&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
@@ -348,14 +451,14 @@
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;pedro&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;pedro&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -366,7 +469,7 @@
 <p>In Python, when you define/create a variable, you are basically creating a reference to an object (i.e string,list,etc). If you want to define/create a new variable from the original variable, you will be creating another reference to the original object rather than copying the contents of the first variable to the second one.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
 <span class="n">b</span>
 </pre></div>
@@ -376,7 +479,7 @@
 <p>Therefore, if you update the original variable (a), the new variable (b) will automatically reference the updated object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">b</span>
 </pre></div>
 </div>
@@ -393,7 +496,7 @@ Rules for Python variables:</p>
 <p>Reference:https://www.w3schools.com/python/python_variables.asp</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_name</span> <span class="o">=</span> <span class="s1">&#39;Pedro&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_name</span> <span class="o">=</span> <span class="s1">&#39;Pedro&#39;</span>
 <span class="n">age</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">is_vaccinated</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">birth_year</span> <span class="o">=</span> <span class="mi">2015</span>
@@ -403,14 +506,14 @@ Rules for Python variables:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">is_vaccinated</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_vaccinated</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_name</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_name</span>
 </pre></div>
 </div>
 </div>
@@ -421,21 +524,21 @@ Rules for Python variables:</p>
 <p>As any other object, you can get information about its type via the built-in function <a class="reference external" href="https://docs.python.org/3/library/functions.html#type">type()</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">age</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">age</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">dog_name</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">dog_name</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">is_vaccinated</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">is_vaccinated</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -445,7 +548,7 @@ Rules for Python variables:</p>
 <h2>Combining variables and operations<a class="headerlink" href="#combining-variables-and-operations" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">4</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span>
 </pre></div>
 </div>
@@ -453,49 +556,49 @@ Rules for Python variables:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">-</span><span class="n">y</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">-</span><span class="n">y</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">*</span><span class="n">y</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">*</span><span class="n">y</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">/</span><span class="n">x</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">/</span><span class="n">x</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">**</span><span class="n">x</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">**</span><span class="n">x</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">&gt;</span><span class="n">y</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">&gt;</span><span class="n">y</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">==</span><span class="n">y</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">==</span><span class="n">y</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">&gt;=</span><span class="n">x</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">&gt;=</span><span class="n">x</span>
 </pre></div>
 </div>
 </div>
@@ -505,21 +608,21 @@ Rules for Python variables:</p>
 <h2>Binary Operators and Comparisons<a class="headerlink" href="#binary-operators-and-comparisons" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">+</span><span class="mi">4</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">*</span><span class="mi">6</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">*</span><span class="mi">6</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">&gt;</span><span class="mi">3</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span><span class="o">&gt;</span><span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -529,7 +632,7 @@ Rules for Python variables:</p>
 <h2>The Respective Print statement<a class="headerlink" href="#the-respective-print-statement" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello Helk!&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello Helk!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -551,7 +654,7 @@ Rules for Python variables:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -559,7 +662,7 @@ Rules for Python variables:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="n">y</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="n">y</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;yes&#39;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no&#39;</span><span class="p">)</span>
@@ -572,7 +675,7 @@ Rules for Python variables:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="n">y</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="n">y</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;They are equal&#39;</span><span class="p">)</span>
 <span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;It is grater than&quot;</span><span class="p">)</span>
@@ -591,14 +694,14 @@ Rules for Python variables:</p>
 <p>The for statement is used to iterate over the elements of a sequence (such as a string, tuple or list) or other iterable object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="kc">True</span><span class="p">,</span><span class="mi">2015</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="kc">True</span><span class="p">,</span><span class="mi">2015</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -610,7 +713,7 @@ Rules for Python variables:</p>
 <p>A while loop allows you to execute a block of code until a condition evaluates to false or the loop is ended with a break command.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -620,7 +723,7 @@ Rules for Python variables:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
         <span class="k">break</span>
@@ -649,28 +752,28 @@ Rules for Python variables:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="kc">True</span><span class="p">,</span><span class="mi">2015</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="kc">True</span><span class="p">,</span><span class="mi">2015</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;My dog&#39;s name is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; and he is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; years old.&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;My dog&#39;s name is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; and he is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; years old.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -681,14 +784,14 @@ Rules for Python variables:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;tennis balls&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;tennis balls&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span>
 </pre></div>
 </div>
 </div>
@@ -698,7 +801,7 @@ Rules for Python variables:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">my_dog_list</span>
 </pre></div>
 </div>
@@ -716,35 +819,35 @@ Rules for Python variables:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span><span class="s1">&#39;age&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;is_vaccinated&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span><span class="s1">&#39;birth_year&#39;</span><span class="p">:</span><span class="mi">2015</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span><span class="s1">&#39;age&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;is_vaccinated&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span><span class="s1">&#39;birth_year&#39;</span><span class="p">:</span><span class="mi">2015</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -758,14 +861,14 @@ Rules for Python variables:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_tuple</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="kc">True</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_tuple</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="kc">True</span><span class="p">,</span><span class="mi">2015</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_tuple</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_tuple</span>
 </pre></div>
 </div>
 </div>
@@ -776,7 +879,7 @@ Rules for Python variables:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_dog_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -789,7 +892,7 @@ Rules for Python variables:</p>
 start:stop passed to the indexing operator []</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">7</span> <span class="p">,</span> <span class="mi">2</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">,</span> <span class="mi">7</span> <span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">1</span> <span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seq</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">7</span> <span class="p">,</span> <span class="mi">2</span> <span class="p">,</span> <span class="mi">3</span> <span class="p">,</span> <span class="mi">7</span> <span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">1</span> <span class="p">]</span>
 <span class="n">seq</span> <span class="p">[</span> <span class="mi">1</span> <span class="p">:</span> <span class="mi">5</span> <span class="p">]</span> 
 </pre></div>
 </div>
@@ -802,7 +905,7 @@ start:stop passed to the indexing operator []</p>
 returned from with the <strong>return</strong> keyword:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
 </pre></div>
 </div>
@@ -810,21 +913,21 @@ returned from with the <strong>return</strong> keyword:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Square root of 2 is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Square root of 2 is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">number_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">number_list</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">number_list</span><span class="p">:</span>
     <span class="n">sn</span> <span class="o">=</span> <span class="n">square</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Square root of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sn</span><span class="p">))</span>
 </pre></div>
@@ -845,7 +948,7 @@ returned from with the <strong>return</strong> keyword:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
 
 <span class="k">def</span> <span class="nf">cube</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -860,14 +963,14 @@ returned from with the <strong>return</strong> keyword:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math_ops</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math_ops</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">number_list</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">number_list</span><span class="p">:</span>
     <span class="n">sn</span> <span class="o">=</span> <span class="n">square</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
     <span class="n">cn</span> <span class="o">=</span> <span class="n">cube</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Square root of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sn</span><span class="p">))</span>
@@ -882,7 +985,7 @@ returned from with the <strong>return</strong> keyword:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="s1">&#39;modules&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="s1">&#39;modules&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -892,7 +995,7 @@ returned from with the <strong>return</strong> keyword:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 </pre></div>
 </div>
 </div>
@@ -902,7 +1005,7 @@ returned from with the <strong>return</strong> keyword:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="n">datetime</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="n">datetime</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -912,19 +1015,19 @@ returned from with the <strong>return</strong> keyword:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;MAXYEAR&#39;,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;MAXYEAR&#39;,
  &#39;MINYEAR&#39;,
  &#39;__builtins__&#39;,
  &#39;__cached__&#39;,
@@ -962,8 +1065,9 @@ returned from with the <strong>return</strong> keyword:</p>
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "fundamentals/programming"
-        }
+            path: "./fundamentals/programming"
+        },
+        predefinedOutput: true
     }
     </script>
     <script>kernelName = 'python3'</script>
@@ -981,13 +1085,15 @@ returned from with the <strong>return</strong> keyword:</p>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g, Jose Rodriguez (@Cyb3rPandaH)<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 

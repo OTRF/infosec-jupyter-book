@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data Visualization with Pandas and Matplotlib &#8212; Infosec Jupyter Book</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
@@ -13,9 +14,9 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/sphinx-book-theme.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
@@ -23,12 +24,15 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../_static/thebelab.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://infosecjupyterbook.com/use-cases/data-visualizations/01_data_viz_pandas.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -38,9 +42,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -50,7 +51,7 @@
 <meta property="og:description" content="Data Visualization with Pandas and Matplotlib  Author: Pete Bryan (@MSSPete)  Project: Infosec Jupyter Book  Public Organization: Microsoft  License: Creative C" />
 <meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
 
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary" />
 
 
   </head>
@@ -60,9 +61,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../../index.html">
   
   <img src="../../_static/logo.png" class="logo" alt="logo">
@@ -79,73 +80,129 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-<li class="navbar-special">
-<p class="margin-caption">Getting Started</p>
-</li>
-  <li class="">
-    <a href="../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/architecture.html">Architecture</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/installation.html">Installation</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Fundamentals</p>
-</li>
-  <li class="">
-    <a href="../../fundamentals/programming/intro.html">Programming Languages</a>
-  </li>
-  <li class="">
-    <a href="../../fundamentals/libraries/intro.html">Libraries</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Use Cases</p>
-</li>
-  <li class="">
-    <a href="../data-analysis/intro.html">Data Analysis</a>
-  </li>
-  <li class="">
-    <a href="../data-connectors/intro.html">Data Connectors</a>
-  </li>
-  <li class="active">
-    <a href="intro.html">Data Visualizations</a>
-  <ul class="nav sidenav_l2">
-    <li class="active">
-      <a href="">Data Visualization with Pandas and Matplotlib</a>
-    </li>
-    <li class="">
-      <a href="02_data_viz_bokeh.html">Data Visualization with Bokeh</a>
-    </li>
-    <li class="">
-      <a href="03_altair_bloodhound_results.html">Leveraging Altair to Visualize BloodHound Results</a>
-    </li>
-  </ul>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Projects</p>
-</li>
-  <li class="">
-    <a href="../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Workshops</p>
-</li>
-  <li class="">
-    <a href="../../community-workshops/defcon_btv_2020/intro.html">Defcon BTV 2020</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Events</p>
-</li>
-  <li class="">
-    <a href="../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
-  </li>
+  <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/what_is_jupyter.html">
+   What Is Jupyter?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/installation.html">
+   Installation
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fundamentals/programming/intro.html">
+   Programming Languages
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fundamentals/libraries/intro.html">
+   Libraries
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Use Cases
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../data-analysis/intro.html">
+   Data Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../data-connectors/intro.html">
+   Data Connectors
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="intro.html">
+   Data Visualizations
+  </a>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Data Visualization with Pandas and Matplotlib
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_data_viz_bokeh.html">
+     Data Visualization with Bokeh
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_altair_bloodhound_results.html">
+     Leveraging Altair to Visualize BloodHound Results
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-projects/threat-hunter-playbook.html">
+   Threat Hunter Playbook
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Workshops
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-workshops/defcon_btv_2020/intro.html">
+   Defcon BTV 2020
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Events
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-events/jupyterthon.html">
+   Infosec Jupyterthon
+  </a>
+ </li>
+</ul>
+
 </nav>
-<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -160,110 +217,149 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/use-cases/data-visualizations/01_data_viz_pandas.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/use-cases/data-visualizations/01_data_viz_pandas.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Edit this page -->
-        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-visualizations/01_data_viz_pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/OTRF/infosec-jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/OTRF/infosec-jupyter-book/issues/new?title=Issue%20on%20page%20%2Fuse-cases/data-visualizations/01_data_viz_pandas.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-visualizations/01_data_viz_pandas.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-        
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/use-cases/data-visualizations/01_data_viz_pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
-                
-            </div>
-        </div>
-        
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/use-cases/data-visualizations/01_data_viz_pandas.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/OTRF/infosec-jupyter-book/blob/master/docs/use-cases/data-visualizations/01_data_viz_pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
         
     </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#description" class="nav-link">Description</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#pre-requisites-reading" class="nav-link">Pre-requisites - Reading</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#importing-libraries" class="nav-link">Importing Libraries</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#line-plot" class="nav-link">Line Plot</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#bar-plots" class="nav-link">Bar Plots</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#pie-charts" class="nav-link">Pie Charts</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#other-charts" class="nav-link">Other charts</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#subplots" class="nav-link">Subplots</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#summary" class="nav-link">Summary</a>
-        </li>
-    
-    </ul>
-</nav>
-
-
-
-<div class="tocsection editthispage">
-    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-visualizations/01_data_viz_pandas.ipynb">
-        <i class="fas fa-pencil-alt"></i> Edit this page
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#description">
+   Description
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pre-requisites-reading">
+     Pre-requisites - Reading
     </a>
-</div>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#importing-libraries">
+   Importing Libraries
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#line-plot">
+   Line Plot
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bar-plots">
+   Bar Plots
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pie-charts">
+   Pie Charts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#other-charts">
+   Other charts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#subplots">
+   Subplots
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
 
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -279,7 +375,7 @@
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 <p>When working with data visualziations can be a powerful tool to help you understand the data that you have, and they can be much more effective at helping you identify patterns, trends, and anomalies than raw data analysis alone can.</p>
-<p>Python has a wide range of excellent, flexible, and powerful data visualization libraries however when working with data in Pandas the built in integration between Pandas and Matplotlib provides the fastest, and easiest way to simply plot your data. If you are planning on creating a complex, interactive visualization you are better placed using something like <code class="xref any docutils literal notranslate"><span class="pre">Bokeh</span></code> but whilst learning or experimenting the features provided by pandas and matplotlib are likely to be enough.</p>
+<p>Python has a wide range of excellent, flexible, and powerful data visualization libraries however when working with data in Pandas the built in integration between Pandas and Matplotlib provides the fastest, and easiest way to simply plot your data. If you are planning on creating a complex, interactive visualization you are better placed using something like <span class="xref myst">Bokeh</span> but whilst learning or experimenting the features provided by pandas and matplotlib are likely to be enough.</p>
 <div class="section" id="pre-requisites-reading">
 <h3>Pre-requisites - Reading<a class="headerlink" href="#pre-requisites-reading" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -296,7 +392,7 @@
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
@@ -304,7 +400,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import our network data - originally from https://github.com/hunters-forge/mordor/tree/master/datasets/large/apt29/day1/zeek</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import our network data - originally from https://github.com/hunters-forge/mordor/tree/master/datasets/large/apt29/day1/zeek</span>
 <span class="n">plotting_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../../datasets/flow_logs.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -316,12 +412,12 @@
 <p>The simplest plot is a line chart, you can plot a line chart of all numerical columns in your Pandas DataFrame with df.plot(). Depending on your dataset this may not produce a very interesting or usable visualization. Often (as with this dataset) this is not the best chart to plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1427df3bac8&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1427df3bac8&gt;
 </pre></div>
 </div>
 <img alt="../../_images/01_data_viz_pandas_6_1.png" src="../../_images/01_data_viz_pandas_6_1.png" />
@@ -333,12 +429,12 @@
 <p>You can plot data in veritcal or horizontal bars. You can also plot on a range of data summarizations such as value_counts() as we are using here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="s1">&#39;src_ip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Source IPs&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="s1">&#39;src_ip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Source IPs&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x142000a6278&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x142000a6278&gt;
 </pre></div>
 </div>
 <img alt="../../_images/01_data_viz_pandas_8_1.png" src="../../_images/01_data_viz_pandas_8_1.png" />
@@ -346,12 +442,12 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="s1">&#39;src_ip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Source IPs&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="s1">&#39;src_ip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Source IPs&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x14200159518&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x14200159518&gt;
 </pre></div>
 </div>
 <img alt="../../_images/01_data_viz_pandas_9_1.png" src="../../_images/01_data_viz_pandas_9_1.png" />
@@ -363,12 +459,12 @@
 <p>There are a number of customizations for each chart such as showing a legend, which is useful for a pie chart.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Destination ports observed&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Destination ports observed&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1420386e2b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1420386e2b0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/01_data_viz_pandas_11_1.png" src="../../_images/01_data_viz_pandas_11_1.png" />
@@ -396,12 +492,12 @@ Avaliable charts:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;dst_port&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;dst_bytes&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Bytes by destination port&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;dst_port&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;dst_bytes&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Bytes by destination port&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x142038094e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x142038094e0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/01_data_viz_pandas_13_1.png" src="../../_images/01_data_viz_pandas_13_1.png" />
@@ -410,12 +506,12 @@ Avaliable charts:</p>
 <p>Some plots can also be done on a Pandas Series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="n">plotting_df</span><span class="p">[</span><span class="s2">&quot;dst_port&quot;</span><span class="p">]</span> <span class="o">&lt;</span><span class="mi">1023</span><span class="p">][</span><span class="s2">&quot;dst_packets&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Packet volume distribution&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="n">plotting_df</span><span class="p">[</span><span class="s2">&quot;dst_port&quot;</span><span class="p">]</span> <span class="o">&lt;</span><span class="mi">1023</span><span class="p">][</span><span class="s2">&quot;dst_packets&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Packet volume distribution&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x142037396a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x142037396a0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/01_data_viz_pandas_15_1.png" src="../../_images/01_data_viz_pandas_15_1.png" />
@@ -423,12 +519,12 @@ Avaliable charts:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="s2">&quot;dst_packets&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">kde</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="s2">&quot;dst_packets&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">kde</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x142004ac048&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x142004ac048&gt;
 </pre></div>
 </div>
 <img alt="../../_images/01_data_viz_pandas_16_1.png" src="../../_images/01_data_viz_pandas_16_1.png" />
@@ -437,12 +533,12 @@ Avaliable charts:</p>
 <p>You can also apply Pandas conditional statements prior to plotting data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="n">plotting_df</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">53</span><span class="p">][</span><span class="s1">&#39;dst_bytes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;DNS sent bytes distribution&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[</span><span class="n">plotting_df</span><span class="p">[</span><span class="s1">&#39;dst_port&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">53</span><span class="p">][</span><span class="s1">&#39;dst_bytes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;DNS sent bytes distribution&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1420379f630&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1420379f630&gt;
 </pre></div>
 </div>
 <img alt="../../_images/01_data_viz_pandas_18_1.png" src="../../_images/01_data_viz_pandas_18_1.png" />
@@ -455,12 +551,12 @@ Avaliable charts:</p>
 You can also resize your plots with the figsize parameter.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[[</span><span class="s1">&#39;dst_bytes&#39;</span><span class="p">,</span><span class="s1">&#39;dst_packets&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">area</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotting_df</span><span class="p">[[</span><span class="s1">&#39;dst_bytes&#39;</span><span class="p">,</span><span class="s1">&#39;dst_packets&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">area</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([&lt;matplotlib.axes._subplots.AxesSubplot object at 0x00000142024548D0&gt;,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&lt;matplotlib.axes._subplots.AxesSubplot object at 0x00000142024548D0&gt;,
        &lt;matplotlib.axes._subplots.AxesSubplot object at 0x00000142024886A0&gt;],
       dtype=object)
 </pre></div>
@@ -472,7 +568,7 @@ You can also resize your plots with the figsize parameter.</p>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p>As you can see Pandas and Matplotlib gives you a very easy and simple way of creating a number of visualizations. Also as is clear with some of these visualizations some fit certain data types better than others, when creating visualizations its important to consider what data you you have and what analysis you are looking to get from the visualization. </br>
-For more details on plotting data with Pandas refer to the <code class="xref any docutils literal notranslate"><span class="pre">documentation</span></code>.</p>
+For more details on plotting data with Pandas refer to the <span class="xref myst">documentation</span>.</p>
 </div>
 </div>
 
@@ -489,8 +585,9 @@ For more details on plotting data with Pandas refer to the <code class="xref any
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "use-cases/data-visualizations"
-        }
+            path: "./use-cases/data-visualizations"
+        },
+        predefinedOutput: true
     }
     </script>
     <script>kernelName = 'python3'</script>
@@ -508,13 +605,15 @@ For more details on plotting data with Pandas refer to the <code class="xref any
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g, Jose Rodriguez (@Cyb3rPandaH)<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 

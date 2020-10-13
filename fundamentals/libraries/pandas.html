@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Introduction to Pandas &#8212; Infosec Jupyter Book</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
@@ -13,9 +14,9 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/sphinx-book-theme.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
@@ -23,12 +24,15 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../_static/thebelab.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://infosecjupyterbook.com/fundamentals/libraries/pandas.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -38,9 +42,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -50,7 +51,7 @@
 <meta property="og:description" content="Introduction to Pandas    Goals:  Learn how to use pandas dataframes  Plot basic charts using dataframes and matplotlib  Reference:  https://pandas.pydata.org/p" />
 <meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
 
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary" />
 
 
   </head>
@@ -60,9 +61,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../../index.html">
   
   <img src="../../_static/logo.png" class="logo" alt="logo">
@@ -79,70 +80,124 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-<li class="navbar-special">
-<p class="margin-caption">Getting Started</p>
-</li>
-  <li class="">
-    <a href="../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/architecture.html">Architecture</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/installation.html">Installation</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Fundamentals</p>
-</li>
-  <li class="">
-    <a href="../programming/intro.html">Programming Languages</a>
-  </li>
-  <li class="active">
-    <a href="intro.html">Libraries</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="numpy_arrays.html">Introduction to NumPy Arrays</a>
-    </li>
-    <li class="active">
-      <a href="">Introduction to Pandas</a>
-    </li>
-  </ul>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Use Cases</p>
-</li>
-  <li class="">
-    <a href="../../use-cases/data-analysis/intro.html">Data Analysis</a>
-  </li>
-  <li class="">
-    <a href="../../use-cases/data-connectors/intro.html">Data Connectors</a>
-  </li>
-  <li class="">
-    <a href="../../use-cases/data-visualizations/intro.html">Data Visualizations</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Projects</p>
-</li>
-  <li class="">
-    <a href="../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Workshops</p>
-</li>
-  <li class="">
-    <a href="../../community-workshops/defcon_btv_2020/intro.html">Defcon BTV 2020</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Events</p>
-</li>
-  <li class="">
-    <a href="../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
-  </li>
+  <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/what_is_jupyter.html">
+   What Is Jupyter?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/installation.html">
+   Installation
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../programming/intro.html">
+   Programming Languages
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="intro.html">
+   Libraries
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="numpy_arrays.html">
+     Introduction to NumPy Arrays
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Introduction to Pandas
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Use Cases
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-analysis/intro.html">
+   Data Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-connectors/intro.html">
+   Data Connectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-visualizations/intro.html">
+   Data Visualizations
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-projects/threat-hunter-playbook.html">
+   Threat Hunter Playbook
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Workshops
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-workshops/defcon_btv_2020/intro.html">
+   Defcon BTV 2020
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Events
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-events/jupyterthon.html">
+   Infosec Jupyterthon
+  </a>
+ </li>
+</ul>
+
 </nav>
-<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -157,130 +212,174 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/fundamentals/libraries/pandas.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/fundamentals/libraries/pandas.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Edit this page -->
-        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/libraries/pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/OTRF/infosec-jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/OTRF/infosec-jupyter-book/issues/new?title=Issue%20on%20page%20%2Ffundamentals/libraries/pandas.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/libraries/pandas.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-        
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/fundamentals/libraries/pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
-                
-            </div>
-        </div>
-        
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/fundamentals/libraries/pandas.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/OTRF/infosec-jupyter-book/blob/master/docs/fundamentals/libraries/pandas.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
         
     </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#goals" class="nav-link">Goals:</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#import-pandas-library" class="nav-link">Import pandas library</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#create-a-serie" class="nav-link">Create a Serie</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#create-a-data-frame" class="nav-link">Create a data frame</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#previewing-the-data-frame" class="nav-link">Previewing the data frame</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#sorting" class="nav-link">Sorting</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#selecting-querying" class="nav-link">Selecting/Querying</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#combining-data-frames" class="nav-link">Combining data frames</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#inner-merge" class="nav-link">Inner Merge</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#left-merge" class="nav-link">Left Merge</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#right-merge" class="nav-link">Right Merge</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#outer-merge" class="nav-link">Outer Merge</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#dropping-columns" class="nav-link">Dropping Columns</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#basic-plotting" class="nav-link">Basic plotting</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-    </ul>
-</nav>
-
-
-
-<div class="tocsection editthispage">
-    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/libraries/pandas.ipynb">
-        <i class="fas fa-pencil-alt"></i> Edit this page
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#goals">
+   Goals:
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#import-pandas-library">
+     Import pandas library
     </a>
-</div>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-a-serie">
+     Create a Serie
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-a-data-frame">
+     Create a data frame
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#previewing-the-data-frame">
+     Previewing the data frame
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sorting">
+     Sorting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#selecting-querying">
+     Selecting/Querying
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#combining-data-frames">
+     Combining data frames
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inner-merge">
+     Inner Merge
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#left-merge">
+     Left Merge
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#right-merge">
+     Right Merge
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outer-merge">
+     Outer Merge
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dropping-columns">
+     Dropping Columns
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basic-plotting">
+     Basic plotting
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
 
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -304,7 +403,7 @@
 <h3>Import pandas library<a class="headerlink" href="#import-pandas-library" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
@@ -328,7 +427,7 @@
 <p>A 1D array similar to a column in spreadsheet</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">])</span>
@@ -338,7 +437,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>0    a
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    a
 1    b
 2    c
 3    d
@@ -353,7 +452,7 @@ dtype: object
 <p>A dataframe is the tabular representation of data. Think of a dataframe as a spreadsheet with column headers and rows.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_data</span><span class="o">=</span><span class="p">[</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_data</span><span class="o">=</span><span class="p">[</span>
     <span class="p">[</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span><span class="s1">&#39;Doberman&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>\
     <span class="p">[</span><span class="s1">&#39;Clementine&#39;</span><span class="p">,</span><span class="s1">&#39;Golden Retriever&#39;</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span>\
     <span class="p">[</span><span class="s1">&#39;Norah&#39;</span><span class="p">,</span><span class="s1">&#39;Great Dane&#39;</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span>\
@@ -367,7 +466,7 @@ dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dog_data</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;breed&#39;</span><span class="p">,</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dog_data</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;breed&#39;</span><span class="p">,</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
 <span class="n">dog_df</span>
 </pre></div>
 </div>
@@ -439,12 +538,12 @@ dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.int64&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.int64&#39;&gt;
 </pre></div>
 </div>
 </div>
@@ -458,7 +557,7 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -527,7 +626,7 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -584,24 +683,24 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">shape</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(6, 3)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6, 3)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">dog_df</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">dog_df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>6
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
 </pre></div>
 </div>
 </div>
@@ -612,12 +711,12 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">columns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">columns</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Index([&#39;name&#39;, &#39;breed&#39;, &#39;age&#39;], dtype=&#39;object&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;name&#39;, &#39;breed&#39;, &#39;age&#39;], dtype=&#39;object&#39;)
 </pre></div>
 </div>
 </div>
@@ -631,12 +730,12 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">dtypes</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">dtypes</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>name     object
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>name     object
 breed    object
 age       int64
 dtype: object
@@ -652,12 +751,12 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">values</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">values</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>array([[&#39;Pedro&#39;, &#39;Doberman&#39;, 3],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&#39;Pedro&#39;, &#39;Doberman&#39;, 3],
        [&#39;Clementine&#39;, &#39;Golden Retriever&#39;, 8],
        [&#39;Norah&#39;, &#39;Great Dane&#39;, 6],
        [&#39;Mabel&#39;, &#39;Austrailian Shepherd&#39;, 1],
@@ -674,7 +773,7 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -744,16 +843,16 @@ dtype: object
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;breed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;breed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Great Dane              2
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Great Dane              2
 Golden Retriever        1
-Maltese                 1
 Doberman                1
 Austrailian Shepherd    1
+Maltese                 1
 Name: breed, dtype: int64
 </pre></div>
 </div>
@@ -767,7 +866,7 @@ Name: breed, dtype: int64
 <h3>Selecting/Querying<a class="headerlink" href="#selecting-querying" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;age&#39;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;age&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -844,7 +943,7 @@ Name: breed, dtype: int64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -891,7 +990,7 @@ Name: breed, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -940,7 +1039,7 @@ Name: breed, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;breed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Great Dane&#39;</span><span class="p">,</span> <span class="s1">&#39;Maltese&#39;</span><span class="p">])]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;breed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Great Dane&#39;</span><span class="p">,</span> <span class="s1">&#39;Maltese&#39;</span><span class="p">])]</span>
 </pre></div>
 </div>
 </div>
@@ -993,7 +1092,7 @@ Name: breed, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Norah&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Norah&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1034,7 +1133,7 @@ Name: breed, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[(</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Bill&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;breed&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Great Dane&#39;</span><span class="p">)]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[(</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Bill&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;breed&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Great Dane&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -1075,7 +1174,7 @@ Name: breed, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1128,7 +1227,7 @@ Name: breed, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;breed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;G&#39;</span><span class="p">)]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dog_df</span><span class="p">[</span><span class="n">dog_df</span><span class="p">[</span><span class="s1">&#39;breed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;G&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -1184,7 +1283,7 @@ Name: breed, dtype: int64
 <h3>Combining data frames<a class="headerlink" href="#combining-data-frames" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">owner_data</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;Bilbo&#39;</span><span class="p">,</span><span class="s1">&#39;Pedro&#39;</span><span class="p">],[</span><span class="s1">&#39;Gandalf&#39;</span><span class="p">,</span><span class="s1">&#39;Bear&#39;</span><span class="p">],[</span><span class="s1">&#39;Sam&#39;</span><span class="p">,</span><span class="s1">&#39;Bill&#39;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">owner_data</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;Bilbo&#39;</span><span class="p">,</span><span class="s1">&#39;Pedro&#39;</span><span class="p">],[</span><span class="s1">&#39;Gandalf&#39;</span><span class="p">,</span><span class="s1">&#39;Bear&#39;</span><span class="p">],[</span><span class="s1">&#39;Sam&#39;</span><span class="p">,</span><span class="s1">&#39;Bill&#39;</span><span class="p">]]</span>
 <span class="n">owner_df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">owner_data</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;owner_name&#39;</span><span class="p">,</span><span class="s1">&#39;dog_name&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -1197,14 +1296,14 @@ Name: breed, dtype: int64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">owner_df</span><span class="p">,</span><span class="n">dog_df</span><span class="p">,</span><span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span><span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">owner_df</span><span class="p">,</span><span class="n">dog_df</span><span class="p">,</span><span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span><span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -1310,14 +1409,14 @@ Name: breed, dtype: int64
 <h3>Inner Merge<a class="headerlink" href="#inner-merge" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inner_df</span> <span class="o">=</span> <span class="n">owner_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dog_df</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inner_df</span> <span class="o">=</span> <span class="n">owner_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dog_df</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inner_df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inner_df</span>
 </pre></div>
 </div>
 </div>
@@ -1378,14 +1477,14 @@ Name: breed, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inner_df</span><span class="o">=</span><span class="n">inner_df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inner_df</span><span class="o">=</span><span class="n">inner_df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inner_df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inner_df</span>
 </pre></div>
 </div>
 </div>
@@ -1445,14 +1544,14 @@ Name: breed, dtype: int64
 <h3>Left Merge<a class="headerlink" href="#left-merge" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">left_df</span> <span class="o">=</span> <span class="n">owner_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dog_df</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">left_df</span> <span class="o">=</span> <span class="n">owner_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dog_df</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">left_df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">left_df</span>
 </pre></div>
 </div>
 </div>
@@ -1516,14 +1615,14 @@ Name: breed, dtype: int64
 <h3>Right Merge<a class="headerlink" href="#right-merge" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">right_df</span> <span class="o">=</span> <span class="n">owner_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dog_df</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">right_df</span> <span class="o">=</span> <span class="n">owner_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dog_df</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">right_df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">right_df</span>
 </pre></div>
 </div>
 </div>
@@ -1564,22 +1663,6 @@ Name: breed, dtype: int64
     </tr>
     <tr>
       <th>1</th>
-      <td>Gandalf</td>
-      <td>Bear</td>
-      <td>Bear</td>
-      <td>Maltese</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Sam</td>
-      <td>Bill</td>
-      <td>Bill</td>
-      <td>Great Dane</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>3</th>
       <td>NaN</td>
       <td>NaN</td>
       <td>Clementine</td>
@@ -1587,7 +1670,7 @@ Name: breed, dtype: int64
       <td>8</td>
     </tr>
     <tr>
-      <th>4</th>
+      <th>2</th>
       <td>NaN</td>
       <td>NaN</td>
       <td>Norah</td>
@@ -1595,12 +1678,28 @@ Name: breed, dtype: int64
       <td>6</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>3</th>
       <td>NaN</td>
       <td>NaN</td>
       <td>Mabel</td>
       <td>Austrailian Shepherd</td>
       <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Gandalf</td>
+      <td>Bear</td>
+      <td>Bear</td>
+      <td>Maltese</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Sam</td>
+      <td>Bill</td>
+      <td>Bill</td>
+      <td>Great Dane</td>
+      <td>10</td>
     </tr>
   </tbody>
 </table>
@@ -1611,14 +1710,14 @@ Name: breed, dtype: int64
 <h3>Outer Merge<a class="headerlink" href="#outer-merge" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">outer_df</span> <span class="o">=</span> <span class="n">owner_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dog_df</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">outer_df</span> <span class="o">=</span> <span class="n">owner_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dog_df</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;dog_name&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">outer_df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">outer_df</span>
 </pre></div>
 </div>
 </div>
@@ -1712,14 +1811,14 @@ Name: breed, dtype: int64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -1779,7 +1878,7 @@ Name: breed, dtype: int64
 <h3>Basic plotting<a class="headerlink" href="#basic-plotting" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
 </pre></div>
 </div>
 </div>
@@ -1787,15 +1886,15 @@ Name: breed, dtype: int64
 <p>Matplotlib is a Python 2D plotting library which produces publication quality figures in a variety of hardcopy formats and interactive environments across platforms.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Will allow us to embed images in the notebook</span>
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Will allow us to embed images in the notebook</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">&#39;col1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
     <span class="s1">&#39;col2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
     <span class="s1">&#39;col3&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
@@ -1810,12 +1909,12 @@ Name: breed, dtype: int64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f997c1d18d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
 <img alt="../../_images/pandas_72_1.png" src="../../_images/pandas_72_1.png" />
@@ -1823,12 +1922,12 @@ Name: breed, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f997c1756a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
 <img alt="../../_images/pandas_73_1.png" src="../../_images/pandas_73_1.png" />
@@ -1836,12 +1935,12 @@ Name: breed, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f997c0b8080&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
 <img alt="../../_images/pandas_74_1.png" src="../../_images/pandas_74_1.png" />
@@ -1864,8 +1963,9 @@ Name: breed, dtype: int64
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "fundamentals/libraries"
-        }
+            path: "./fundamentals/libraries"
+        },
+        predefinedOutput: true
     }
     </script>
     <script>kernelName = 'python3'</script>
@@ -1883,13 +1983,15 @@ Name: breed, dtype: int64
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g, Jose Rodriguez (@Cyb3rPandaH)<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 

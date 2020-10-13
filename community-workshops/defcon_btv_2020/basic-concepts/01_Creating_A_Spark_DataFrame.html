@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Creating a Spark Dataframe &#8212; Infosec Jupyter Book</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../../_static/css/index.css" rel="stylesheet">
@@ -13,9 +14,9 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/sphinx-book-theme.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
@@ -23,12 +24,15 @@
     <script src="../../../_static/togglebutton.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script src="../../../_static/mystnb.js"></script>
     <script src="../../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../../_static/thebelab.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://infosecjupyterbook.com/community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.html" />
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -38,9 +42,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -50,7 +51,7 @@
 <meta property="og:description" content="Creating a Spark Dataframe  Author: Jose Rodriguez (@Cyb3rPandah)  Project: Infosec Jupyter Book  Public Organization: Open Threat Research  License: Creative C" />
 <meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
 
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary" />
 
 
   </head>
@@ -60,9 +61,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../../../index.html">
   
   <img src="../../../_static/logo.png" class="logo" alt="logo">
@@ -79,90 +80,173 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-<li class="navbar-special">
-<p class="margin-caption">Getting Started</p>
-</li>
-  <li class="">
-    <a href="../../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
-  </li>
-  <li class="">
-    <a href="../../../getting-started/architecture.html">Architecture</a>
-  </li>
-  <li class="">
-    <a href="../../../getting-started/installation.html">Installation</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Fundamentals</p>
-</li>
-  <li class="">
-    <a href="../../../fundamentals/programming/intro.html">Programming Languages</a>
-  </li>
-  <li class="">
-    <a href="../../../fundamentals/libraries/intro.html">Libraries</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Use Cases</p>
-</li>
-  <li class="">
-    <a href="../../../use-cases/data-analysis/intro.html">Data Analysis</a>
-  </li>
-  <li class="">
-    <a href="../../../use-cases/data-connectors/intro.html">Data Connectors</a>
-  </li>
-  <li class="">
-    <a href="../../../use-cases/data-visualizations/intro.html">Data Visualizations</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Projects</p>
-</li>
-  <li class="">
-    <a href="../../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Workshops</p>
-</li>
-  <li class="active">
-    <a href="../intro.html">Defcon BTV 2020</a>
-  <ul class="nav sidenav_l2">
-    <li class="active">
-      <a href="intro.html">Basic Data Analysis Concepts</a>
-      <ul class="nav sidenav_l3">
-      <li class="active">
-        <a href="">Creating a Spark Dataframe</a>
-      </li>
-      <li class="">
-        <a href="02_Spark_SQL_View_From_Mordor_dataset.html">Creating a Spark SQL View from a Mordor Dataset</a>
-      </li>
-      <li class="">
-        <a href="03_Filtering_Summarizing.html">Data Analysis with Spark.SQL: Filtering & Summarizing</a>
-      </li>
-      <li class="">
-        <a href="04_Transforming.html">Data Analysis with Spark.SQL: Transforming</a>
-      </li>
-      <li class="">
-        <a href="05_Correlating.html">Data Analysis with Spark.SQL: Correlating</a>
-      </li>
-      <li class="">
-        <a href="06_Visualizing.html">Data Analysis with Spark.SQL: Visualizing</a>
-      </li>
-    </ul>
-    </li>
-    <li class="">
-      <a href="../use-cases/intro.html">Use Cases</a>
-    </li>
-  </ul>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Events</p>
-</li>
-  <li class="">
-    <a href="../../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
-  </li>
+  <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../getting-started/what_is_jupyter.html">
+   What Is Jupyter?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../getting-started/architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../getting-started/installation.html">
+   Installation
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../fundamentals/programming/intro.html">
+   Programming Languages
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../fundamentals/libraries/intro.html">
+   Libraries
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Use Cases
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../use-cases/data-analysis/intro.html">
+   Data Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../use-cases/data-connectors/intro.html">
+   Data Connectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../use-cases/data-visualizations/intro.html">
+   Data Visualizations
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../community-projects/threat-hunter-playbook.html">
+   Threat Hunter Playbook
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Workshops
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="../intro.html">
+   Defcon BTV 2020
+  </a>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="reference internal" href="intro.html">
+     Basic Data Analysis Concepts
+    </a>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       Creating a Spark Dataframe
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="02_Spark_SQL_View_From_Mordor_dataset.html">
+       Creating a Spark SQL View from a Mordor Dataset
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="03_Filtering_Summarizing.html">
+       Data Analysis with Spark.SQL: Filtering &amp; Summarizing
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="04_Transforming.html">
+       Data Analysis with Spark.SQL: Transforming
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="05_Correlating.html">
+       Data Analysis with Spark.SQL: Correlating
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="06_Visualizing.html">
+       Data Analysis with Spark.SQL: Visualizing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../use-cases/intro.html">
+     Use Cases
+    </a>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../use-cases/01_Data_Analysis_Process_Injection.html">
+       Process Injection - CreatRemoteThread
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../use-cases/02_Data_Analysis_DCSync_dcerpc.html">
+       DCSync dcerpc dcerpc
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../use-cases/03_Data_Analysis_RemoteCreateInstance_dcerpc_wmi.html">
+       Remote Create Instance - dcerpc - wmi
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Events
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../community-events/jupyterthon.html">
+   Infosec Jupyterthon
+  </a>
+ </li>
+</ul>
+
 </nav>
-<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -177,110 +261,149 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../../_sources/community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Edit this page -->
-        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/OTRF/infosec-jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/OTRF/infosec-jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcommunity-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-        
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
-                
-            </div>
-        </div>
-        
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/OTRF/infosec-jupyter-book/blob/master/docs/community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
         
     </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#importing-spark-libraries" class="nav-link">Importing Spark libraries</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#creating-spark-session" class="nav-link">Creating Spark session</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#creating-a-spark-sample-dataframe" class="nav-link">Creating a Spark Sample DataFrame</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#create-sample-data" class="nav-link">Create sample data</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#define-dataframe-schema" class="nav-link">Define dataframe schema</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#create-spark-datarame" class="nav-link">Create Spark datarame</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#exposing-spark-dataframe-as-a-sql-view" class="nav-link">Exposing Spark DataFrame as a SQL View</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#testing-a-sql-like-query" class="nav-link">Testing a SQL-like Query</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#thank-you-i-hope-you-enjoyed-it" class="nav-link">Thank you! I hope you enjoyed it!</a>
-        </li>
-    
-    </ul>
-</nav>
-
-
-
-<div class="tocsection editthispage">
-    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/community-workshops/defcon_btv_2020/basic-concepts/01_Creating_A_Spark_DataFrame.ipynb">
-        <i class="fas fa-pencil-alt"></i> Edit this page
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#importing-spark-libraries">
+   Importing Spark libraries
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-spark-session">
+   Creating Spark session
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-spark-sample-dataframe">
+   Creating a Spark Sample DataFrame
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-sample-data">
+     Create sample data
     </a>
-</div>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#define-dataframe-schema">
+     Define dataframe schema
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-spark-datarame">
+     Create Spark datarame
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exposing-spark-dataframe-as-a-sql-view">
+   Exposing Spark DataFrame as a SQL View
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#testing-a-sql-like-query">
+   Testing a SQL-like Query
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#thank-you-i-hope-you-enjoyed-it">
+   Thank you! I hope you enjoyed it!
+  </a>
+ </li>
+</ul>
 
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -297,7 +420,7 @@
 <h2>Importing Spark libraries<a class="headerlink" href="#importing-spark-libraries" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
 </pre></div>
 </div>
 </div>
@@ -307,7 +430,7 @@
 <h2>Creating Spark session<a class="headerlink" href="#creating-spark-session" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span> \
     <span class="o">.</span><span class="n">builder</span> \
     <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;Spark_example&quot;</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.caseSensitive&quot;</span><span class="p">,</span><span class="s2">&quot;True&quot;</span><span class="p">)</span> \
@@ -318,7 +441,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span>
 </pre></div>
 </div>
 </div>
@@ -330,11 +453,11 @@
 <div>
     <p><b>SparkContext</b></p>
 
-    <p><a href="http://712dc416906f:4041">Spark UI</a></p>
+    <p><a href="http://robertos-mbp.fios-router.home:4040">Spark UI</a></p>
 
     <dl>
       <dt>Version</dt>
-        <dd><code>v2.4.5</code></dd>
+        <dd><code>v3.0.0</code></dd>
       <dt>Master</dt>
         <dd><code>local[*]</code></dd>
       <dt>AppName</dt>
@@ -353,7 +476,7 @@
 <p>Security event logs</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogs</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Sysmon&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Process creation&#39;</span><span class="p">),</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogs</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Sysmon&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;Process creation&#39;</span><span class="p">),</span>
              <span class="p">(</span><span class="s1">&#39;Sysmon&#39;</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;A process changed a file creation time&#39;</span><span class="p">),</span>
              <span class="p">(</span><span class="s1">&#39;Sysmon&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;Network connection&#39;</span><span class="p">),</span>
              <span class="p">(</span><span class="s1">&#39;Sysmon&#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39;Sysmon service state changed&#39;</span><span class="p">),</span>
@@ -366,12 +489,12 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">eventLogs</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">eventLogs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>list
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>list
 </pre></div>
 </div>
 </div>
@@ -381,14 +504,14 @@
 <h3>Define dataframe schema<a class="headerlink" href="#define-dataframe-schema" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">([</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">([</span>
    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;Channel&quot;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;Event_Id&quot;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">),</span>
    <span class="n">StructField</span><span class="p">(</span><span class="s2">&quot;Description&quot;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="kc">True</span><span class="p">)])</span>
@@ -401,19 +524,19 @@
 <h3>Create Spark datarame<a class="headerlink" href="#create-spark-datarame" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogsDf</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">eventLogs</span><span class="p">,</span><span class="n">schema</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogsDf</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">eventLogs</span><span class="p">,</span><span class="n">schema</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogsDf</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogsDf</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+--------+--------------------------------------+
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+--------+--------+--------------------------------------+
 |Channel |Event_Id|Description                           |
 +--------+--------+--------------------------------------+
 |Sysmon  |1       |Process creation                      |
@@ -424,19 +547,18 @@
 |Security|4688    |A process has been created            |
 |Security|4697    |A service was installed in the system |
 +--------+--------+--------------------------------------+
-
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">eventLogsDf</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">eventLogsDf</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>pyspark.sql.dataframe.DataFrame
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pyspark.sql.dataframe.DataFrame
 </pre></div>
 </div>
 </div>
@@ -447,7 +569,7 @@
 <h2>Exposing Spark DataFrame as a SQL View<a class="headerlink" href="#exposing-spark-dataframe-as-a-sql-view" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogsDf</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s1">&#39;eventLogs&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eventLogsDf</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s1">&#39;eventLogs&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -458,7 +580,7 @@
 <p>Filtering on <strong>Sysmon</strong> event logs</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sysmonEvents</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sysmonEvents</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">SELECT *</span>
 <span class="sd">FROM eventLogs</span>
@@ -470,12 +592,12 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sysmonEvents</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sysmonEvents</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">truncate</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>+-------+--------+--------------------------------------+
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+-------+--------+--------------------------------------+
 |Channel|Event_Id|Description                           |
 +-------+--------+--------------------------------------+
 |Sysmon |1       |Process creation                      |
@@ -484,7 +606,6 @@
 |Sysmon |4       |Sysmon service state changed          |
 |Sysmon |5       |Process terminated                    |
 +-------+--------+--------------------------------------+
-
 </pre></div>
 </div>
 </div>
@@ -504,15 +625,16 @@
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "pyspark3"
         },
         kernelOptions: {
-            kernelName: "python3",
-            path: "community-workshops/defcon_btv_2020/basic-concepts"
-        }
+            kernelName: "pyspark3",
+            path: "./community-workshops/defcon_btv_2020/basic-concepts"
+        },
+        predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'pyspark3'</script>
 
               </div>
               
@@ -527,13 +649,15 @@
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g, Jose Rodriguez (@Cyb3rPandaH)<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 

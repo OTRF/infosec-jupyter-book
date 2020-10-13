@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Azure Sentinel &#8212; Infosec Jupyter Book</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
@@ -13,9 +14,9 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/sphinx-book-theme.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
@@ -23,12 +24,15 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../_static/thebelab.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://infosecjupyterbook.com/use-cases/data-connectors/azure_sentinel.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -38,9 +42,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -50,7 +51,7 @@
 <meta property="og:description" content="Azure Sentinel  Author: Roberto Rodriguez (@Cyb3rWard0g)  Notes: You can run this notebook from BinderHub! On the top right of your screen click on the rocket a" />
 <meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
 
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary" />
 
 
   </head>
@@ -60,9 +61,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../../index.html">
   
   <img src="../../_static/logo.png" class="logo" alt="logo">
@@ -79,73 +80,129 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-<li class="navbar-special">
-<p class="margin-caption">Getting Started</p>
-</li>
-  <li class="">
-    <a href="../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/architecture.html">Architecture</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/installation.html">Installation</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Fundamentals</p>
-</li>
-  <li class="">
-    <a href="../../fundamentals/programming/intro.html">Programming Languages</a>
-  </li>
-  <li class="">
-    <a href="../../fundamentals/libraries/intro.html">Libraries</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Use Cases</p>
-</li>
-  <li class="">
-    <a href="../data-analysis/intro.html">Data Analysis</a>
-  </li>
-  <li class="active">
-    <a href="intro.html">Data Connectors</a>
-  <ul class="nav sidenav_l2">
-    <li class="">
-      <a href="elasticsearch.html">Elasticsearch</a>
-    </li>
-    <li class="">
-      <a href="splunk.html">Splunk</a>
-    </li>
-    <li class="active">
-      <a href="">Azure Sentinel</a>
-    </li>
-  </ul>
-  </li>
-  <li class="">
-    <a href="../data-visualizations/intro.html">Data Visualizations</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Projects</p>
-</li>
-  <li class="">
-    <a href="../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Workshops</p>
-</li>
-  <li class="">
-    <a href="../../community-workshops/defcon_btv_2020/intro.html">Defcon BTV 2020</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Events</p>
-</li>
-  <li class="">
-    <a href="../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
-  </li>
+  <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/what_is_jupyter.html">
+   What Is Jupyter?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/installation.html">
+   Installation
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fundamentals/programming/intro.html">
+   Programming Languages
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fundamentals/libraries/intro.html">
+   Libraries
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Use Cases
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../data-analysis/intro.html">
+   Data Analysis
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="intro.html">
+   Data Connectors
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="elasticsearch.html">
+     Elasticsearch
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="splunk.html">
+     Splunk
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Azure Sentinel
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../data-visualizations/intro.html">
+   Data Visualizations
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-projects/threat-hunter-playbook.html">
+   Threat Hunter Playbook
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Workshops
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-workshops/defcon_btv_2020/intro.html">
+   Defcon BTV 2020
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Events
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-events/jupyterthon.html">
+   Infosec Jupyterthon
+  </a>
+ </li>
+</ul>
+
 </nav>
-<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -160,104 +217,153 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/use-cases/data-connectors/azure_sentinel.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/use-cases/data-connectors/azure_sentinel.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Edit this page -->
-        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-connectors/azure_sentinel.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/OTRF/infosec-jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/OTRF/infosec-jupyter-book/issues/new?title=Issue%20on%20page%20%2Fuse-cases/data-connectors/azure_sentinel.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-connectors/azure_sentinel.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-        
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/use-cases/data-connectors/azure_sentinel.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
-                
-            </div>
-        </div>
-        
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/use-cases/data-connectors/azure_sentinel.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/OTRF/infosec-jupyter-book/blob/master/docs/use-cases/data-connectors/azure_sentinel.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
         
     </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#using-msticpy" class="nav-link">Using MSTICpy</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#import-libraries" class="nav-link">Import Libraries</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#define-connection-string" class="nav-link">Define Connection String</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#native-kqlmagic-interface" class="nav-link">Native Kqlmagic interface</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#msitcpy-query-interface" class="nav-link">MSITCPy query interface</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h4">
-            <a href="#send-queries-of-arbitrary-complexity-using-kql-or-msticpy" class="nav-link">Send queries of arbitrary complexity (using %%kql or msticpy)</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h4">
-            <a href="#simple-parameterization-of-queries" class="nav-link">Simple parameterization of queries</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-            </ul>
-        </li>
-    
-    </ul>
-</nav>
-
-
-
-<div class="tocsection editthispage">
-    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-connectors/azure_sentinel.ipynb">
-        <i class="fas fa-pencil-alt"></i> Edit this page
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-msticpy">
+   Using MSTICpy
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#import-libraries">
+     Import Libraries
     </a>
-</div>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#define-connection-string">
+     Define Connection String
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#native-kqlmagic-interface">
+     Native Kqlmagic interface
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#msitcpy-query-interface">
+     MSITCPy query interface
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#send-queries-of-arbitrary-complexity-using-kql-or-msticpy">
+       Send queries of arbitrary complexity (using
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         %%kql
+        </span>
+       </code>
+       or
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         msticpy
+        </span>
+       </code>
+       )
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#simple-parameterization-of-queries">
+       Simple parameterization of queries
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
 
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -283,7 +389,7 @@
 <h3>Import Libraries<a class="headerlink" href="#import-libraries" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">msticpy.nbtools.wsconfig</span> <span class="kn">import</span> <span class="n">WorkspaceConfig</span>
@@ -299,12 +405,112 @@
 <p>We are going to authenticate to our demo workspace with an AppKey. Therefore, there is no need for you to pass an azure account or authenticate with your credentials! This is a great demo environment to test your notebooks!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connect_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;loganalytics://workspace=&#39;DEMO_WORKSPACE&#39;;appkey=&#39;DEMO_KEY&#39;;alias=&#39;myworkspace&#39;&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">connect_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;loganalytics://workspace=&#39;DEMO_WORKSPACE&#39;;appkey=&#39;DEMO_KEY&#39;;alias=&#39;myworkspace&#39;&quot;</span>
 <span class="n">qry_prov</span> <span class="o">=</span> <span class="n">QueryProvider</span><span class="p">(</span><span class="s2">&quot;LogAnalytics&quot;</span><span class="p">)</span>
 <span class="n">qry_prov</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">connect_str</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Please wait. Loading Kqlmagic extension...
+</pre></div>
+</div>
+<script type="application/javascript">try {IPython.notebook.kernel.reconnect();} catch(err) {;}</script><script type="application/javascript">try {IPython.notebook.kernel.execute("NOTEBOOK_URL = '" + window.location + "'");} catch(err) {;}</script><script type="application/javascript">try {IPython.notebook.kernel.execute("NOTEBOOK_URL = '" + window.location + "'");} catch(err) {;}</script><div class="output text_html"><!DOCTYPE html>
+            <html><body>
+            <div style=''>
+
+            <button onclick="this.style.visibility='visible';
+            kql_MagicLaunchWindowFunction('kqlmagic/temp_files/377c4ca2-fd5f-4b88-8213-253c01230f59/_myworkspace_at_loganalytics_schema.html', 'fullscreen=no,directories=no,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,titlebar=no,toolbar=no,', '_myworkspace_at_loganalytics_schema', '');
+            kql_MagicCloseWindow(kql_Magic__myworkspace_at_loganalytics_schema, -1, -1);">
+            popup schema myworkspace@loganalytics</button>
+            </div>
+
+            <script>
+            var kql_Magic__myworkspace_at_loganalytics_schema = null;
+
+
+            function kql_MagicCloseWindow(window_obj, obj_secs, itself_secs) {
+                if (obj_secs >= 0) {
+                    _timeout = setTimeout(function(){
+                        window_obj.close();
+                        if (itself_secs >= 0) {
+                            __timeout = setTimeout(function(){window.close();}, itself_secs * 1000);
+                        }
+                    }, obj_secs * 1000);
+                } else if (itself_secs >= 0) {
+                    _timeout = setTimeout(function(){window.close();}, itself_secs * 1000);
+                }
+            }
+
+            function kql_MagicLaunchWindowFunction(file_path, window_params, window_name, host_or_text) {
+                var url;
+                if (host_or_text == 'text') {
+                    url = ''
+                } else if (file_path.startsWith('http')) {
+                    url = file_path;
+                } else {
+                    var base_url = '';
+
+                    // check if azure notebook
+                    var azure_host = (host_or_text == null || host_or_text.length == 0) ? 'https://notebooks.azure.com' : host_or_text;
+                    var start = azure_host.search('//');
+                    var azure_host_suffix = '.' + azure_host.substring(start+2);
+
+                    var loc = String(window.location);
+                    var end = loc.search(azure_host_suffix);
+                    start = loc.search('//');
+                    if (start > 0 && end > 0) {
+                        var parts = loc.substring(start+2, end).split('-');
+                        if (parts.length == 2) {
+                            var library = parts[0];
+                            var user = parts[1];
+                            base_url = azure_host + '/api/user/' +user+ '/library/' +library+ '/html/';
+                        }
+                    }
+
+                    // check if local jupyter lab
+                    if (base_url.length == 0) {
+                        var configDataScipt  = document.getElementById('jupyter-config-data');
+                        if (configDataScipt != null) {
+                            var jupyterConfigData = JSON.parse(configDataScipt.textContent);
+                            if (jupyterConfigData['appName'] == 'JupyterLab' && jupyterConfigData['serverRoot'] != null &&  jupyterConfigData['treeUrl'] != null) {
+                                var basePath = '/Users/cyb3rward0g/Documents/GitHub/infosec-jupyter-book/docs/use-cases/data-connectors' + '/';
+                                if (basePath.startsWith(jupyterConfigData['serverRoot'])) {
+                                    base_url = '/files/' + basePath.substring(jupyterConfigData['serverRoot'].length+1);
+                                }
+                            }
+                        }
+                    }
+
+                    // assume local jupyter notebook
+                    if (base_url.length == 0) {
+
+                        var parts = loc.split('/');
+                        parts.pop();
+                        base_url = parts.join('/') + '/';
+                    }
+                    url = base_url + file_path;
+                }
+
+                window.focus();
+                var w = screen.width / 2;
+                var h = screen.height / 2;
+                params = 'width='+w+',height='+h;
+                // kql_Magic + window_name should be a global variable 
+                window_obj = window.open(url, window_name, window_params + params);
+                if (url == '') {
+                    var el = window_obj.document.createElement('p');
+                    window_obj.document.body.overflow = 'auto';
+                    el.style.top = 0;
+                    el.style.left = 0;
+                    el.innerHTML = file_path;
+                    window_obj.document.body.appendChild(el);
+                }
+                kql_Magic__myworkspace_at_loganalytics_schema = window_obj;
+            }
+            </script>
+
+            </body></html></div><script type="application/javascript">try {IPython.notebook.kernel.execute("NOTEBOOK_URL = '" + window.location + "'");} catch(err) {;}</script></div>
 </div>
 </div>
 <div class="section" id="native-kqlmagic-interface">
@@ -312,17 +518,498 @@
 <p>See https://github.com/Microsoft/jupyter-Kqlmagic</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">kql</span> <span class="n">SecurityEvent</span> <span class="o">|</span> <span class="n">take</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">kql</span> SecurityEvent | take 1
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<script type="application/javascript">try {IPython.notebook.kernel.execute("NOTEBOOK_URL = '" + window.location + "'");} catch(err) {;}</script><div class="output text_html"><html>
+        <head>
+
+
+        </head>
+        <body>
+            <div><p style='padding: 10px; color: #3a87ad; background-color: #d9edf7; border-color: #bce9f1'>&nbsp;*&nbsp;myworkspace@loganalytics</p></div>
+        </body>
+        </html></div><div class="output text_html"><html>
+        <head>
+
+            <title>Kqlmagic - table</title>
+        </head>
+        <body>
+            <table>
+    <tr>
+        <th>TenantId</th>
+        <th>TimeGenerated</th>
+        <th>SourceSystem</th>
+        <th>Account</th>
+        <th>AccountType</th>
+        <th>Computer</th>
+        <th>EventSourceName</th>
+        <th>Channel</th>
+        <th>Task</th>
+        <th>Level</th>
+        <th>EventData</th>
+        <th>EventID</th>
+        <th>Activity</th>
+        <th>PartitionKey</th>
+        <th>RowKey</th>
+        <th>StorageAccount</th>
+        <th>AzureDeploymentID</th>
+        <th>AzureTableName</th>
+        <th>AccessList</th>
+        <th>AccessMask</th>
+        <th>AccessReason</th>
+        <th>AccountDomain</th>
+        <th>AccountExpires</th>
+        <th>AccountName</th>
+        <th>AccountSessionIdentifier</th>
+        <th>AdditionalInfo</th>
+        <th>AdditionalInfo2</th>
+        <th>AllowedToDelegateTo</th>
+        <th>Attributes</th>
+        <th>AuditPolicyChanges</th>
+        <th>AuditsDiscarded</th>
+        <th>AuthenticationLevel</th>
+        <th>AuthenticationPackageName</th>
+        <th>AuthenticationProvider</th>
+        <th>AuthenticationServer</th>
+        <th>AuthenticationService</th>
+        <th>AuthenticationType</th>
+        <th>CACertificateHash</th>
+        <th>CalledStationID</th>
+        <th>CallerProcessId</th>
+        <th>CallerProcessName</th>
+        <th>CallingStationID</th>
+        <th>CAPublicKeyHash</th>
+        <th>CategoryId</th>
+        <th>CertificateDatabaseHash</th>
+        <th>ClassId</th>
+        <th>ClassName</th>
+        <th>ClientAddress</th>
+        <th>ClientIPAddress</th>
+        <th>ClientName</th>
+        <th>CommandLine</th>
+        <th>CompatibleIds</th>
+        <th>DCDNSName</th>
+        <th>DeviceDescription</th>
+        <th>DeviceId</th>
+        <th>DisplayName</th>
+        <th>Disposition</th>
+        <th>DomainBehaviorVersion</th>
+        <th>DomainName</th>
+        <th>DomainPolicyChanged</th>
+        <th>DomainSid</th>
+        <th>EAPType</th>
+        <th>ElevatedToken</th>
+        <th>ErrorCode</th>
+        <th>ExtendedQuarantineState</th>
+        <th>FailureReason</th>
+        <th>FileHash</th>
+        <th>FilePath</th>
+        <th>FilePathNoUser</th>
+        <th>Filter</th>
+        <th>ForceLogoff</th>
+        <th>Fqbn</th>
+        <th>FullyQualifiedSubjectMachineName</th>
+        <th>FullyQualifiedSubjectUserName</th>
+        <th>GroupMembership</th>
+        <th>HandleId</th>
+        <th>HardwareIds</th>
+        <th>HomeDirectory</th>
+        <th>HomePath</th>
+        <th>ImpersonationLevel</th>
+        <th>InterfaceUuid</th>
+        <th>IpAddress</th>
+        <th>IpPort</th>
+        <th>KeyLength</th>
+        <th>LmPackageName</th>
+        <th>LocationInformation</th>
+        <th>LockoutDuration</th>
+        <th>LockoutObservationWindow</th>
+        <th>LockoutThreshold</th>
+        <th>LoggingResult</th>
+        <th>LogonGuid</th>
+        <th>LogonHours</th>
+        <th>LogonID</th>
+        <th>LogonProcessName</th>
+        <th>LogonType</th>
+        <th>LogonTypeName</th>
+        <th>MachineAccountQuota</th>
+        <th>MachineInventory</th>
+        <th>MachineLogon</th>
+        <th>MandatoryLabel</th>
+        <th>MaxPasswordAge</th>
+        <th>MemberName</th>
+        <th>MemberSid</th>
+        <th>MinPasswordAge</th>
+        <th>MinPasswordLength</th>
+        <th>MixedDomainMode</th>
+        <th>NASIdentifier</th>
+        <th>NASIPv4Address</th>
+        <th>NASIPv6Address</th>
+        <th>NASPort</th>
+        <th>NASPortType</th>
+        <th>NetworkPolicyName</th>
+        <th>NewDate</th>
+        <th>NewMaxUsers</th>
+        <th>NewProcessId</th>
+        <th>NewProcessName</th>
+        <th>NewRemark</th>
+        <th>NewShareFlags</th>
+        <th>NewTime</th>
+        <th>NewUacValue</th>
+        <th>NewValue</th>
+        <th>NewValueType</th>
+        <th>ObjectName</th>
+        <th>ObjectServer</th>
+        <th>ObjectType</th>
+        <th>ObjectValueName</th>
+        <th>OemInformation</th>
+        <th>OldMaxUsers</th>
+        <th>OldRemark</th>
+        <th>OldShareFlags</th>
+        <th>OldUacValue</th>
+        <th>OldValue</th>
+        <th>OldValueType</th>
+        <th>OperationType</th>
+        <th>PackageName</th>
+        <th>ParentProcessName</th>
+        <th>PasswordHistoryLength</th>
+        <th>PasswordLastSet</th>
+        <th>PasswordProperties</th>
+        <th>PreviousDate</th>
+        <th>PreviousTime</th>
+        <th>PrimaryGroupId</th>
+        <th>PrivateKeyUsageCount</th>
+        <th>PrivilegeList</th>
+        <th>Process</th>
+        <th>ProcessId</th>
+        <th>ProcessName</th>
+        <th>Properties</th>
+        <th>ProfilePath</th>
+        <th>ProtocolSequence</th>
+        <th>ProxyPolicyName</th>
+        <th>QuarantineHelpURL</th>
+        <th>QuarantineSessionID</th>
+        <th>QuarantineSessionIdentifier</th>
+        <th>QuarantineState</th>
+        <th>QuarantineSystemHealthResult</th>
+        <th>RelativeTargetName</th>
+        <th>RemoteIpAddress</th>
+        <th>RemotePort</th>
+        <th>Requester</th>
+        <th>RequestId</th>
+        <th>RestrictedAdminMode</th>
+        <th>RowsDeleted</th>
+        <th>SamAccountName</th>
+        <th>ScriptPath</th>
+        <th>SecurityDescriptor</th>
+        <th>ServiceAccount</th>
+        <th>ServiceFileName</th>
+        <th>ServiceName</th>
+        <th>ServiceStartType</th>
+        <th>ServiceType</th>
+        <th>SessionName</th>
+        <th>ShareLocalPath</th>
+        <th>ShareName</th>
+        <th>SidHistory</th>
+        <th>Status</th>
+        <th>SubjectAccount</th>
+        <th>SubcategoryGuid</th>
+        <th>SubcategoryId</th>
+        <th>Subject</th>
+        <th>SubjectDomainName</th>
+        <th>SubjectKeyIdentifier</th>
+        <th>SubjectLogonId</th>
+        <th>SubjectMachineName</th>
+        <th>SubjectMachineSID</th>
+        <th>SubjectUserName</th>
+        <th>SubjectUserSid</th>
+        <th>SubStatus</th>
+        <th>TableId</th>
+        <th>TargetAccount</th>
+        <th>TargetDomainName</th>
+        <th>TargetInfo</th>
+        <th>TargetLinkedLogonId</th>
+        <th>TargetLogonGuid</th>
+        <th>TargetLogonId</th>
+        <th>TargetOutboundDomainName</th>
+        <th>TargetOutboundUserName</th>
+        <th>TargetServerName</th>
+        <th>TargetSid</th>
+        <th>TargetUser</th>
+        <th>TargetUserName</th>
+        <th>TargetUserSid</th>
+        <th>TemplateContent</th>
+        <th>TemplateDSObjectFQDN</th>
+        <th>TemplateInternalName</th>
+        <th>TemplateOID</th>
+        <th>TemplateSchemaVersion</th>
+        <th>TemplateVersion</th>
+        <th>TokenElevationType</th>
+        <th>TransmittedServices</th>
+        <th>UserAccountControl</th>
+        <th>UserParameters</th>
+        <th>UserPrincipalName</th>
+        <th>UserWorkstations</th>
+        <th>VirtualAccount</th>
+        <th>VendorIds</th>
+        <th>Workstation</th>
+        <th>WorkstationName</th>
+        <th>SourceComputerId</th>
+        <th>EventOriginId</th>
+        <th>MG</th>
+        <th>TimeCollected</th>
+        <th>ManagementGroupName</th>
+        <th>Type</th>
+        <th>_ResourceId</th>
+    </tr>
+    <tr>
+        <td>ddcfc599-cae0-48ee-9026-2ec12172512f</td>
+        <td>2020-09-04 15:43:22.283000+00:00</td>
+        <td>OpsManager</td>
+        <td>WORKGROUP\JBOX00$</td>
+        <td>Machine</td>
+        <td>JBOX00</td>
+        <td>Microsoft-Windows-Security-Auditing</td>
+        <td>Security</td>
+        <td>13312</td>
+        <td>8</td>
+        <td></td>
+        <td>4688</td>
+        <td>4688 - A new process has been created.</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>None</td>
+        <td>None</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>None</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>&quot;C:\Program Files\Microsoft Monitoring Agent\Agent\Health Service State\ICT 2\CMF-64/DesiredStateConfiguration\DscRun.exe&quot; GetInventory &quot;C:\Program Files\Microsoft Monitoring Agent\Agent\Health Service State\ICT 2\work\Registry.mof&quot; &quot;C:\Program Files\Microsoft Monitoring Agent\Agent\Health Service State\ICT 2\work&quot;</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>None</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>None</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>None</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>S-1-16-16384</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>0x1058</td>
+        <td>C:\Program Files\Microsoft Monitoring Agent\Agent\Health Service State\ICT 2\CMF-64\DesiredStateConfiguration\DscRun.exe</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>C:\Program Files\Microsoft Monitoring Agent\Agent\MonitoringHost.exe</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>DscRun.exe</td>
+        <td>0xdf0</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>None</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>WORKGROUP\JBOX00$</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>WORKGROUP</td>
+        <td></td>
+        <td>0x3e7</td>
+        <td></td>
+        <td></td>
+        <td>JBOX00$</td>
+        <td>S-1-5-18</td>
+        <td></td>
+        <td></td>
+        <td>-\-</td>
+        <td>-</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>0x0</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>-</td>
+        <td>S-1-0-0</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>%%1936</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>4ccd31fe-3d9c-498c-837d-14eb0bb365e6</td>
+        <td>691cce14-a5b0-4555-86b0-951d6995e731</td>
+        <td>00000000-0000-0000-0000-000000000001</td>
+        <td>2020-09-04 15:43:53.513000+00:00</td>
+        <td>AOI-ddcfc599-cae0-48ee-9026-2ec12172512f</td>
+        <td>SecurityEvent</td>
+        <td>/subscriptions/5733bcb3-7fde-4caf-8629-41dc15e3b352/resourcegroups/ch-opsrg-pri/providers/microsoft.compute/virtualmachines/ch-jboxvm00</td>
+    </tr>
+</table>
+        </body>
+        </html></div><div class="output text_html"><html>
+        <head>
+
+
+        </head>
+        <body>
+            <div><p style='padding: 10px; color: #3a87ad; background-color: #d9edf7; border-color: #bce9f1'>Done&nbsp;(00:00.952):&nbsp;1&nbsp;records</p></div>
+        </body>
+        </html></div><div class="output text_html"></div></div>
 </div>
 </div>
 <div class="section" id="msitcpy-query-interface">
 <h3>MSITCPy query interface<a class="headerlink" href="#msitcpy-query-interface" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alerts_df</span> <span class="o">=</span> <span class="n">qry_prov</span><span class="o">.</span><span class="n">exec_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alerts_df</span> <span class="o">=</span> <span class="n">qry_prov</span><span class="o">.</span><span class="n">exec_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">SecurityAlert </span>
 <span class="s2">| take 10</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
@@ -331,12 +1018,182 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<script type="application/javascript">try {IPython.notebook.kernel.execute("NOTEBOOK_URL = '" + window.location + "'");} catch(err) {;}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TenantId</th>
+      <th>TimeGenerated</th>
+      <th>DisplayName</th>
+      <th>AlertName</th>
+      <th>AlertSeverity</th>
+      <th>Description</th>
+      <th>ProviderName</th>
+      <th>VendorName</th>
+      <th>VendorOriginalId</th>
+      <th>SystemAlertId</th>
+      <th>...</th>
+      <th>ExtendedProperties</th>
+      <th>Entities</th>
+      <th>SourceSystem</th>
+      <th>WorkspaceSubscriptionId</th>
+      <th>WorkspaceResourceGroup</th>
+      <th>ExtendedLinks</th>
+      <th>ProductName</th>
+      <th>ProductComponentName</th>
+      <th>AlertLink</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ddcfc599-cae0-48ee-9026-2ec12172512f</td>
+      <td>2020-06-22 15:32:15+00:00</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>High</td>
+      <td>Machine logs indicate that the suspicious proc...</td>
+      <td>MSTIC</td>
+      <td>Microsoft</td>
+      <td>9901617c-c26b-4a87-a496-68ab08d37605</td>
+      <td>2518095455988289169_9901617c-c26b-4a87-a496-68...</td>
+      <td>...</td>
+      <td>{\r\n  "Compromised Host": "VICTIM00",\r\n  "U...</td>
+      <td>[\r\n  {\r\n    "$id": "4",\r\n    "DnsDomain"...</td>
+      <td>Detection</td>
+      <td>5733bcb3-7fde-4caf-8629-41dc15e3b352</td>
+      <td>ch-opsrg-pri</td>
+      <td></td>
+      <td>Azure Security Center</td>
+      <td></td>
+      <td>https://portal.azure.com/#blade/Microsoft_Azur...</td>
+      <td>SecurityAlert</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ddcfc599-cae0-48ee-9026-2ec12172512f</td>
+      <td>2020-06-23 15:36:28+00:00</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>High</td>
+      <td>Machine logs indicate that the suspicious proc...</td>
+      <td>MSTIC</td>
+      <td>Microsoft</td>
+      <td>249cf59e-56d5-49a8-a7f4-afef445bb5c9</td>
+      <td>2518094591997622353_249cf59e-56d5-49a8-a7f4-af...</td>
+      <td>...</td>
+      <td>{\r\n  "Compromised Host": "VICTIM00",\r\n  "U...</td>
+      <td>[\r\n  {\r\n    "$id": "4",\r\n    "DnsDomain"...</td>
+      <td>Detection</td>
+      <td>5733bcb3-7fde-4caf-8629-41dc15e3b352</td>
+      <td>ch-opsrg-pri</td>
+      <td></td>
+      <td>Azure Security Center</td>
+      <td></td>
+      <td>https://portal.azure.com/#blade/Microsoft_Azur...</td>
+      <td>SecurityAlert</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ddcfc599-cae0-48ee-9026-2ec12172512f</td>
+      <td>2020-06-25 15:43:07+00:00</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>High</td>
+      <td>Machine logs indicate that the suspicious proc...</td>
+      <td>MSTIC</td>
+      <td>Microsoft</td>
+      <td>30d669d1-f135-4b8f-9ecd-b865eac8ed34</td>
+      <td>2518092863996329708_30d669d1-f135-4b8f-9ecd-b8...</td>
+      <td>...</td>
+      <td>{\r\n  "Compromised Host": "VICTIM00",\r\n  "U...</td>
+      <td>[\r\n  {\r\n    "$id": "4",\r\n    "DnsDomain"...</td>
+      <td>Detection</td>
+      <td>5733bcb3-7fde-4caf-8629-41dc15e3b352</td>
+      <td>ch-opsrg-pri</td>
+      <td></td>
+      <td>Azure Security Center</td>
+      <td></td>
+      <td>https://portal.azure.com/#blade/Microsoft_Azur...</td>
+      <td>SecurityAlert</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ddcfc599-cae0-48ee-9026-2ec12172512f</td>
+      <td>2020-06-24 15:39:36+00:00</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>High</td>
+      <td>Machine logs indicate that the suspicious proc...</td>
+      <td>MSTIC</td>
+      <td>Microsoft</td>
+      <td>1e8d1946-ecba-4b5b-a17f-100933c9078c</td>
+      <td>2518093727996968682_1e8d1946-ecba-4b5b-a17f-10...</td>
+      <td>...</td>
+      <td>{\r\n  "Compromised Host": "VICTIM00",\r\n  "U...</td>
+      <td>[\r\n  {\r\n    "$id": "4",\r\n    "DnsDomain"...</td>
+      <td>Detection</td>
+      <td>5733bcb3-7fde-4caf-8629-41dc15e3b352</td>
+      <td>ch-opsrg-pri</td>
+      <td></td>
+      <td>Azure Security Center</td>
+      <td></td>
+      <td>https://portal.azure.com/#blade/Microsoft_Azur...</td>
+      <td>SecurityAlert</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ddcfc599-cae0-48ee-9026-2ec12172512f</td>
+      <td>2020-06-26 15:46:36+00:00</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>Suspicious process executed [seen multiple times]</td>
+      <td>High</td>
+      <td>Machine logs indicate that the suspicious proc...</td>
+      <td>MSTIC</td>
+      <td>Microsoft</td>
+      <td>d6bc109d-6f53-48d7-8c9b-4717afedbe44</td>
+      <td>2518091999994429218_d6bc109d-6f53-48d7-8c9b-47...</td>
+      <td>...</td>
+      <td>{\r\n  "Compromised Host": "VICTIM00",\r\n  "U...</td>
+      <td>[\r\n  {\r\n    "$id": "4",\r\n    "DnsDomain"...</td>
+      <td>Detection</td>
+      <td>5733bcb3-7fde-4caf-8629-41dc15e3b352</td>
+      <td>ch-opsrg-pri</td>
+      <td></td>
+      <td>Azure Security Center</td>
+      <td></td>
+      <td>https://portal.azure.com/#blade/Microsoft_Azur...</td>
+      <td>SecurityAlert</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 30 columns</p>
+</div></div></div>
 </div>
 <div class="section" id="send-queries-of-arbitrary-complexity-using-kql-or-msticpy">
 <h4>Send queries of arbitrary complexity (using <code class="docutils literal notranslate"><span class="pre">%%kql</span></code> or <code class="docutils literal notranslate"><span class="pre">msticpy</span></code>)<a class="headerlink" href="#send-queries-of-arbitrary-complexity-using-kql-or-msticpy" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">events_df</span> <span class="o">=</span> <span class="n">qry_prov</span><span class="o">.</span><span class="n">exec_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">events_df</span> <span class="o">=</span> <span class="n">qry_prov</span><span class="o">.</span><span class="n">exec_query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">SecurityEvent</span>
 <span class="s2">| where TimeGenerated between (ago(1d) .. now())</span>
 <span class="s2">| summarize EventCount=count() by EventID</span>
@@ -346,13 +1203,69 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<script type="application/javascript">try {IPython.notebook.kernel.execute("NOTEBOOK_URL = '" + window.location + "'");} catch(err) {;}</script><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EventID</th>
+      <th>EventCount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4688</td>
+      <td>142482</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8002</td>
+      <td>136887</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4624</td>
+      <td>52456</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4672</td>
+      <td>36501</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4634</td>
+      <td>48898</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x126af2ad0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/azure_sentinel_11_3.png" src="../../_images/azure_sentinel_11_3.png" />
+</div>
 </div>
 </div>
 <div class="section" id="simple-parameterization-of-queries">
 <h4>Simple parameterization of queries<a class="headerlink" href="#simple-parameterization-of-queries" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="n">param_query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">SecurityEvent</span>
 <span class="s2">| where TimeGenerated between (datetime(</span><span class="si">{start}</span><span class="s2">) .. datetime(</span><span class="si">{end}</span><span class="s2">))</span>
@@ -370,6 +1283,62 @@
 <span class="n">events_df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;EventID&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;EventCount&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;EventCount&quot;</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/javascript">try {IPython.notebook.kernel.execute("NOTEBOOK_URL = '" + window.location + "'");} catch(err) {;}</script><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EventID</th>
+      <th>EventCount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4688</td>
+      <td>430621</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8002</td>
+      <td>414002</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4624</td>
+      <td>158420</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4672</td>
+      <td>110916</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4634</td>
+      <td>147810</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x126a87ed0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/azure_sentinel_13_3.png" src="../../_images/azure_sentinel_13_3.png" />
 </div>
 </div>
 </div>
@@ -390,8 +1359,9 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "use-cases/data-connectors"
-        }
+            path: "./use-cases/data-connectors"
+        },
+        predefinedOutput: true
     }
     </script>
     <script>kernelName = 'python3'</script>
@@ -409,13 +1379,15 @@
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g, Jose Rodriguez (@Cyb3rPandaH)<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 

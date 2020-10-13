@@ -1,0 +1,1313 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Análisis de Datos con Pandas - Filtrando y Resumiendo Datos &#8212; Infosec Jupyter Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://infosecjupyterbook.com/fundamentals/libraries/3_Analisis_Datos_Pandas_Filtrando_Resumiendo_Datos.html" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://infosecjupyterbook.com/fundamentals/libraries/3_Analisis_Datos_Pandas_Filtrando_Resumiendo_Datos.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Análisis de Datos con Pandas - Filtrando y Resumiendo Datos" />
+<meta property="og:description" content="Análisis de Datos con Pandas - Filtrando y Resumiendo Datos  Autor: Jose Rodriguez (@Cyb3rPandah)  Proyecto: Infosec Jupyter Book  Organización Pública: Open Th" />
+<meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
+
+<meta name="twitter:card" content="summary" />
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Infosec Jupyter Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/what_is_jupyter.html">
+   What Is Jupyter?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/installation.html">
+   Installation
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../programming/intro.html">
+   Programming Languages
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Libraries
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Use Cases
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-analysis/intro.html">
+   Data Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-connectors/intro.html">
+   Data Connectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-visualizations/intro.html">
+   Data Visualizations
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-projects/threat-hunter-playbook.html">
+   Threat Hunter Playbook
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Workshops
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-workshops/defcon_btv_2020/intro.html">
+   Defcon BTV 2020
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Events
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-events/jupyterthon.html">
+   Infosec Jupyterthon
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/fundamentals/libraries/3_Analisis_Datos_Pandas_Filtrando_Resumiendo_Datos.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/OTRF/infosec-jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/OTRF/infosec-jupyter-book/issues/new?title=Issue%20on%20page%20%2Ffundamentals/libraries/3_Analisis_Datos_Pandas_Filtrando_Resumiendo_Datos.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/libraries/3_Analisis_Datos_Pandas_Filtrando_Resumiendo_Datos.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/fundamentals/libraries/3_Analisis_Datos_Pandas_Filtrando_Resumiendo_Datos.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/OTRF/infosec-jupyter-book/blob/master/docs/fundamentals/libraries/3_Analisis_Datos_Pandas_Filtrando_Resumiendo_Datos.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#representando-el-archivo-json-como-dataframe-usando-pandas">
+   Representando el Archivo JSON como Dataframe usando Pandas
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-importando-la-libreria-pandas">
+     a) Importando la librería Pandas
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-leyendo-archivo-json">
+     b) Leyendo Archivo JSON
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-conociendo-las-columnas-o-atributos-del-dataframe">
+     c) Conociendo las columnas o atributos del Dataframe
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filtrando-columnas-o-atributos-de-nuestro-dataframe">
+   Filtrando Columnas o Atributos de nuestro Dataframe
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filtrando-filas-o-registros-de-nuestro-dataframe">
+   Filtrando Filas o Registros de nuestro Dataframe
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-una-condicion">
+     a) Una condición
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-mas-de-una-condicion-operadores-and-y-or">
+     b) Más de una condición: Operadores AND y OR
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resumiendo-filas-o-registros-de-nuestro-dataframe">
+   Resumiendo Filas o Registros de nuestro Dataframe
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-resumiendo-los-eventos-de-seguridad-para-el-proveedor-sysmon">
+     a) Resumiendo los eventos de seguridad para el proveedor Sysmon
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-resumiendo-y-ordenando-los-eventos-de-seguridad-para-el-proveedor-sysmon">
+     b)  Resumiendo y Ordenando los eventos de seguridad para el proveedor Sysmon
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#muchas-gracias-espero-que-este-notebooks-haya-sido-util-para-empezar-a-revisar-algunas-tecnicas-para-filtrar-y-resumir-datos-d">
+   Muchas gracias!! Espero que este notebooks haya sido útil para empezar a revisar algunas técnicas para filtrar y resumir datos :D
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aun-hay-mas-por-aprender-d">
+   Aún hay más por aprender :D
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="analisis-de-datos-con-pandas-filtrando-y-resumiendo-datos">
+<h1>Análisis de Datos con Pandas - Filtrando y Resumiendo Datos<a class="headerlink" href="#analisis-de-datos-con-pandas-filtrando-y-resumiendo-datos" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><strong>Autor</strong>: Jose Rodriguez (&#64;Cyb3rPandah)</p></li>
+<li><p><strong>Proyecto</strong>: Infosec Jupyter Book</p></li>
+<li><p><strong>Organización Pública</strong>: <a class="reference external" href="https://github.com/OTRF">Open Threat Research</a></p></li>
+<li><p><strong>Licencia</strong>: <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p></li>
+<li><p><strong>Referencia</strong>: https://mordordatasets.com/notebooks/small/windows/02_execution/SDWIN-200806115603.html</p></li>
+</ul>
+<div class="section" id="representando-el-archivo-json-como-dataframe-usando-pandas">
+<h2>Representando el Archivo JSON como Dataframe usando Pandas<a class="headerlink" href="#representando-el-archivo-json-como-dataframe-usando-pandas" title="Permalink to this headline">¶</a></h2>
+<p>La representación del archivo JSON como un Dataframe de Pandas puede involucrar el uso de comandos como <strong>wget</strong>, <strong>unzip</strong>. Esto fue explicado con más detalle en el notebook que lleva por título <strong>Representando el Archivo JSON como Dataframe usando Pandas</strong>, y además se encuentra en la misma carpeta del presente notebook. Para mantener la estructura del presente notebok en un formato simple, los JSON files requeridos para este workshop ya han sido desargados y descomprimidos. Estos archivos se encuentran en la carpeta <strong>sets_datos</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psremoting_json</span> <span class="o">=</span> <span class="s1">&#39;sets_datos/covenant_psremoting_command_2020-08-06115603.json&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="a-importando-la-libreria-pandas">
+<h3>a) Importando la librería Pandas<a class="headerlink" href="#a-importando-la-libreria-pandas" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="b-leyendo-archivo-json">
+<h3>b) Leyendo Archivo JSON<a class="headerlink" href="#b-leyendo-archivo-json" title="Permalink to this headline">¶</a></h3>
+<p>Usaremos el método <strong>pandas.read_json</strong>.</p>
+<p>Referencia: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_json.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">path_or_buf</span> <span class="o">=</span> <span class="n">psremoting_json</span><span class="p">,</span> <span class="n">lines</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tags</th>
+      <th>@version</th>
+      <th>EventType</th>
+      <th>Version</th>
+      <th>ThreadID</th>
+      <th>EventTime</th>
+      <th>Task</th>
+      <th>AccountType</th>
+      <th>PipeName</th>
+      <th>Channel</th>
+      <th>...</th>
+      <th>ContextInfo</th>
+      <th>Payload</th>
+      <th>AdditionalInfo</th>
+      <th>AdditionalInfo2</th>
+      <th>OperationType</th>
+      <th>Properties</th>
+      <th>MiniportNameLen</th>
+      <th>MiniportName</th>
+      <th>param3</th>
+      <th>param4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>ConnectPipe</td>
+      <td>1.0</td>
+      <td>4208</td>
+      <td>2020-08-06 11:56:04</td>
+      <td>18</td>
+      <td>User</td>
+      <td>\lsass</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>INFO</td>
+      <td>3.0</td>
+      <td>4208</td>
+      <td>2020-08-06 11:56:05</td>
+      <td>10</td>
+      <td>User</td>
+      <td>NaN</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>INFO</td>
+      <td>3.0</td>
+      <td>4208</td>
+      <td>2020-08-06 11:56:05</td>
+      <td>10</td>
+      <td>User</td>
+      <td>NaN</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>AUDIT_SUCCESS</td>
+      <td>1.0</td>
+      <td>1808</td>
+      <td>2020-08-06 11:56:06</td>
+      <td>12810</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Security</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>AUDIT_SUCCESS</td>
+      <td>1.0</td>
+      <td>1808</td>
+      <td>2020-08-06 11:56:06</td>
+      <td>12810</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Security</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 180 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="c-conociendo-las-columnas-o-atributos-del-dataframe">
+<h3>c) Conociendo las columnas o atributos del Dataframe<a class="headerlink" href="#c-conociendo-las-columnas-o-atributos-del-dataframe" title="Permalink to this headline">¶</a></h3>
+<p>Usaremos el método <strong>pandas.DataFrame.info</strong>.</p>
+<p>Referencia: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 4284 entries, 0 to 4283
+Data columns (total 180 columns):
+ #   Column                     Dtype  
+---  ------                     -----  
+ 0   tags                       object 
+ 1   @version                   int64  
+ 2   EventType                  object 
+ 3   Version                    float64
+ 4   ThreadID                   int64  
+ 5   EventTime                  object 
+ 6   Task                       int64  
+ 7   AccountType                object 
+ 8   PipeName                   object 
+ 9   Channel                    object 
+ 10  EventTypeOrignal           object 
+ 11  SourceName                 object 
+ 12  Hostname                   object 
+ 13  @timestamp                 object 
+ 14  OpcodeValue                float64
+ 15  Message                    object 
+ 16  SourceModuleName           object 
+ 17  ProcessId                  object 
+ 18  EventReceivedTime          object 
+ 19  port                       int64  
+ 20  AccountName                object 
+ 21  UtcTime                    object 
+ 22  Domain                     object 
+ 23  ExecutionProcessID         int64  
+ 24  host                       object 
+ 25  Severity                   object 
+ 26  SeverityValue              int64  
+ 27  EventID                    int64  
+ 28  UserID                     object 
+ 29  ProviderGuid               object 
+ 30  RecordNumber               int64  
+ 31  Image                      object 
+ 32  Keywords                   int64  
+ 33  ProcessGuid                object 
+ 34  SourceModuleType           object 
+ 35  RuleName                   object 
+ 36  TargetProcessGUID          object 
+ 37  SourceProcessGUID          object 
+ 38  CallTrace                  object 
+ 39  SourceImage                object 
+ 40  GrantedAccess              object 
+ 41  SourceProcessId            object 
+ 42  SourceThreadId             float64
+ 43  TargetProcessId            object 
+ 44  TargetImage                object 
+ 45  DestAddress                object 
+ 46  SourcePort                 float64
+ 47  Category                   object 
+ 48  Opcode                     object 
+ 49  Application                object 
+ 50  Direction                  object 
+ 51  RemoteMachineID            object 
+ 52  DestPort                   float64
+ 53  LayerRTID                  float64
+ 54  LayerName                  object 
+ 55  SourceAddress              object 
+ 56  FilterRTID                 float64
+ 57  Protocol                   object 
+ 58  RemoteUserID               object 
+ 59  TargetObject               object 
+ 60  SubjectLogonId             object 
+ 61  PrivilegeList              object 
+ 62  SubjectDomainName          object 
+ 63  SubjectUserSid             object 
+ 64  SubjectUserName            object 
+ 65  TargetDomainName           object 
+ 66  ElevatedToken              object 
+ 67  TargetOutboundDomainName   object 
+ 68  IpPort                     object 
+ 69  ImpersonationLevel         object 
+ 70  ProcessName                object 
+ 71  KeyLength                  float64
+ 72  TargetOutboundUserName     object 
+ 73  RestrictedAdminMode        object 
+ 74  LogonProcessName           object 
+ 75  LogonGuid                  object 
+ 76  WorkstationName            object 
+ 77  TargetLinkedLogonId        object 
+ 78  TargetLogonId              object 
+ 79  TargetUserSid              object 
+ 80  TransmittedServices        object 
+ 81  IpAddress                  object 
+ 82  LmPackageName              object 
+ 83  TargetUserName             object 
+ 84  AuthenticationPackageName  object 
+ 85  VirtualAccount             object 
+ 86  LogonType                  float64
+ 87  GroupMembership            object 
+ 88  EventIdx                   float64
+ 89  EventCountTotal            float64
+ 90  DestinationPortName        object 
+ 91  DestinationIp              object 
+ 92  SourceIp                   object 
+ 93  Initiated                  object 
+ 94  DestinationHostname        object 
+ 95  SourceHostname             object 
+ 96  DestinationPort            float64
+ 97  SourceIsIpv6               object 
+ 98  User                       object 
+ 99  DestinationIsIpv6          object 
+ 100 SourcePortName             object 
+ 101 ActivityID                 object 
+ 102 ObjectType                 object 
+ 103 AccessMask                 object 
+ 104 AccessList                 object 
+ 105 ShareName                  object 
+ 106 Device                     object 
+ 107 EnabledPrivilegeList       object 
+ 108 DisabledPrivilegeList      object 
+ 109 ShareLocalPath             object 
+ 110 AccessReason               object 
+ 111 RelativeTargetName         object 
+ 112 Details                    object 
+ 113 OriginalFileName           object 
+ 114 ParentCommandLine          object 
+ 115 ParentProcessId            float64
+ 116 FileVersion                object 
+ 117 Company                    object 
+ 118 CurrentDirectory           object 
+ 119 IntegrityLevel             object 
+ 120 CommandLine                object 
+ 121 ParentImage                object 
+ 122 LogonId                    object 
+ 123 Hashes                     object 
+ 124 Description                object 
+ 125 TerminalSessionId          float64
+ 126 ParentProcessGuid          object 
+ 127 Product                    object 
+ 128 Signed                     object 
+ 129 SignatureStatus            object 
+ 130 Signature                  object 
+ 131 ImageLoaded                object 
+ 132 ObjectName                 object 
+ 133 ResourceAttributes         object 
+ 134 TransactionId              object 
+ 135 RestrictedSidCount         float64
+ 136 ObjectServer               object 
+ 137 HandleId                   object 
+ 138 SourceHandleId             object 
+ 139 TargetHandleId             object 
+ 140 NewProcessName             object 
+ 141 NewProcessId               object 
+ 142 TokenElevationType         object 
+ 143 MandatoryLabel             object 
+ 144 ParentProcessName          object 
+ 145 Service                    object 
+ 146 NewSd                      object 
+ 147 OldSd                      object 
+ 148 TargetFilename             object 
+ 149 CreationUtcTime            object 
+ 150 Path                       object 
+ 151 Priority                   float64
+ 152 TaskName                   object 
+ 153 Status                     object 
+ 154 IsExecutable               object 
+ 155 Archived                   object 
+ 156 QueryResults               object 
+ 157 QueryName                  object 
+ 158 QueryStatus                float64
+ 159 TargetServerName           object 
+ 160 TargetLogonGuid            object 
+ 161 TargetInfo                 object 
+ 162 TicketEncryptionType       object 
+ 163 ServiceName                object 
+ 164 ServiceSid                 object 
+ 165 PreAuthType                float64
+ 166 TargetSid                  object 
+ 167 TicketOptions              object 
+ 168 param1                     object 
+ 169 param2                     object 
+ 170 ContextInfo                object 
+ 171 Payload                    object 
+ 172 AdditionalInfo             object 
+ 173 AdditionalInfo2            object 
+ 174 OperationType              object 
+ 175 Properties                 object 
+ 176 MiniportNameLen            float64
+ 177 MiniportName               object 
+ 178 param3                     object 
+ 179 param4                     object 
+dtypes: float64(19), int64(9), object(152)
+memory usage: 5.9+ MB
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="filtrando-columnas-o-atributos-de-nuestro-dataframe">
+<h2>Filtrando Columnas o Atributos de nuestro Dataframe<a class="headerlink" href="#filtrando-columnas-o-atributos-de-nuestro-dataframe" title="Permalink to this headline">¶</a></h2>
+<p>Seleccionando las columnas <strong>‘&#64;timestamp’,’Hostname’,’Channel’,’EventID’</strong> usando una <strong>lista</strong> con los nombres de las columnas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;@timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>@timestamp</th>
+      <th>Hostname</th>
+      <th>Channel</th>
+      <th>ParentImage</th>
+      <th>Image</th>
+      <th>EventID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-08-06T15:56:07.158Z</td>
+      <td>MORDORDC.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>C:\windows\system32\dns.exe</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-08-06T15:56:07.158Z</td>
+      <td>MORDORDC.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-08-06T15:56:07.158Z</td>
+      <td>MORDORDC.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-08-06T15:56:08.170Z</td>
+      <td>WORKSTATION5.theshire.local</td>
+      <td>Security</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5156</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-08-06T15:56:08.170Z</td>
+      <td>WORKSTATION5.theshire.local</td>
+      <td>Security</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5156</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="filtrando-filas-o-registros-de-nuestro-dataframe">
+<h2>Filtrando Filas o Registros de nuestro Dataframe<a class="headerlink" href="#filtrando-filas-o-registros-de-nuestro-dataframe" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-una-condicion">
+<h3>a) Una condición<a class="headerlink" href="#a-una-condicion" title="Permalink to this headline">¶</a></h3>
+<p>Filtrando nombres de procesos que incluyan el string <strong>wsmprovhost.exe</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;@timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
+    
+<span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;wsmprovhost.exe&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)]</span>
+    
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>@timestamp</th>
+      <th>Hostname</th>
+      <th>Channel</th>
+      <th>ParentImage</th>
+      <th>Image</th>
+      <th>EventID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>656</th>
+      <td>2020-08-06T15:56:24.416Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>C:\Windows\System32\svchost.exe</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>666</th>
+      <td>2020-08-06T15:56:24.419Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>669</th>
+      <td>2020-08-06T15:56:24.420Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>2020-08-06T15:56:24.423Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>675</th>
+      <td>2020-08-06T15:56:24.424Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="b-mas-de-una-condicion-operadores-and-y-or">
+<h3>b) Más de una condición: Operadores AND y OR<a class="headerlink" href="#b-mas-de-una-condicion-operadores-and-y-or" title="Permalink to this headline">¶</a></h3>
+<p>Podemos usar múltiples condiciones usando los operadores <strong>&amp;</strong> (AND) y <strong>|</strong> (OR). El uso de parentesis es importante cuando trabajamos con múltiples condiciones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;@timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
+    
+<span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;wsmprovhost.exe&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))</span> <span class="o">|</span>
+  <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;wsmprovhost.exe&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))]</span>    
+
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>@timestamp</th>
+      <th>Hostname</th>
+      <th>Channel</th>
+      <th>ParentImage</th>
+      <th>Image</th>
+      <th>EventID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>656</th>
+      <td>2020-08-06T15:56:24.416Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>C:\Windows\System32\svchost.exe</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>666</th>
+      <td>2020-08-06T15:56:24.419Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>669</th>
+      <td>2020-08-06T15:56:24.420Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>2020-08-06T15:56:24.423Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>675</th>
+      <td>2020-08-06T15:56:24.424Z</td>
+      <td>WORKSTATION6.theshire.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>NaN</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="resumiendo-filas-o-registros-de-nuestro-dataframe">
+<h2>Resumiendo Filas o Registros de nuestro Dataframe<a class="headerlink" href="#resumiendo-filas-o-registros-de-nuestro-dataframe" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-resumiendo-los-eventos-de-seguridad-para-el-proveedor-sysmon">
+<h3>a) Resumiendo los eventos de seguridad para el proveedor Sysmon<a class="headerlink" href="#a-resumiendo-los-eventos-de-seguridad-para-el-proveedor-sysmon" title="Permalink to this headline">¶</a></h3>
+<p>Ahora podemos realizar la agrupación del dataframe anterior usando el método <strong>groupby</strong> y la columna que representa el número de identificaión del evento de seguridad.</p>
+<p>Referencia: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;@timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
+    
+<span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;wsmprovhost.exe&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))</span> <span class="o">|</span>
+  <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;wsmprovhost.exe&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))]</span>    
+
+<span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;EventID&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EventID
+1       1
+5       1
+7      91
+11      3
+12    148
+17      1
+18      1
+23      2
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>El código ejecutado previamente nos devuelve una <strong>Serie</strong>. En caso quisieramos convertir este objeto a un <strong>dataframe</strong>, podemos usar el método <strong>to_frame</strong>.</p>
+<p>Referencia: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_frame.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;@timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
+    
+<span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;wsmprovhost.exe&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))</span> <span class="o">|</span>
+  <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;wsmprovhost.exe&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))]</span>    
+
+<span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;EventID&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Frequencia&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Frequencia</th>
+    </tr>
+    <tr>
+      <th>EventID</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>91</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>148</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="b-resumiendo-y-ordenando-los-eventos-de-seguridad-para-el-proveedor-sysmon">
+<h3>b)  Resumiendo y Ordenando los eventos de seguridad para el proveedor Sysmon<a class="headerlink" href="#b-resumiendo-y-ordenando-los-eventos-de-seguridad-para-el-proveedor-sysmon" title="Permalink to this headline">¶</a></h3>
+<p>Similar al codigo anterior, pero ahora vamos a agregar la operacion de ordenamiento usando el método <strong>sort_values</strong>.</p>
+<p>Referencia: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sort_values.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;@timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
+    
+<span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;wsmprovhost.exe&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))</span> <span class="o">|</span>
+  <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;ParentImage&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;wsmprovhost.exe&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))]</span>    
+
+<span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;EventID&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Frequencia&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="s1">&#39;Frequencia&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Frequencia</th>
+    </tr>
+    <tr>
+      <th>EventID</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12</th>
+      <td>148</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>91</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="muchas-gracias-espero-que-este-notebooks-haya-sido-util-para-empezar-a-revisar-algunas-tecnicas-para-filtrar-y-resumir-datos-d">
+<h2>Muchas gracias!! Espero que este notebooks haya sido útil para empezar a revisar algunas técnicas para filtrar y resumir datos :D<a class="headerlink" href="#muchas-gracias-espero-que-este-notebooks-haya-sido-util-para-empezar-a-revisar-algunas-tecnicas-para-filtrar-y-resumir-datos-d" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="aun-hay-mas-por-aprender-d">
+<h2>Aún hay más por aprender :D<a class="headerlink" href="#aun-hay-mas-por-aprender-d" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "OTRF/infosec-jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "pyspark3"
+        },
+        kernelOptions: {
+            kernelName: "pyspark3",
+            path: "./fundamentals/libraries"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'pyspark3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g, Jose Rodriguez (@Cyb3rPandaH)<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>

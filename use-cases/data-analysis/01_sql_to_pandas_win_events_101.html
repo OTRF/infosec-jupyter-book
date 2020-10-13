@@ -2,9 +2,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SQL to Pandas with Windows Events 101 &#8212; Infosec Jupyter Book</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../../_static/css/index.css" rel="stylesheet">
@@ -13,9 +14,9 @@
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/sphinx-book-theme.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
@@ -23,12 +24,15 @@
     <script src="../../_static/togglebutton.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/mystnb.js"></script>
     <script src="../../_static/sphinx-book-theme.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
-    <script async="async" src="../../_static/thebelab.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://infosecjupyterbook.com/use-cases/data-analysis/01_sql_to_pandas_win_events_101.html" />
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -38,9 +42,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
-<!-- Put requirejs at the end so it's always after bootstrap -->
-<!-- TODO: remove this once https://github.com/pandas-dev/pydata-sphinx-theme/pull/149 is merged -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 
 
 <!-- Opengraph tags -->
@@ -50,7 +51,7 @@
 <meta property="og:description" content="SQL to Pandas with Windows Events 101  Author: Jose Rodriguez (@Cyb3rPandah)  Project: Infosec Jupyter Book  Public Organization: Open Threat Research  License:" />
 <meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
 
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary" />
 
 
   </head>
@@ -60,9 +61,9 @@
     <div class="container-xl">
       <div class="row">
           
-
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    <div class="navbar-brand-box">
+    
+        <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../../index.html">
   
   <img src="../../_static/logo.png" class="logo" alt="logo">
@@ -79,73 +80,129 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-<li class="navbar-special">
-<p class="margin-caption">Getting Started</p>
-</li>
-  <li class="">
-    <a href="../../getting-started/what_is_jupyter.html">What Is Jupyter?</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/architecture.html">Architecture</a>
-  </li>
-  <li class="">
-    <a href="../../getting-started/installation.html">Installation</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Fundamentals</p>
-</li>
-  <li class="">
-    <a href="../../fundamentals/programming/intro.html">Programming Languages</a>
-  </li>
-  <li class="">
-    <a href="../../fundamentals/libraries/intro.html">Libraries</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Use Cases</p>
-</li>
-  <li class="active">
-    <a href="intro.html">Data Analysis</a>
-  <ul class="nav sidenav_l2">
-    <li class="active">
-      <a href="">SQL to Pandas with Windows Events 101</a>
-    </li>
-    <li class="">
-      <a href="02_bloodhound_explore_kerberoastable_users.html">Explore Kerberoastable Users with BloodHound</a>
-    </li>
-    <li class="">
-      <a href="03_analyzing_rpc_methods_relationships_graphframes.html">Analyzing Windows RPC Methods & Other Functions Via GraphFrames</a>
-    </li>
-  </ul>
-  </li>
-  <li class="">
-    <a href="../data-connectors/intro.html">Data Connectors</a>
-  </li>
-  <li class="">
-    <a href="../data-visualizations/intro.html">Data Visualizations</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Projects</p>
-</li>
-  <li class="">
-    <a href="../../community-projects/threat-hunter-playbook.html">Threat Hunter Playbook</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Workshops</p>
-</li>
-  <li class="">
-    <a href="../../community-workshops/defcon_btv_2020/intro.html">Defcon BTV 2020</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">Community Events</p>
-</li>
-  <li class="">
-    <a href="../../community-events/jupyterthon.html">Infosec Jupyterthon</a>
-  </li>
+  <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/what_is_jupyter.html">
+   What Is Jupyter?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/installation.html">
+   Installation
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fundamentals/programming/intro.html">
+   Programming Languages
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../fundamentals/libraries/intro.html">
+   Libraries
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Use Cases
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="intro.html">
+   Data Analysis
+  </a>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     SQL to Pandas with Windows Events 101
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_bloodhound_explore_kerberoastable_users.html">
+     Explore Kerberoastable Users with BloodHound
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_analyzing_rpc_methods_relationships_graphframes.html">
+     Analyzing Windows RPC Methods &amp; Other Functions Via GraphFrames
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../data-connectors/intro.html">
+   Data Connectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../data-visualizations/intro.html">
+   Data Visualizations
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-projects/threat-hunter-playbook.html">
+   Threat Hunter Playbook
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Workshops
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-workshops/defcon_btv_2020/intro.html">
+   Defcon BTV 2020
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Events
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-events/jupyterthon.html">
+   Infosec Jupyterthon
+  </a>
+ </li>
+</ul>
+
 </nav>
-<p class="navbar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -160,168 +217,219 @@
     </div>
     <div class="col pl-2 topbar-main">
         
-        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
             <i class="fas fa-bars"></i>
             <i class="fas fa-arrow-left"></i>
             <i class="fas fa-arrow-up"></i>
         </button>
+        
         <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
 
-            
-            <div class="dropdown-buttons">
-                <!-- ipynb file if we had a myst markdown file -->
-                
-                <!-- Download raw file -->
-                <a class="dropdown-buttons" href="../../_sources/use-cases/data-analysis/01_sql_to_pandas_win_events_101.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
-                <!-- Download PDF via print -->
-                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-            </div>
-            
-        </div>
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/use-cases/data-analysis/01_sql_to_pandas_win_events_101.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
 
-        <!-- Edit this page -->
-        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-analysis/01_sql_to_pandas_win_events_101.ipynb"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" title="Edit this page"><i class="fas fa-pencil-alt"></i></button></a>
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/OTRF/infosec-jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/OTRF/infosec-jupyter-book/issues/new?title=Issue%20on%20page%20%2Fuse-cases/data-analysis/01_sql_to_pandas_win_events_101.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-analysis/01_sql_to_pandas_win_events_101.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
-        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
-        
-        <div class="dropdown-buttons-trigger">
-            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-            <div class="dropdown-buttons">
-                
-                <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/use-cases/data-analysis/01_sql_to_pandas_win_events_101.ipynb"><button type="button" class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip" data-placement="left"><img class="binder-button-logo" src="../../_static/images/logo_binder.svg" alt="Interact on binder">Binder</button></a>
-                
-                
-                <button type="button" class="btn btn-secondary topbarbtn thebelab-launch-button" onclick="initThebelab()" title="Launch Thebelab" data-toggle="tooltip" data-placement="left"><i class="fas fa-rocket"></i><span style="margin-left: .4em;">ThebeLab</span></button>
-                
-            </div>
-        </div>
-        
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/use-cases/data-analysis/01_sql_to_pandas_win_events_101.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/OTRF/infosec-jupyter-book/blob/master/docs/use-cases/data-analysis/01_sql_to_pandas_win_events_101.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
         
     </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#description" class="nav-link">Description</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#pre-requisites-reading" class="nav-link">Pre-requisites - Reading</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#importing-libraries" class="nav-link">Importing Libraries</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#importing-mordor-demo-dataset" class="nav-link">Importing Mordor Demo Dataset</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#reading-json-mordor-file" class="nav-link">Reading JSON Mordor File</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#leveraging-pandas-for-security-from-a-sql-perspective" class="nav-link">Leveraging Pandas for Security from a SQL perspective</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#select" class="nav-link">SELECT</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#calculated-column" class="nav-link">Calculated Column</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#where" class="nav-link">WHERE</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#or-and-boolean-operators" class="nav-link">OR & AND Boolean Operators</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h4">
-            <a href="#looking-for-new-applications-being-executed-for-the-first-time" class="nav-link">Looking for new applications being executed for the first time</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#null-checking" class="nav-link">NULL Checking</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#group-by" class="nav-link">GROUP BY</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#multiple-functions" class="nav-link">Multiple Functions</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#grouping-by-more-than-one-column" class="nav-link">Grouping By more than one column</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#join" class="nav-link">JOIN</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#inner-join" class="nav-link">INNER JOIN</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#left-outer-join" class="nav-link">LEFT OUTER JOIN</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#right-join" class="nav-link">RIGHT JOIN</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#full-join" class="nav-link">FULL JOIN</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#thank-you-i-hope-you-enjoyed-it" class="nav-link">Thank you! I hope you enjoyed it!</a>
-        </li>
-    
-    </ul>
-</nav>
-
-
-
-<div class="tocsection editthispage">
-    <a href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/use-cases/data-analysis/01_sql_to_pandas_win_events_101.ipynb">
-        <i class="fas fa-pencil-alt"></i> Edit this page
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#description">
+   Description
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pre-requisites-reading">
+     Pre-requisites - Reading
     </a>
-</div>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#importing-libraries">
+   Importing Libraries
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#importing-mordor-demo-dataset">
+   Importing Mordor Demo Dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reading-json-mordor-file">
+   Reading JSON Mordor File
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#leveraging-pandas-for-security-from-a-sql-perspective">
+   Leveraging Pandas for Security from a SQL perspective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#select">
+   SELECT
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculated-column">
+     Calculated Column
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#where">
+   WHERE
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#or-and-boolean-operators">
+     OR &amp; AND Boolean Operators
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#looking-for-new-applications-being-executed-for-the-first-time">
+       Looking for new applications being executed for the first time
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#null-checking">
+     NULL Checking
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#group-by">
+   GROUP BY
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multiple-functions">
+     Multiple Functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grouping-by-more-than-one-column">
+     Grouping By more than one column
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#join">
+   JOIN
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inner-join">
+     INNER JOIN
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#left-outer-join">
+     LEFT OUTER JOIN
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#right-join">
+     RIGHT JOIN
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#full-join">
+     FULL JOIN
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#thank-you-i-hope-you-enjoyed-it">
+   Thank you! I hope you enjoyed it!
+  </a>
+ </li>
+</ul>
 
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
-        <div class="col-12 col-md-9 col-xxl-7 pl-md-3 pr-md-0">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
         
               <div>
                 
@@ -354,7 +462,7 @@
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">openhunt</span> <span class="kn">import</span> <span class="n">mordorutils</span> <span class="k">as</span> <span class="n">mu</span>
@@ -375,7 +483,7 @@
 <p>Let’s start by using the <code class="docutils literal notranslate"><span class="pre">getMordorZipFile</span></code> method from the <code class="docutils literal notranslate"><span class="pre">mordorutils</span></code> module to download and decompress the dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mordorUrl</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/OTRF/infosec-jupyter-book/blob/master/datasets/apt29_evals_day1_manual_demo.zip&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mordorUrl</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/OTRF/infosec-jupyter-book/blob/master/datasets/apt29_evals_day1_manual_demo.zip&#39;</span>
 <span class="n">mordorFilePath</span> <span class="o">=</span> <span class="n">mu</span><span class="o">.</span><span class="n">getMordorZipFile</span><span class="p">(</span><span class="n">mordorUrl</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -387,14 +495,14 @@
 <p>Next, we use the <code class="docutils literal notranslate"><span class="pre">read_json</span></code> method from <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to read the JSON file (Decompressed dataset) that returns a DataFrame. We are going to use that variable throughout the notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt29</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">mordorFilePath</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">apt29</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">mordorFilePath</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt29</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">apt29</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -485,7 +593,7 @@
 <p>With pandas, column selection is done by passing a list of column names to your DataFrame. We can select a few columns from the APT29 dataset as shown below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
 <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="p">)</span>
@@ -570,7 +678,7 @@
 <p>With pandas, you can use the <strong>DataFrame.assign()</strong> method of a DataFrame to append a new column. As a proof of concept, we can add a new column named <strong>Hostname_Length</strong> to the right of our DataFrame to calculate the number of characters in the Hostname field. We are going to show another example that could provide more context to our data analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Hostname_Length</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -666,7 +774,7 @@
 <p>DataFrames can be <strong>filtered</strong> in multiple ways. According to pandas docs, the most intuitive way is by using <strong>boolean indexing</strong>. We can filter our APT29 DataFrame and show only Windows events from the <strong>Microsoft-Windows-Sysmon/Operational</strong> provider.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Hostname_Length</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -761,7 +869,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -859,7 +967,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;ProcessGuid&#39;</span><span class="p">,</span><span class="s1">&#39;ProcessId&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;TargetObject&#39;</span><span class="p">]]</span>
     
 <span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> 
@@ -953,7 +1061,7 @@
 <p>We can use what we have learned so far and look for new application in the AppCompat registery keys. This is an indicator of applications executing for the first time.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;ProcessId&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;TargetObject&#39;</span><span class="p">]]</span>
     
 <span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> 
@@ -1082,7 +1190,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -1146,7 +1254,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -1252,7 +1360,7 @@
 <p>The pandas equvalent would be:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -1265,7 +1373,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Hostname
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hostname
 NASHUA.dmevals.local       61
 NEWYORK.dmevals.local      18
 SCRANTON.dmevals.local    359
@@ -1278,7 +1386,7 @@ dtype: int64
 <p>We can use this technique and group Sysmon Event ID 1 events by the process name.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -1369,7 +1477,7 @@ dtype: int64
 <p>In the previous example, I used <strong>size()</strong> and not <strong>count()</strong>. This is because <strong>count()</strong> applies the function to every column and the result does not consider <strong>null records</strong>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -1461,7 +1569,7 @@ dtype: int64
 <p>Alternatively, we can also use the <strong>count()</strong> method to a specific column. In the example below, we are doing it on the <strong>CommandLine</strong> column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -1474,7 +1582,7 @@ dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>Hostname
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hostname
 NASHUA.dmevals.local       61
 NEWYORK.dmevals.local      18
 SCRANTON.dmevals.local    358
@@ -1496,7 +1604,7 @@ Name: CommandLine, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -1575,7 +1683,7 @@ Name: CommandLine, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
 
 <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
@@ -1741,42 +1849,42 @@ Name: CommandLine, dtype: int64
 <p>JOINs can be performed with <strong>join()</strong> or <strong>merge()</strong>. By default, join() will join the DataFrames on their indices if a type of join is not specified. Each method has parameters allowing you to specify the type of join to perform <strong>(LEFT, RIGHT, INNER, FULL)</strong> or the columns to join on <strong>(column names or indices)</strong>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dataframe with information of Security event 4624: An account was successfully logged on</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dataframe with information of Security event 4624: An account was successfully logged on</span>
 <span class="n">Security4624</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;security&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4624</span><span class="p">)]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
 <span class="n">Security4624</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(297, 55)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(297, 55)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dataframe with information of Security event 4688: A new process has been created</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dataframe with information of Security event 4688: A new process has been created</span>
 <span class="n">Security4688</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;security&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4688</span><span class="p">)]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
 <span class="n">Security4688</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(460, 42)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(460, 42)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dataframe with information of Security event 4697: A service was installed in the system</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dataframe with information of Security event 4697: A service was installed in the system</span>
 <span class="n">Security4697</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;security&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4697</span><span class="p">)]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
 <span class="n">Security4697</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(23, 37)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(23, 37)
 </pre></div>
 </div>
 </div>
@@ -1786,7 +1894,7 @@ Name: CommandLine, dtype: int64
 <p>In the example below, we are looking for <strong>New Processes</strong> being created by accounts that were authenticated over the network (Logon Type 3). This query looks for potential <strong>Lateral Movement</strong> techniques. Without looking for <strong>“wsmprovhost.exe”</strong> which is an indication of <strong>PSRemoting</strong>, I was able to get there by focusing on the behavior of accounts authenticating over the network and creating new processes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># merge performs an INNER JOIN by default</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># merge performs an INNER JOIN by default</span>
 <span class="p">(</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4688</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
          <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;inner&#39;</span><span class="p">)</span>
@@ -1845,7 +1953,7 @@ Name: CommandLine, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># merge performs an INNER JOIN by default</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># merge performs an INNER JOIN by default</span>
 <span class="p">(</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4697</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
          <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;SubjectLogonId&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;inner&#39;</span><span class="p">)</span>
@@ -1913,7 +2021,7 @@ Name: CommandLine, dtype: int64
 <p>Same query as before, but in the example below we use the <strong>LEFT</strong> join type for the <strong>how</strong> parameter. We can see a new service installed named <strong>javamtsup</strong>. If you look at the emulation plan for Day 1, we know tha the javamtsup service was installed locally and not over the network. That service was used for persistence.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4697</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
          <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;SubjectLogonId&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
 <span class="p">[[</span><span class="s1">&#39;ServiceName&#39;</span><span class="p">,</span> <span class="s1">&#39;ServiceFileName&#39;</span><span class="p">,</span><span class="s1">&#39;IpAddress&#39;</span><span class="p">]]</span>
@@ -2094,7 +2202,7 @@ Name: CommandLine, dtype: int64
 <p>Same query as before, but in the example below we use the <strong>RIGHT</strong> join type for the <strong>how</strong> parameter. We can see also a new service installing</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4697</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
          <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;SubjectLogonId&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span>
 <span class="p">[[</span><span class="s1">&#39;ServiceName&#39;</span><span class="p">,</span> <span class="s1">&#39;ServiceFileName&#39;</span><span class="p">,</span><span class="s1">&#39;IpAddress&#39;</span><span class="p">]]</span>
@@ -2204,7 +2312,7 @@ Name: CommandLine, dtype: int64
 <p>pandas also allows for FULL JOINs, which display both sides of the dataset, whether or not the joined columns find a match. As of writing, FULL JOINs are not supported in all RDBMS (MySQL).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4697</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
          <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;SubjectLogonId&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;outer&#39;</span><span class="p">)</span>
 <span class="p">[[</span><span class="s1">&#39;ServiceName&#39;</span><span class="p">,</span> <span class="s1">&#39;ServiceFileName&#39;</span><span class="p">,</span><span class="s1">&#39;IpAddress&#39;</span><span class="p">]]</span>
@@ -2328,8 +2436,9 @@ Name: CommandLine, dtype: int64
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "use-cases/data-analysis"
-        }
+            path: "./use-cases/data-analysis"
+        },
+        predefinedOutput: true
     }
     </script>
     <script>kernelName = 'python3'</script>
@@ -2347,13 +2456,15 @@ Name: CommandLine, dtype: int64
 
     </div>
     <footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    <p>
-          &copy; Copyright 2020.<br/>
-        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
-    </p>
-  </div>
-</footer>
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g, Jose Rodriguez (@Cyb3rPandaH)<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
 </main>
 
 

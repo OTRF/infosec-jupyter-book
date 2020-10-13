@@ -1,0 +1,61 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/usr/local/lib/python3.8/site-packages/nbclient/client.py", line 1082, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/usr/local/lib/python3.8/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/usr/local/lib/python3.8/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/local/Cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/usr/local/lib/python3.8/site-packages/nbclient/client.py", line 535, in async_execute
+    await self.async_execute_cell(
+  File "/usr/local/lib/python3.8/site-packages/nbclient/client.py", line 827, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/usr/local/lib/python3.8/site-packages/nbclient/client.py", line 735, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply['content'])
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+processInjectionJson = '../datasets/empire_psinject_2020-08-07143205.json'
+
+processInjectionDf = spark.read.json(processInjectionJson)
+
+processInjectionDf.createOrReplaceTempView('processInjection')
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mAnalysisException[0m                         Traceback (most recent call last)
+[0;32m<ipython-input-3-9df0a539e03e>[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0mprocessInjectionJson[0m [0;34m=[0m [0;34m'../datasets/empire_psinject_2020-08-07143205.json'[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      2[0m [0;34m[0m[0m
+[0;32m----> 3[0;31m [0mprocessInjectionDf[0m [0;34m=[0m [0mspark[0m[0;34m.[0m[0mread[0m[0;34m.[0m[0mjson[0m[0;34m([0m[0mprocessInjectionJson[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      4[0m [0;34m[0m[0m
+[1;32m      5[0m [0mprocessInjectionDf[0m[0;34m.[0m[0mcreateOrReplaceTempView[0m[0;34m([0m[0;34m'processInjection'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/var/lib/spark/python/pyspark/sql/readwriter.py[0m in [0;36mjson[0;34m(self, path, schema, primitivesAsString, prefersDecimal, allowComments, allowUnquotedFieldNames, allowSingleQuotes, allowNumericLeadingZero, allowBackslashEscapingAnyCharacter, mode, columnNameOfCorruptRecord, dateFormat, timestampFormat, multiLine, allowUnquotedControlChars, lineSep, samplingRatio, dropFieldIfAllNull, encoding, locale, pathGlobFilter, recursiveFileLookup)[0m
+[1;32m    298[0m             [0mpath[0m [0;34m=[0m [0;34m[[0m[0mpath[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    299[0m         [0;32mif[0m [0mtype[0m[0;34m([0m[0mpath[0m[0;34m)[0m [0;34m==[0m [0mlist[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 300[0;31m             [0;32mreturn[0m [0mself[0m[0;34m.[0m[0m_df[0m[0;34m([0m[0mself[0m[0;34m.[0m[0m_jreader[0m[0;34m.[0m[0mjson[0m[0;34m([0m[0mself[0m[0;34m.[0m[0m_spark[0m[0;34m.[0m[0m_sc[0m[0;34m.[0m[0m_jvm[0m[0;34m.[0m[0mPythonUtils[0m[0;34m.[0m[0mtoSeq[0m[0;34m([0m[0mpath[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    301[0m         [0;32melif[0m [0misinstance[0m[0;34m([0m[0mpath[0m[0;34m,[0m [0mRDD[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    302[0m             [0;32mdef[0m [0mfunc[0m[0;34m([0m[0miterator[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/var/lib/spark/python/lib/py4j-0.10.9-src.zip/py4j/java_gateway.py[0m in [0;36m__call__[0;34m(self, *args)[0m
+[1;32m   1302[0m [0;34m[0m[0m
+[1;32m   1303[0m         [0manswer[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mgateway_client[0m[0;34m.[0m[0msend_command[0m[0;34m([0m[0mcommand[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1304[0;31m         return_value = get_return_value(
+[0m[1;32m   1305[0m             answer, self.gateway_client, self.target_id, self.name)
+[1;32m   1306[0m [0;34m[0m[0m
+
+[0;32m/var/lib/spark/python/pyspark/sql/utils.py[0m in [0;36mdeco[0;34m(*a, **kw)[0m
+[1;32m    135[0m                 [0;31m# Hide where the exception came from that shows a non-Pythonic[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    136[0m                 [0;31m# JVM exception message.[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 137[0;31m                 [0mraise_from[0m[0;34m([0m[0mconverted[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    138[0m             [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    139[0m                 [0;32mraise[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/var/lib/spark/python/pyspark/sql/utils.py[0m in [0;36mraise_from[0;34m(e)[0m
+
+[0;31mAnalysisException[0m: Path does not exist: file:/private/var/folders/lt/s5djww754m90lmrtcf_077xm0000gn/T/datasets/empire_psinject_2020-08-07143205.json;
+AnalysisException: Path does not exist: file:/private/var/folders/lt/s5djww754m90lmrtcf_077xm0000gn/T/datasets/empire_psinject_2020-08-07143205.json;
+

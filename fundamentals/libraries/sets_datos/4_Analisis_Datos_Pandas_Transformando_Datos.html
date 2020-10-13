@@ -1,0 +1,1239 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Análisis de Datos con Pandas - Transformando Datos &#8212; Infosec Jupyter Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://infosecjupyterbook.com/fundamentals/libraries/sets_datos/4_Analisis_Datos_Pandas_Transformando_Datos.html" />
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://infosecjupyterbook.com/fundamentals/libraries/sets_datos/4_Analisis_Datos_Pandas_Transformando_Datos.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Análisis de Datos con Pandas - Transformando Datos" />
+<meta property="og:description" content="Análisis de Datos con Pandas - Transformando Datos  Autor: Jose Rodriguez (@Cyb3rPandah)  Proyecto: Infosec Jupyter Book  Organización Pública: Open Threat Rese" />
+<meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
+
+<meta name="twitter:card" content="summary" />
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Infosec Jupyter Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../getting-started/what_is_jupyter.html">
+   What Is Jupyter?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../getting-started/architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../getting-started/installation.html">
+   Installation
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../programming/intro.html">
+   Programming Languages
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Libraries
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Use Cases
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../use-cases/data-analysis/intro.html">
+   Data Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../use-cases/data-connectors/intro.html">
+   Data Connectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../use-cases/data-visualizations/intro.html">
+   Data Visualizations
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../community-projects/threat-hunter-playbook.html">
+   Threat Hunter Playbook
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Workshops
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../community-workshops/defcon_btv_2020/intro.html">
+   Defcon BTV 2020
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Events
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../community-events/jupyterthon.html">
+   Infosec Jupyterthon
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/fundamentals/libraries/sets_datos/4_Analisis_Datos_Pandas_Transformando_Datos.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/OTRF/infosec-jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/OTRF/infosec-jupyter-book/issues/new?title=Issue%20on%20page%20%2Ffundamentals/libraries/sets_datos/4_Analisis_Datos_Pandas_Transformando_Datos.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/libraries/sets_datos/4_Analisis_Datos_Pandas_Transformando_Datos.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/fundamentals/libraries/sets_datos/4_Analisis_Datos_Pandas_Transformando_Datos.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/OTRF/infosec-jupyter-book/blob/master/docs/fundamentals/libraries/sets_datos/4_Analisis_Datos_Pandas_Transformando_Datos.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#representando-el-archivo-json-como-dataframe-usando-pandas">
+   Representando el Archivo JSON como Dataframe usando Pandas
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-importando-la-libreria-pandas">
+     a) Importando la librería Pandas
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-leyendo-archivo-json">
+     b) Leyendo Archivo JSON
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-conociendo-las-columnas-o-atributos-del-dataframe">
+     c) Conociendo las columnas o atributos del Dataframe
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#filtrando-eventos-de-seguridad-sysmon-1-creacion-de-processo">
+   Filtrando Eventos de Seguridad: Sysmon 1 (Creacion de Processo)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#calculando-la-longitud-del-commandline">
+   Calculando la Longitud del CommandLine
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#muchas-gracias-espero-que-este-notebooks-haya-sido-util-para-empezar-a-revisar-algunas-tecnicas-para-transformar-datos-d">
+   Muchas gracias!! Espero que este notebooks haya sido útil para empezar a revisar algunas técnicas para transformar datos :D
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aun-hay-mas-por-aprender-d">
+   Aún hay más por aprender :D
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="analisis-de-datos-con-pandas-transformando-datos">
+<h1>Análisis de Datos con Pandas - Transformando Datos<a class="headerlink" href="#analisis-de-datos-con-pandas-transformando-datos" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><strong>Autor</strong>: Jose Rodriguez (&#64;Cyb3rPandah)</p></li>
+<li><p><strong>Proyecto</strong>: Infosec Jupyter Book</p></li>
+<li><p><strong>Organización Pública</strong>: <a class="reference external" href="https://github.com/OTRF">Open Threat Research</a></p></li>
+<li><p><strong>Licencia</strong>: <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p></li>
+<li><p><strong>Referencia</strong>: https://github.com/OTRF/mordor/tree/master/datasets/large/apt29/day1</p></li>
+</ul>
+<div class="section" id="representando-el-archivo-json-como-dataframe-usando-pandas">
+<h2>Representando el Archivo JSON como Dataframe usando Pandas<a class="headerlink" href="#representando-el-archivo-json-como-dataframe-usando-pandas" title="Permalink to this headline">¶</a></h2>
+<p>La representación del archivo JSON como un Dataframe de Pandas puede involucrar el uso de comandos como <strong>wget</strong>, <strong>unzip</strong>. Esto fue explicado con más detalle en el notebook que lleva por título <strong>Representando el Archivo JSON como Dataframe usando Pandas</strong>, y además se encuentra en la misma carpeta del presente notebook. Para mantener la estructura del presente notebok en un formato simple, los JSON files requeridos para este workshop ya han sido desargados y descomprimidos. Estos archivos se encuentran en la carpeta <strong>sets_datos</strong>.</p>
+<p>! wget https://github.com/OTRF/mordor/raw/master/datasets/large/apt29/day1/apt29_evals_day1_manual.zip  -O sets_datos/apt29_evals_day1_manual.zip</p>
+<p>! unzip -o sets_datos/apt29_evals_day1_manual.zip -d sets_datos/</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">apt29_json</span> <span class="o">=</span> <span class="s1">&#39;sets_datos/apt29_evals_day1_manual_2020-05-01225525.json&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="a-importando-la-libreria-pandas">
+<h3>a) Importando la librería Pandas<a class="headerlink" href="#a-importando-la-libreria-pandas" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="b-leyendo-archivo-json">
+<h3>b) Leyendo Archivo JSON<a class="headerlink" href="#b-leyendo-archivo-json" title="Permalink to this headline">¶</a></h3>
+<p>Usaremos el método <strong>pandas.read_json</strong>.</p>
+<p>Referencia: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_json.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># reading the json file using read_json method and considering the parameter lines = True</span>
+<span class="c1"># setting the chunksize parameter = 1000</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">apt29_json</span><span class="p">,</span> <span class="n">lines</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">chunksize</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="c1"># creating an empty list to store data for every chunk</span>
+<span class="n">apt29_chunks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># adding data of every chunk to an empty list using a for loop and the append method</span>
+<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">df</span><span class="p">:</span>
+    <span class="n">apt29_chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<span class="c1"># putting everything together into a Pandas dataframe using the concat method</span>
+<span class="c1"># considering the parameter sort = False</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">apt29_chunks</span><span class="p">,</span> <span class="n">sort</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="c1"># visualizing the first five records of the Pandas dataframe using the head method</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EventTime</th>
+      <th>port</th>
+      <th>Message</th>
+      <th>SourceThreadId</th>
+      <th>EventID</th>
+      <th>TargetProcessId</th>
+      <th>SourceModuleName</th>
+      <th>tags</th>
+      <th>@version</th>
+      <th>SourceImage</th>
+      <th>...</th>
+      <th>Flags</th>
+      <th>SecurityOptions</th>
+      <th>RemoteAddresses</th>
+      <th>Active</th>
+      <th>ProfileChanged</th>
+      <th>param10</th>
+      <th>param6</th>
+      <th>param8</th>
+      <th>param9</th>
+      <th>param11</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-05-01 22:55:23</td>
+      <td>60737</td>
+      <td>Process accessed:\r\nRuleName: -\r\nUtcTime: 2...</td>
+      <td>504.0</td>
+      <td>10</td>
+      <td>2092</td>
+      <td>eventlog</td>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-05-01 22:55:23</td>
+      <td>60737</td>
+      <td>Process accessed:\r\nRuleName: -\r\nUtcTime: 2...</td>
+      <td>504.0</td>
+      <td>10</td>
+      <td>2092</td>
+      <td>eventlog</td>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-05-01 22:55:23</td>
+      <td>60737</td>
+      <td>Process accessed:\r\nRuleName: -\r\nUtcTime: 2...</td>
+      <td>972.0</td>
+      <td>10</td>
+      <td>2092</td>
+      <td>eventlog</td>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-05-01 22:55:23</td>
+      <td>60737</td>
+      <td>Process accessed:\r\nRuleName: -\r\nUtcTime: 2...</td>
+      <td>972.0</td>
+      <td>10</td>
+      <td>2092</td>
+      <td>eventlog</td>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-05-01 22:55:24</td>
+      <td>60737</td>
+      <td>Process accessed:\r\nRuleName: -\r\nUtcTime: 2...</td>
+      <td>5792.0</td>
+      <td>10</td>
+      <td>2980</td>
+      <td>eventlog</td>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 388 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="c-conociendo-las-columnas-o-atributos-del-dataframe">
+<h3>c) Conociendo las columnas o atributos del Dataframe<a class="headerlink" href="#c-conociendo-las-columnas-o-atributos-del-dataframe" title="Permalink to this headline">¶</a></h3>
+<p>Usaremos el método <strong>pandas.DataFrame.info</strong>.</p>
+<p>Referencia: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 196081 entries, 0 to 196080
+Data columns (total 388 columns):
+ #   Column                           Dtype  
+---  ------                           -----  
+ 0   EventTime                        object 
+ 1   port                             int64  
+ 2   Message                          object 
+ 3   SourceThreadId                   float64
+ 4   EventID                          int64  
+ 5   TargetProcessId                  object 
+ 6   SourceModuleName                 object 
+ 7   tags                             object 
+ 8   @version                         int64  
+ 9   SourceImage                      object 
+ 10  SourceName                       object 
+ 11  AccountType                      object 
+ 12  TargetImage                      object 
+ 13  host                             object 
+ 14  Task                             int64  
+ 15  ThreadID                         int64  
+ 16  EventReceivedTime                object 
+ 17  CallTrace                        object 
+ 18  Domain                           object 
+ 19  UtcTime                          object 
+ 20  Keywords                         int64  
+ 21  RecordNumber                     int64  
+ 22  SourceProcessId                  object 
+ 23  SourceModuleType                 object 
+ 24  @timestamp                       object 
+ 25  SeverityValue                    int64  
+ 26  Version                          float64
+ 27  OpcodeValue                      float64
+ 28  Severity                         object 
+ 29  Channel                          object 
+ 30  AccountName                      object 
+ 31  GrantedAccess                    object 
+ 32  SourceProcessGUID                object 
+ 33  EventType                        object 
+ 34  UserID                           object 
+ 35  TargetProcessGUID                object 
+ 36  ProcessId                        object 
+ 37  Hostname                         object 
+ 38  RuleName                         object 
+ 39  ExecutionProcessID               int64  
+ 40  ProviderGuid                     object 
+ 41  Opcode                           object 
+ 42  Application                      object 
+ 43  RemoteMachineID                  object 
+ 44  Category                         object 
+ 45  DestPort                         float64
+ 46  DestAddress                      object 
+ 47  SourceAddress                    object 
+ 48  SourcePort                       float64
+ 49  Protocol                         object 
+ 50  Direction                        object 
+ 51  FilterRTID                       float64
+ 52  LayerRTID                        float64
+ 53  RemoteUserID                     object 
+ 54  LayerName                        object 
+ 55  DestinationIsIpv6                object 
+ 56  DestinationHostname              object 
+ 57  DestinationIp                    object 
+ 58  DestinationPortName              object 
+ 59  DestinationPort                  float64
+ 60  SourceIsIpv6                     object 
+ 61  Initiated                        object 
+ 62  ProcessGuid                      object 
+ 63  SourceIp                         object 
+ 64  SourcePortName                   object 
+ 65  SourceHostname                   object 
+ 66  Image                            object 
+ 67  User                             object 
+ 68  TargetFilename                   object 
+ 69  CreationUtcTime                  object 
+ 70  SubjectLogonId                   object 
+ 71  ProcessName                      object 
+ 72  SubjectUserSid                   object 
+ 73  SubjectUserName                  object 
+ 74  SubjectDomainName                object 
+ 75  Status                           object 
+ 76  TargetObject                     object 
+ 77  Details                          object 
+ 78  ImageLoaded                      object 
+ 79  Product                          object 
+ 80  SignatureStatus                  object 
+ 81  Description                      object 
+ 82  Signature                        object 
+ 83  Signed                           object 
+ 84  FileVersion                      object 
+ 85  Company                          object 
+ 86  OriginalFileName                 object 
+ 87  Hashes                           object 
+ 88  PipeName                         object 
+ 89  TargetLogonId                    object 
+ 90  EnabledPrivilegeList             object 
+ 91  TargetDomainName                 object 
+ 92  TargetUserSid                    object 
+ 93  TargetUserName                   object 
+ 94  DisabledPrivilegeList            object 
+ 95  PrivilegeList                    object 
+ 96  RestrictedAdminMode              object 
+ 97  VirtualAccount                   object 
+ 98  ElevatedToken                    object 
+ 99  LmPackageName                    object 
+ 100 TransmittedServices              object 
+ 101 ImpersonationLevel               object 
+ 102 TargetLinkedLogonId              object 
+ 103 WorkstationName                  object 
+ 104 TargetOutboundUserName           object 
+ 105 LogonProcessName                 object 
+ 106 IpAddress                        object 
+ 107 AuthenticationPackageName        object 
+ 108 LogonGuid                        object 
+ 109 KeyLength                        float64
+ 110 TargetOutboundDomainName         object 
+ 111 LogonType                        float64
+ 112 IpPort                           object 
+ 113 EventCountTotal                  float64
+ 114 GroupMembership                  object 
+ 115 EventIdx                         float64
+ 116 ParentProcessGuid                object 
+ 117 ParentCommandLine                object 
+ 118 LogonId                          object 
+ 119 IntegrityLevel                   object 
+ 120 TerminalSessionId                float64
+ 121 CommandLine                      object 
+ 122 CurrentDirectory                 object 
+ 123 ParentProcessId                  float64
+ 124 ParentImage                      object 
+ 125 NewProcessName                   object 
+ 126 MandatoryLabel                   object 
+ 127 ParentProcessName                object 
+ 128 TokenElevationType               object 
+ 129 NewProcessId                     object 
+ 130 ObjectServer                     object 
+ 131 Service                          object 
+ 132 TargetHandleId                   object 
+ 133 SourceHandleId                   object 
+ 134 HandleId                         object 
+ 135 ObjectType                       object 
+ 136 RestrictedSidCount               float64
+ 137 AccessReason                     object 
+ 138 TransactionId                    object 
+ 139 AccessList                       object 
+ 140 AccessMask                       object 
+ 141 ResourceAttributes               object 
+ 142 ObjectName                       object 
+ 143 QueryName                        object 
+ 144 QueryResults                     object 
+ 145 QueryStatus                      float64
+ 146 ActivityID                       object 
+ 147 param1                           object 
+ 148 param2                           object 
+ 149 ScriptBlockText                  object 
+ 150 MessageNumber                    float64
+ 151 MessageTotal                     float64
+ 152 ScriptBlockId                    object 
+ 153 Payload                          object 
+ 154 ContextInfo                      object 
+ 155 Archived                         object 
+ 156 IsExecutable                     object 
+ 157 ShareLocalPath                   object 
+ 158 ShareName                        object 
+ 159 RelativeTargetName               object 
+ 160 Device                           object 
+ 161 NewSd                            object 
+ 162 OldSd                            object 
+ 163 PreviousCreationUtcTime          object 
+ 164 Path                             object 
+ 165 ReturnCode                       object 
+ 166 KeyFilePath                      object 
+ 167 AlgorithmName                    object 
+ 168 Operation                        object 
+ 169 ClientProcessId                  float64
+ 170 ProviderName                     object 
+ 171 KeyType                          object 
+ 172 ClientCreationTime               object 
+ 173 KeyName                          object 
+ 174 ProcessingMode                   float64
+ 175 SupportInfo1                     float64
+ 176 SupportInfo2                     float64
+ 177 ProcessingTimeInMilliseconds     float64
+ 178 DCName                           object 
+ 179 TaskName                         object 
+ 180 TaskContentNew                   object 
+ 181 MiniportNameLen                  float64
+ 182 MiniportName                     object 
+ 183 KeysUpdated                      float64
+ 184 HiveNameLength                   float64
+ 185 HiveName                         object 
+ 186 DirtyPages                       float64
+ 187 Conditions                       object 
+ 188 UserSid                          object 
+ 189 FilterKey                        object 
+ 190 CalloutName                      object 
+ 191 CalloutKey                       object 
+ 192 LayerKey                         object 
+ 193 ProviderKey                      object 
+ 194 UserName                         object 
+ 195 FilterName                       object 
+ 196 ChangeType                       object 
+ 197 Weight                           float64
+ 198 FilterType                       object 
+ 199 Action                           object 
+ 200 LayerId                          float64
+ 201 FilterId                         float64
+ 202 Properties                       object 
+ 203 AdditionalInfo2                  object 
+ 204 AdditionalInfo                   object 
+ 205 OperationType                    object 
+ 206 CallerProcessId                  object 
+ 207 TargetSid                        object 
+ 208 CallerProcessName                object 
+ 209 TicketOptions                    object 
+ 210 ServiceName                      object 
+ 211 ServiceSid                       object 
+ 212 TicketEncryptionType             object 
+ 213 ServiceFileName                  object 
+ 214 ServiceAccount                   object 
+ 215 ServiceStartType                 float64
+ 216 ServiceType                      object 
+ 217 StartType                        object 
+ 218 ImagePath                        object 
+ 219 StartAddress                     object 
+ 220 StartModule                      object 
+ 221 TargetProcessGuid                object 
+ 222 NewThreadId                      float64
+ 223 SourceProcessGuid                object 
+ 224 StartFunction                    object 
+ 225 TargetName                       object 
+ 226 ProcessCreationTime              object 
+ 227 CountOfCredentialsReturned       float64
+ 228 ReadOperation                    object 
+ 229 Type                             float64
+ 230 MaxRunspaces                     float64
+ 231 InstanceId                       object 
+ 232 MinRunspaces                     float64
+ 233 UserData                         object 
+ 234 TargetLogonGuid                  object 
+ 235 TargetInfo                       object 
+ 236 TargetServerName                 object 
+ 237 PreAuthType                      float64
+ 238 ObjectValueName                  object 
+ 239 OldValueType                     object 
+ 240 NewValueType                     object 
+ 241 OldValue                         object 
+ 242 NewValue                         object 
+ 243 param7                           object 
+ 244 param5                           object 
+ 245 param3                           object 
+ 246 param4                           object 
+ 247 TSId                             float64
+ 248 InterfaceGuid                    object 
+ 249 NewProfile                       float64
+ 250 InterfaceName                    object 
+ 251 OldProfile                       float64
+ 252 SettingValueSize                 float64
+ 253 ModifyingUser                    object 
+ 254 SettingValueDisplay              object 
+ 255 SettingValue                     float64
+ 256 Origin                           float64
+ 257 SettingType                      float64
+ 258 NewTime                          object 
+ 259 OldTime                          object 
+ 260 Reason                           float64
+ 261 DwordVal                         float64
+ 262 ShutdownReason                   float64
+ 263 ShutdownEventCode                float64
+ 264 ShutdownActionType               float64
+ 265 StopTime                         object 
+ 266 QfeVersion                       float64
+ 267 BuildVersion                     float64
+ 268 ServiceVersion                   float64
+ 269 MajorVersion                     float64
+ 270 MinorVersion                     float64
+ 271 BootMode                         float64
+ 272 StartTime                        object 
+ 273 EnableDisableReason              float64
+ 274 VsmPolicy                        float64
+ 275 LastShutdownGood                 object 
+ 276 LastBootGood                     object 
+ 277 BootStatusPolicy                 float64
+ 278 LastBootId                       float64
+ 279 BootMenuPolicy                   float64
+ 280 LoadOptions                      object 
+ 281 BootType                         float64
+ 282 EntryCount                       float64
+ 283 BitlockerUserInputTime           float64
+ 284 CountOld                         float64
+ 285 CountNew                         float64
+ 286 EnabledNew                       object 
+ 287 UpdateReason                     float64
+ 288 DeviceName                       object 
+ 289 DeviceNameLength                 float64
+ 290 DeviceTime                       object 
+ 291 DeviceVersionMajor               float64
+ 292 DeviceVersionMinor               float64
+ 293 FinalStatus                      object 
+ 294 CorruptionActionState            float64
+ 295 DriveName                        object 
+ 296 State                            object 
+ 297 VersionLen                       float64
+ 298 Number                           float64
+ 299 MinimumPerformancePercent        float64
+ 300 MinimumThrottlePercent           float64
+ 301 NominalFrequency                 float64
+ 302 Group                            float64
+ 303 PerformanceImplementation        float64
+ 304 IdleStateCount                   float64
+ 305 MaximumPerformancePercent        float64
+ 306 IdleImplementation               float64
+ 307 Config                           float64
+ 308 IsTestConfig                     float64
+ 309 Default SD String:               object 
+ 310 TimeSource                       object 
+ 311 DnsServerList                    object 
+ 312 ErrorCode                        float64
+ 313 Sent UpdateServer                object 
+ 314 AdapterName                      object 
+ 315 AdapterSuffixName                object 
+ 316 Ipaddress                        object 
+ 317 PreviousTime                     object 
+ 318 TargetProcessName                object 
+ 319 FlightSigning                    object 
+ 320 HypervisorDebug                  object 
+ 321 HypervisorLoadOptions            object 
+ 322 RemoteEventLogging               object 
+ 323 DisableIntegrityChecks           object 
+ 324 KernelDebug                      object 
+ 325 HypervisorLaunchType             object 
+ 326 AdvancedOptions                  object 
+ 327 ConfigAccessPolicy               object 
+ 328 TestSigning                      object 
+ 329 VsmLaunchType                    object 
+ 330 SecurityPackageName              object 
+ 331 PuaPolicyId                      object 
+ 332 PuaCount                         float64
+ 333 NotificationPackageName          object 
+ 334 TimeSourceRefId                  float64
+ 335 CurrentStratumNumber             float64
+ 336 SubLayerName                     object 
+ 337 SubLayerType                     object 
+ 338 SubLayerKey                      object 
+ 339 ProviderType                     object 
+ 340 CalloutType                      object 
+ 341 CalloutId                        float64
+ 342 ProviderContextType              object 
+ 343 ProviderContextName              object 
+ 344 ProviderContextKey               object 
+ 345 ReasonForRejection               object 
+ 346 RuleId                           object 
+ 347 Profile                          object 
+ 348 RuleAttr                         object 
+ 349 Hash                             object 
+ 350 SchemaVersion                    float64
+ 351 MulticastFlowsEnabled            object 
+ 352 LogSuccessfulConnectionsEnabled  object 
+ 353 LogDroppedPacketsEnabled         object 
+ 354 RemoteAdminEnabled               object 
+ 355 GroupPolicyApplied               object 
+ 356 OperationMode                    object 
+ 357 ProfileUsed                      object 
+ 358 ActiveProfile                    object 
+ 359 FileName                         object 
+ 360 LinkName                         object 
+ 361 DeviceDescription                object 
+ 362 LocationInformation              object 
+ 363 ClassId                          object 
+ 364 ClassName                        object 
+ 365 DeviceId                         object 
+ 366 VendorIds                        object 
+ 367 CompatibleIds                    object 
+ 368 Workstation                      object 
+ 369 PackageName                      object 
+ 370 ModifyingApplication             object 
+ 371 LocalOnlyMapped                  float64
+ 372 Profiles                         float64
+ 373 LocalAddresses                   object 
+ 374 RuleStatus                       float64
+ 375 LooseSourceMapped                float64
+ 376 EdgeTraversal                    float64
+ 377 EmbeddedContext                  object 
+ 378 Flags                            float64
+ 379 SecurityOptions                  float64
+ 380 RemoteAddresses                  object 
+ 381 Active                           float64
+ 382 ProfileChanged                   object 
+ 383 param10                          object 
+ 384 param6                           object 
+ 385 param8                           object 
+ 386 param9                           object 
+ 387 param11                          object 
+dtypes: float64(96), int64(9), object(283)
+memory usage: 580.4+ MB
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="filtrando-eventos-de-seguridad-sysmon-1-creacion-de-processo">
+<h2>Filtrando Eventos de Seguridad: Sysmon 1 (Creacion de Processo)<a class="headerlink" href="#filtrando-eventos-de-seguridad-sysmon-1-creacion-de-processo" title="Permalink to this headline">¶</a></h2>
+<p>Vamos a usar el mismo codigo del notebok anterior, pero con una pequeña modificación. En vez de buscar el nombre del channel completo, buscaremos la palabra <strong>sysmon</strong>.</p>
+<p>Referencias:</p>
+<ul class="simple">
+<li><p>https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.contains.html</p></li>
+<li><p>https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.startswith.html</p></li>
+<li><p>https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.endswith.html</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;@timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]]</span>
+    
+<span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;sysmon&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))</span> <span class="p">]</span>
+    
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>@timestamp</th>
+      <th>Image</th>
+      <th>CommandLine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>372</th>
+      <td>2020-05-02T02:55:57.730Z</td>
+      <td>C:\ProgramData\victim\â€®cod.3aka3.scr</td>
+      <td>"C:\ProgramData\victim\â€®cod.3aka3.scr" /S</td>
+    </tr>
+    <tr>
+      <th>621</th>
+      <td>2020-05-02T02:56:05.822Z</td>
+      <td>C:\Windows\System32\conhost.exe</td>
+      <td>\\?\C:\windows\system32\conhost.exe --headless...</td>
+    </tr>
+    <tr>
+      <th>649</th>
+      <td>2020-05-02T02:56:05.830Z</td>
+      <td>C:\Windows\System32\cmd.exe</td>
+      <td>"C:\windows\system32\cmd.exe"</td>
+    </tr>
+    <tr>
+      <th>827</th>
+      <td>2020-05-02T02:56:15.884Z</td>
+      <td>C:\Windows\System32\WindowsPowerShell\v1.0\pow...</td>
+      <td>powershell</td>
+    </tr>
+    <tr>
+      <th>3620</th>
+      <td>2020-05-02T02:57:02.831Z</td>
+      <td>C:\Windows\System32\SearchProtocolHost.exe</td>
+      <td>"C:\windows\system32\SearchProtocolHost.exe" G...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="calculando-la-longitud-del-commandline">
+<h2>Calculando la Longitud del CommandLine<a class="headerlink" href="#calculando-la-longitud-del-commandline" title="Permalink to this headline">¶</a></h2>
+<p>Usaremos el método <strong>assign</strong> para agregar una columna nueva a nuestro dataframe. Esta nueva columna mostrará el calculo de la longitud del command line que el processo utilizó.</p>
+<p>Referencia: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;@timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]]</span>
+    
+<span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;sysmon&#39;</span><span class="p">,</span><span class="n">case</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">na</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">regex</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))]</span>
+    
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Command_Length</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>@timestamp</th>
+      <th>Image</th>
+      <th>CommandLine</th>
+      <th>Command_Length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>372</th>
+      <td>2020-05-02T02:55:57.730Z</td>
+      <td>C:\ProgramData\victim\â€®cod.3aka3.scr</td>
+      <td>"C:\ProgramData\victim\â€®cod.3aka3.scr" /S</td>
+      <td>43.0</td>
+    </tr>
+    <tr>
+      <th>621</th>
+      <td>2020-05-02T02:56:05.822Z</td>
+      <td>C:\Windows\System32\conhost.exe</td>
+      <td>\\?\C:\windows\system32\conhost.exe --headless...</td>
+      <td>99.0</td>
+    </tr>
+    <tr>
+      <th>649</th>
+      <td>2020-05-02T02:56:05.830Z</td>
+      <td>C:\Windows\System32\cmd.exe</td>
+      <td>"C:\windows\system32\cmd.exe"</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <th>827</th>
+      <td>2020-05-02T02:56:15.884Z</td>
+      <td>C:\Windows\System32\WindowsPowerShell\v1.0\pow...</td>
+      <td>powershell</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>3620</th>
+      <td>2020-05-02T02:57:02.831Z</td>
+      <td>C:\Windows\System32\SearchProtocolHost.exe</td>
+      <td>"C:\windows\system32\SearchProtocolHost.exe" G...</td>
+      <td>308.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>193780</th>
+      <td>2020-05-02T03:25:33.847Z</td>
+      <td>C:\Windows\System32\UsoClient.exe</td>
+      <td>C:\windows\system32\usoclient.exe StartScan</td>
+      <td>43.0</td>
+    </tr>
+    <tr>
+      <th>193812</th>
+      <td>2020-05-02T03:25:33.858Z</td>
+      <td>C:\Windows\System32\usocoreworker.exe</td>
+      <td>C:\Windows\System32\usocoreworker.exe -Embedding</td>
+      <td>48.0</td>
+    </tr>
+    <tr>
+      <th>194036</th>
+      <td>2020-05-02T03:25:50.013Z</td>
+      <td>C:\Windows\System32\taskhostw.exe</td>
+      <td>taskhostw.exe Logon</td>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>194568</th>
+      <td>2020-05-02T03:26:12.287Z</td>
+      <td>C:\Windows\System32\UsoClient.exe</td>
+      <td>C:\windows\system32\usoclient.exe StartScan</td>
+      <td>43.0</td>
+    </tr>
+    <tr>
+      <th>194596</th>
+      <td>2020-05-02T03:26:12.298Z</td>
+      <td>C:\Windows\System32\usocoreworker.exe</td>
+      <td>C:\Windows\System32\usocoreworker.exe -Embedding</td>
+      <td>48.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>447 rows × 4 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="muchas-gracias-espero-que-este-notebooks-haya-sido-util-para-empezar-a-revisar-algunas-tecnicas-para-transformar-datos-d">
+<h2>Muchas gracias!! Espero que este notebooks haya sido útil para empezar a revisar algunas técnicas para transformar datos :D<a class="headerlink" href="#muchas-gracias-espero-que-este-notebooks-haya-sido-util-para-empezar-a-revisar-algunas-tecnicas-para-transformar-datos-d" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="aun-hay-mas-por-aprender-d">
+<h2>Aún hay más por aprender :D<a class="headerlink" href="#aun-hay-mas-por-aprender-d" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "OTRF/infosec-jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "pyspark3"
+        },
+        kernelOptions: {
+            kernelName: "pyspark3",
+            path: "./fundamentals/libraries/sets_datos"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'pyspark3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g, Jose Rodriguez (@Cyb3rPandaH)<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../../_static/js/index.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,74 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/usr/local/lib/python3.8/site-packages/nbclient/client.py", line 1082, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/usr/local/lib/python3.8/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/usr/local/lib/python3.8/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/usr/local/Cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/usr/local/lib/python3.8/site-packages/nbclient/client.py", line 535, in async_execute
+    await self.async_execute_cell(
+  File "/usr/local/lib/python3.8/site-packages/nbclient/client.py", line 827, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/usr/local/lib/python3.8/site-packages/nbclient/client.py", line 735, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply['content'])
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# reading the json file using read_json method and considering the parameter lines = True
+# setting the chunksize parameter = 1000
+df = pd.read_json(apt29_json, lines = True, chunksize = 1000)
+# creating an empty list to store data for every chunk
+apt29_chunks = []
+# adding data of every chunk to an empty list using a for loop and the append method
+for chunk in df:
+    apt29_chunks.append(chunk)
+# putting everything together into a Pandas dataframe using the concat method
+# considering the parameter sort = False
+df = pd.concat(apt29_chunks, sort = False)
+# visualizing the first five records of the Pandas dataframe using the head method
+df.head()
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m<ipython-input-3-1f68d69e5590>[0m in [0;36m<module>[0;34m[0m
+[1;32m      5[0m [0mapt29_chunks[0m [0;34m=[0m [0;34m[[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m      6[0m [0;31m# adding data of every chunk to an empty list using a for loop and the append method[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 7[0;31m [0;32mfor[0m [0mchunk[0m [0;32min[0m [0mdf[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      8[0m     [0mapt29_chunks[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mchunk[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      9[0m [0;31m# putting everything together into a Pandas dataframe using the concat method[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/usr/local/lib/python3.8/site-packages/pandas/io/json/_json.py[0m in [0;36m__next__[0;34m(self)[0m
+[1;32m    806[0m         [0;32mif[0m [0mlines[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    807[0m             [0mlines_json[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_combine_lines[0m[0;34m([0m[0mlines[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 808[0;31m             [0mobj[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_get_object_parser[0m[0;34m([0m[0mlines_json[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    809[0m [0;34m[0m[0m
+[1;32m    810[0m             [0;31m# Make sure that the returned objects have the right index.[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/usr/local/lib/python3.8/site-packages/pandas/io/json/_json.py[0m in [0;36m_get_object_parser[0;34m(self, json)[0m
+[1;32m    775[0m         [0mobj[0m [0;34m=[0m [0;32mNone[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    776[0m         [0;32mif[0m [0mtyp[0m [0;34m==[0m [0;34m"frame"[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 777[0;31m             [0mobj[0m [0;34m=[0m [0mFrameParser[0m[0;34m([0m[0mjson[0m[0;34m,[0m [0;34m**[0m[0mkwargs[0m[0;34m)[0m[0;34m.[0m[0mparse[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    778[0m [0;34m[0m[0m
+[1;32m    779[0m         [0;32mif[0m [0mtyp[0m [0;34m==[0m [0;34m"series"[0m [0;32mor[0m [0mobj[0m [0;32mis[0m [0;32mNone[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/usr/local/lib/python3.8/site-packages/pandas/io/json/_json.py[0m in [0;36mparse[0;34m(self)[0m
+[1;32m    884[0m [0;34m[0m[0m
+[1;32m    885[0m         [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 886[0;31m             [0mself[0m[0;34m.[0m[0m_parse_no_numpy[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    887[0m [0;34m[0m[0m
+[1;32m    888[0m         [0;32mif[0m [0mself[0m[0;34m.[0m[0mobj[0m [0;32mis[0m [0;32mNone[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/usr/local/lib/python3.8/site-packages/pandas/io/json/_json.py[0m in [0;36m_parse_no_numpy[0;34m(self)[0m
+[1;32m   1117[0m         [0;32mif[0m [0morient[0m [0;34m==[0m [0;34m"columns"[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1118[0m             self.obj = DataFrame(
+[0;32m-> 1119[0;31m                 [0mloads[0m[0;34m([0m[0mjson[0m[0;34m,[0m [0mprecise_float[0m[0;34m=[0m[0mself[0m[0;34m.[0m[0mprecise_float[0m[0;34m)[0m[0;34m,[0m [0mdtype[0m[0;34m=[0m[0;32mNone[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   1120[0m             )
+[1;32m   1121[0m         [0;32melif[0m [0morient[0m [0;34m==[0m [0;34m"split"[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: Expected object or value
+ValueError: Expected object or value
+

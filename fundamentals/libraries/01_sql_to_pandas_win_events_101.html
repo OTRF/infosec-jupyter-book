@@ -1,0 +1,2462 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQL to Pandas with Windows Events 101 &#8212; Infosec Jupyter Book</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://infosecjupyterbook.com/fundamentals/libraries/01_sql_to_pandas_win_events_101.html" />
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://infosecjupyterbook.com/fundamentals/libraries/01_sql_to_pandas_win_events_101.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="SQL to Pandas with Windows Events 101" />
+<meta property="og:description" content="SQL to Pandas with Windows Events 101  Author: Jose Rodriguez (@Cyb3rPandah)  Project: Infosec Jupyter Book  Public Organization: Open Threat Research  License:" />
+<meta property="og:image"       content="https://infosecjupyterbook.com/_static/logo.png" />
+
+<meta name="twitter:card" content="summary" />
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Infosec Jupyter Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/what_is_jupyter.html">
+   What Is Jupyter?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/architecture.html">
+   Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started/installation.html">
+   Installation
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../programming/intro.html">
+   Programming Languages
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Libraries
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Use Cases
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-analysis/intro.html">
+   Data Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-connectors/intro.html">
+   Data Connectors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../use-cases/data-visualizations/intro.html">
+   Data Visualizations
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Projects
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-projects/threat-hunter-playbook.html">
+   Threat Hunter Playbook
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Workshops
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-workshops/defcon_btv_2020/intro.html">
+   Defcon BTV 2020
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Community Events
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../community-events/jupyterthon.html">
+   Infosec Jupyterthon
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/fundamentals/libraries/01_sql_to_pandas_win_events_101.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/OTRF/infosec-jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/OTRF/infosec-jupyter-book/issues/new?title=Issue%20on%20page%20%2Ffundamentals/libraries/01_sql_to_pandas_win_events_101.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/OTRF/infosec-jupyter-book/edit/master/docs/fundamentals/libraries/01_sql_to_pandas_win_events_101.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/OTRF/infosec-jupyter-book/master?urlpath=tree/docs/fundamentals/libraries/01_sql_to_pandas_win_events_101.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/OTRF/infosec-jupyter-book/blob/master/docs/fundamentals/libraries/01_sql_to_pandas_win_events_101.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#description">
+   Description
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pre-requisites-reading">
+     Pre-requisites - Reading
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#importing-libraries">
+   Importing Libraries
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#importing-mordor-demo-dataset">
+   Importing Mordor Demo Dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reading-json-mordor-file">
+   Reading JSON Mordor File
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#leveraging-pandas-for-security-from-a-sql-perspective">
+   Leveraging Pandas for Security from a SQL perspective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#select">
+   SELECT
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calculated-column">
+     Calculated Column
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#where">
+   WHERE
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#or-and-boolean-operators">
+     OR &amp; AND Boolean Operators
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#looking-for-new-applications-being-executed-for-the-first-time">
+       Looking for new applications being executed for the first time
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#null-checking">
+     NULL Checking
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#group-by">
+   GROUP BY
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multiple-functions">
+     Multiple Functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grouping-by-more-than-one-column">
+     Grouping By more than one column
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#join">
+   JOIN
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inner-join">
+     INNER JOIN
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#left-outer-join">
+     LEFT OUTER JOIN
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#right-join">
+     RIGHT JOIN
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#full-join">
+     FULL JOIN
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#thank-you-i-hope-you-enjoyed-it">
+   Thank you! I hope you enjoyed it!
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="sql-to-pandas-with-windows-events-101">
+<h1>SQL to Pandas with Windows Events 101<a class="headerlink" href="#sql-to-pandas-with-windows-events-101" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><strong>Author</strong>: Jose Rodriguez (&#64;Cyb3rPandah)</p></li>
+<li><p><strong>Project</strong>: Infosec Jupyter Book</p></li>
+<li><p><strong>Public Organization</strong>: <a class="reference external" href="https://github.com/OTRF">Open Threat Research</a></p></li>
+<li><p><strong>License</strong>: <a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a></p></li>
+<li><p><strong>Reference</strong>: https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_sql.html</p></li>
+</ul>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>This notebook was created as part of the Open Threat Research (OTR) initiative to empower others in the InfoSec community around the world.</p>
+<p>With more security analysts getting into data analysis with Python and Jupyter Notebooks, I figured it would be a good idea to create a notebook and share some of my experience with Pandas. Since many analysts in our community are familiar with SQL syntax to craft detection rules, I used it in this notebook to show how easy it is to translate SQL logic to pandas statements. I leveraged this doc “<a class="reference external" href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_sql.html">Comparison with SQL</a>” to organize the notebook and make sure I align my queries and descriptions to official pandas resources.</p>
+<div class="section" id="pre-requisites-reading">
+<h3>Pre-requisites - Reading<a class="headerlink" href="#pre-requisites-reading" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://infosecjupyterbook.com/fundamentals/libraries/pandas.html">Intro to Pandas</a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="importing-libraries">
+<h2>Importing Libraries<a class="headerlink" href="#importing-libraries" title="Permalink to this headline">¶</a></h2>
+<p>Pre-requisites:</p>
+<ul class="simple">
+<li><p>pip install pandas</p></li>
+<li><p>pip install openhunt</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">openhunt</span> <span class="kn">import</span> <span class="n">mordorutils</span> <span class="k">as</span> <span class="n">mu</span>
+
+<span class="c1"># Do not truncate Pandas output</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_colwidth&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="importing-mordor-demo-dataset">
+<h2>Importing Mordor Demo Dataset<a class="headerlink" href="#importing-mordor-demo-dataset" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Every time I practice or learn something new, I make sure I work on examples that are related to the field where I would implement what I learn to. Therefore, for this notebook, I used a dataset from the <a class="reference external" href="https://mordordatasets.com/introduction.html">Mordor Project</a> to show you how you can use Pandas to explore a few techniques that were emulated following the <a class="reference external" href="https://github.com/hunters-forge/mordor/blob/master/datasets/large/apt29/emulationplans/apt29.xlsx">ATT&amp;CK Evals Emulation Plans</a>.</p></li>
+<li><p>This dataset is a subset of the <a class="reference external" href="https://github.com/hunters-forge/mordor/tree/master/datasets/large/apt29">Mordor ATT&amp;CK Evals APT29 - Day 1</a>. It includes only a few events for the purpose of this notebook. Feel free to download the full dataset on your own. Make sure you allocate enough memory to your local Jupyter Notebooks server since we are using pandas to read the JSON file (dataset).</p></li>
+</ul>
+<p>Let’s start by using the <code class="docutils literal notranslate"><span class="pre">getMordorZipFile</span></code> method from the <code class="docutils literal notranslate"><span class="pre">mordorutils</span></code> module to download and decompress the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mordorUrl</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/OTRF/infosec-jupyter-book/blob/master/datasets/apt29_evals_day1_manual_demo.zip&#39;</span>
+<span class="n">mordorFilePath</span> <span class="o">=</span> <span class="n">mu</span><span class="o">.</span><span class="n">getMordorZipFile</span><span class="p">(</span><span class="n">mordorUrl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="reading-json-mordor-file">
+<h2>Reading JSON Mordor File<a class="headerlink" href="#reading-json-mordor-file" title="Permalink to this headline">¶</a></h2>
+<p>Next, we use the <code class="docutils literal notranslate"><span class="pre">read_json</span></code> method from <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to read the JSON file (Decompressed dataset) that returns a DataFrame. We are going to use that variable throughout the notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">apt29</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">mordorFilePath</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">apt29</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EventTime</th>
+      <th>port</th>
+      <th>Message</th>
+      <th>EventID</th>
+      <th>SourceModuleName</th>
+      <th>tags</th>
+      <th>@version</th>
+      <th>SourceName</th>
+      <th>AccountType</th>
+      <th>host</th>
+      <th>...</th>
+      <th>MandatoryLabel</th>
+      <th>ParentProcessName</th>
+      <th>TokenElevationType</th>
+      <th>NewProcessId</th>
+      <th>ActivityID</th>
+      <th>ServiceName</th>
+      <th>ServiceFileName</th>
+      <th>ServiceAccount</th>
+      <th>ServiceStartType</th>
+      <th>ServiceType</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-05-01 22:55:29</td>
+      <td>60737</td>
+      <td>Registry value set:\r\nRuleName: -\r\nEventType: SetValue\r\nUtcTime: 2020-05-02 02:55:29.635\r\nProcessGuid: {5aa8ec29-cae0-5eac-4c00-000000000400}\r\nProcessId: 3340\r\nImage: C:\windows\system32\svchost.exe\r\nTargetObject: HKLM\System\CurrentControlSet\Services\W32Time\Config\LastKnownGoodTime\r\nDetails: QWORD (0x01d6202d-0x23915fdf)</td>
+      <td>13</td>
+      <td>eventlog</td>
+      <td>[mordorDataset]</td>
+      <td>1</td>
+      <td>Microsoft-Windows-Sysmon</td>
+      <td>User</td>
+      <td>wec.internal.cloudapp.net</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>NaN</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 91 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="leveraging-pandas-for-security-from-a-sql-perspective">
+<h2>Leveraging Pandas for Security from a SQL perspective<a class="headerlink" href="#leveraging-pandas-for-security-from-a-sql-perspective" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="select">
+<h2>SELECT<a class="headerlink" href="#select" title="Permalink to this headline">¶</a></h2>
+<p>In SQL, selection is done using a <strong>comma-separated list</strong> of columns you’d like to select. You can use the <code class="docutils literal notranslate"><span class="pre">*</span></code> character to select all the available columnsin the SQL table.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventTime</span><span class="p">,</span> <span class="n">EventID</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>With pandas, column selection is done by passing a list of column names to your DataFrame. We can select a few columns from the APT29 dataset as shown below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hostname</th>
+      <th>Channel</th>
+      <th>EventTime</th>
+      <th>EventID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NASHUA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:29</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:30</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UTICA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:30</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UTICA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:31</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NASHUA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:39</td>
+      <td>13</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Calling the DataFrame <strong>without the list of column</strong> names would <strong>display all columns</strong> (Similar to SQL’s *).</p>
+<div class="section" id="calculated-column">
+<h3>Calculated Column<a class="headerlink" href="#calculated-column" title="Permalink to this headline">¶</a></h3>
+<p>In SQL, you can add a <strong>calculated column</strong> or <strong>computed column</strong>. A computed column is a virtual column that is not physically stored in the table and can use data from other columns to calculate a new value.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventTime</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span>
+       <span class="nb">len</span><span class="p">(</span><span class="n">Hostname</span><span class="p">)</span> <span class="k">as</span> <span class="n">Hostname_Length</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>With pandas, you can use the <strong>DataFrame.assign()</strong> method of a DataFrame to append a new column. As a proof of concept, we can add a new column named <strong>Hostname_Length</strong> to the right of our DataFrame to calculate the number of characters in the Hostname field. We are going to show another example that could provide more context to our data analysis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Hostname_Length</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hostname</th>
+      <th>Channel</th>
+      <th>EventTime</th>
+      <th>EventID</th>
+      <th>Hostname_Length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NASHUA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:29</td>
+      <td>13</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:30</td>
+      <td>13</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UTICA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:30</td>
+      <td>12</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UTICA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:31</td>
+      <td>13</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NASHUA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:39</td>
+      <td>13</td>
+      <td>20</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="where">
+<h2>WHERE<a class="headerlink" href="#where" title="Permalink to this headline">¶</a></h2>
+<p>Filtering in SQL is done via a WHERE clause.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventTime</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span>
+       <span class="nb">len</span><span class="p">(</span><span class="n">Hostname</span><span class="p">)</span> <span class="k">as</span> <span class="n">Hostname_Length</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">WHERE</span> <span class="n">Channel</span> <span class="o">=</span> <span class="s1">&#39;Windows PowerShell&#39;</span>
+<span class="n">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>DataFrames can be <strong>filtered</strong> in multiple ways. According to pandas docs, the most intuitive way is by using <strong>boolean indexing</strong>. We can filter our APT29 DataFrame and show only Windows events from the <strong>Microsoft-Windows-Sysmon/Operational</strong> provider.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Hostname_Length</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">]</span>
+    
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hostname</th>
+      <th>Channel</th>
+      <th>EventTime</th>
+      <th>EventID</th>
+      <th>Hostname_Length</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NASHUA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:29</td>
+      <td>13</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:30</td>
+      <td>13</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>UTICA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:30</td>
+      <td>12</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>UTICA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:31</td>
+      <td>13</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NASHUA.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:39</td>
+      <td>13</td>
+      <td>20</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="section" id="or-and-boolean-operators">
+<h3>OR &amp; AND Boolean Operators<a class="headerlink" href="#or-and-boolean-operators" title="Permalink to this headline">¶</a></h3>
+<p>Just like SQL’s <strong>OR</strong> and <strong>AND</strong>, multiple conditions can be passed to a DataFrame using | (OR) and &amp; (AND). We can use an <strong>AND</strong> operator in our APT29 DataFrame and only show Sysmon events of ID 1. In this example, I also show you how to use the <strong>calculated columns</strong> concept, that we learnerd earlier, to the <strong>CommandLine</strong> field to calculate the lenght of the command line used by the new process created.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventTime</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span> <span class="n">CommandLine</span>
+       <span class="nb">len</span><span class="p">(</span><span class="n">CommandLine</span><span class="p">)</span> <span class="k">as</span> <span class="n">CommandLineLength</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">WHERE</span> <span class="n">Channel</span> <span class="o">=</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span> <span class="n">AND</span> <span class="n">EventID</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hostname</th>
+      <th>Channel</th>
+      <th>EventTime</th>
+      <th>EventID</th>
+      <th>CommandLine</th>
+      <th>CommandLineLength</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>44</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:56</td>
+      <td>1</td>
+      <td>"C:\ProgramData\victim\â€®cod.3aka3.scr" /S</td>
+      <td>43.0</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:56:04</td>
+      <td>1</td>
+      <td>\\?\C:\windows\system32\conhost.exe --headless --width 80 --height 25 --signal 0x54c --server 0x540</td>
+      <td>99.0</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:56:04</td>
+      <td>1</td>
+      <td>"C:\windows\system32\cmd.exe"</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:56:14</td>
+      <td>1</td>
+      <td>powershell</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>1222</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:57:01</td>
+      <td>1</td>
+      <td>"C:\windows\system32\SearchProtocolHost.exe" Global\UsGthrFltPipeMssGthrPipe6_ Global\UsGthrCtrlFltPipeMssGthrPipe6 1 -2147483646 "Software\Microsoft\Windows Search" "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT; MS Search 4.0 Robot)" "C:\ProgramData\Microsoft\Search\Data\Temp\usgthrsvc" "DownLevelDaemon"</td>
+      <td>308.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can practice also combinations of <strong>AND</strong> and <strong>OR</strong> boolean operators with Sysmon registry events. Let’s use Event ID 12 (Object create and delete) and 13 (Value Set).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span> <span class="n">ProcessGuid</span><span class="p">,</span> <span class="n">ProcessId</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">TargetObject</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">WHERE</span> <span class="n">Channel</span> <span class="o">=</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span> <span class="n">AND</span> <span class="p">(</span><span class="n">EventID</span> <span class="o">=</span> <span class="mi">12</span> <span class="n">OR</span> <span class="n">eventID</span> <span class="o">=</span> <span class="mi">13</span><span class="p">)</span>
+<span class="n">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;ProcessGuid&#39;</span><span class="p">,</span><span class="s1">&#39;ProcessId&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;TargetObject&#39;</span><span class="p">]]</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> 
+ 
+     <span class="o">&amp;</span> <span class="p">((</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">12</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">13</span><span class="p">))]</span>
+
+<span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Channel</th>
+      <th>EventID</th>
+      <th>ProcessGuid</th>
+      <th>ProcessId</th>
+      <th>Image</th>
+      <th>TargetObject</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>13</td>
+      <td>{5aa8ec29-cae0-5eac-4c00-000000000400}</td>
+      <td>3340</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKLM\System\CurrentControlSet\Services\W32Time\Config\LastKnownGoodTime</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>13</td>
+      <td>{47ab858c-cae1-5eac-4b00-000000000400}</td>
+      <td>3292</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKLM\System\CurrentControlSet\Services\W32Time\Config\LastKnownGoodTime</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>12</td>
+      <td>{6bbf237a-cb01-5eac-4d00-000000000400}</td>
+      <td>3356</td>
+      <td>C:\WindowsAzure\Packages\GuestAgent\WindowsAzureGuestAgent.exe</td>
+      <td>HKU\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>13</td>
+      <td>{6bbf237a-cb01-5eac-4700-000000000400}</td>
+      <td>3280</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKLM\System\CurrentControlSet\Services\W32Time\Config\LastKnownGoodTime</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>13</td>
+      <td>{5aa8ec29-cad7-5eac-0c00-000000000400}</td>
+      <td>728</td>
+      <td>C:\windows\system32\lsass.exe</td>
+      <td>HKLM\System\CurrentControlSet\Services\W32Time\SecureTimeLimits\SecureTimeHigh</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="section" id="looking-for-new-applications-being-executed-for-the-first-time">
+<h4>Looking for new applications being executed for the first time<a class="headerlink" href="#looking-for-new-applications-being-executed-for-the-first-time" title="Permalink to this headline">¶</a></h4>
+<p>We can use what we have learned so far and look for new application in the AppCompat registery keys. This is an indicator of applications executing for the first time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;ProcessId&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span><span class="s1">&#39;TargetObject&#39;</span><span class="p">]]</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> 
+ 
+     <span class="o">&amp;</span> <span class="p">((</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">12</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">13</span><span class="p">))</span>
+     
+     <span class="o">&amp;</span> <span class="p">((</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;TargetObject&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;.*AppCompatFlags</span><span class="se">\\\\</span><span class="s1">Compatibility Assistant.*&#39;</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)))]</span>
+
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>EventID</th>
+      <th>ProcessId</th>
+      <th>Image</th>
+      <th>TargetObject</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>45</th>
+      <td>12</td>
+      <td>1144</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKU\S-1-5-21-1830255721-3727074217-2423397540-1107\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>12</td>
+      <td>1144</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKU\S-1-5-21-1830255721-3727074217-2423397540-1107\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store</td>
+    </tr>
+    <tr>
+      <th>14215</th>
+      <td>12</td>
+      <td>1144</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKU\S-1-5-21-1830255721-3727074217-2423397540-1107\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store</td>
+    </tr>
+    <tr>
+      <th>14217</th>
+      <td>12</td>
+      <td>1144</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKU\S-1-5-21-1830255721-3727074217-2423397540-1107\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store</td>
+    </tr>
+    <tr>
+      <th>14219</th>
+      <td>12</td>
+      <td>1144</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKU\S-1-5-21-1830255721-3727074217-2423397540-1107\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store</td>
+    </tr>
+    <tr>
+      <th>14221</th>
+      <td>13</td>
+      <td>1144</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKU\S-1-5-21-1830255721-3727074217-2423397540-1107\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store\C:\ProgramData\victim\â€®cod.3aka3.scr</td>
+    </tr>
+    <tr>
+      <th>14427</th>
+      <td>12</td>
+      <td>1144</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKU\S-1-5-21-1830255721-3727074217-2423397540-1107\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store</td>
+    </tr>
+    <tr>
+      <th>77148</th>
+      <td>12</td>
+      <td>8460</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant</td>
+    </tr>
+    <tr>
+      <th>77161</th>
+      <td>12</td>
+      <td>8460</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKU\S-1-5-21-1830255721-3727074217-2423397540-1107\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store</td>
+    </tr>
+    <tr>
+      <th>77162</th>
+      <td>13</td>
+      <td>8460</td>
+      <td>C:\windows\system32\svchost.exe</td>
+      <td>HKU\S-1-5-21-1830255721-3727074217-2423397540-1107\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store\C:\Windows\System32\hostui.exe</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="null-checking">
+<h3>NULL Checking<a class="headerlink" href="#null-checking" title="Permalink to this headline">¶</a></h3>
+<p>NULL checking is done using the <strong>notna()</strong> and <strong>isna()</strong> methods.</p>
+<p>We can show records where <strong>CommandLine</strong> field <strong>IS NULL</strong> with the following query. This query is built on the top of previous ones.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventTime</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span> <span class="n">CommandLine</span>
+       <span class="nb">len</span><span class="p">(</span><span class="n">CommandLine</span><span class="p">)</span> <span class="k">as</span> <span class="n">CommandLineLength</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">WHERE</span> <span class="n">Channel</span> <span class="o">=</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span> <span class="n">AND</span> <span class="n">EventID</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">AND</span> <span class="n">CommandLine</span> <span class="n">IS</span> <span class="n">NULL</span>
+<span class="n">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> 
+     <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">())]</span>
+    
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hostname</th>
+      <th>Channel</th>
+      <th>EventTime</th>
+      <th>EventID</th>
+      <th>CommandLine</th>
+      <th>CommandLineLength</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>77736</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 23:21:29</td>
+      <td>1</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Getting items where <strong>CommandLine</strong> field <strong>IS NOT NULL</strong> can be done with notna().</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventTime</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span> <span class="n">CommandLine</span>
+       <span class="nb">len</span><span class="p">(</span><span class="n">CommandLine</span><span class="p">)</span> <span class="k">as</span> <span class="n">CommandLineLength</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">WHERE</span> <span class="n">Channel</span> <span class="o">=</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span> <span class="n">AND</span> <span class="n">EventID</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">AND</span> <span class="n">CommandLine</span> <span class="n">IS</span> <span class="n">NOT</span> <span class="n">NULL</span>
+<span class="n">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> 
+     <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">())]</span>
+    
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hostname</th>
+      <th>Channel</th>
+      <th>EventTime</th>
+      <th>EventID</th>
+      <th>CommandLine</th>
+      <th>CommandLineLength</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>44</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:55:56</td>
+      <td>1</td>
+      <td>"C:\ProgramData\victim\â€®cod.3aka3.scr" /S</td>
+      <td>43.0</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:56:04</td>
+      <td>1</td>
+      <td>\\?\C:\windows\system32\conhost.exe --headless --width 80 --height 25 --signal 0x54c --server 0x540</td>
+      <td>99.0</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:56:04</td>
+      <td>1</td>
+      <td>"C:\windows\system32\cmd.exe"</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:56:14</td>
+      <td>1</td>
+      <td>powershell</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>1222</th>
+      <td>SCRANTON.dmevals.local</td>
+      <td>Microsoft-Windows-Sysmon/Operational</td>
+      <td>2020-05-01 22:57:01</td>
+      <td>1</td>
+      <td>"C:\windows\system32\SearchProtocolHost.exe" Global\UsGthrFltPipeMssGthrPipe6_ Global\UsGthrCtrlFltPipeMssGthrPipe6 1 -2147483646 "Software\Microsoft\Windows Search" "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT; MS Search 4.0 Robot)" "C:\ProgramData\Microsoft\Search\Data\Temp\usgthrsvc" "DownLevelDaemon"</td>
+      <td>308.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="group-by">
+<h2>GROUP BY<a class="headerlink" href="#group-by" title="Permalink to this headline">¶</a></h2>
+<p>In pandas, SQL’s <strong>GROUP BY</strong> operations are performed using the similarly named <strong>groupby()</strong> method. groupby() typically refers to a process where we’d like to split a dataset into groups, apply some function (typically aggregation) , and then combine the groups together.</p>
+<p>We can count and group our APT29 DataFrame by the <strong>Hostname</strong> field.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventTime</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span> <span class="n">CommandLine</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span>
+       <span class="nb">len</span><span class="p">(</span><span class="n">CommandLine</span><span class="p">)</span> <span class="k">as</span> <span class="n">CommandLineLength</span><span class="p">,</span> <span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">GROUP</span> <span class="n">BY</span> <span class="n">Hostname</span>
+<span class="n">WHERE</span> <span class="n">Channel</span> <span class="o">=</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span> <span class="n">AND</span> <span class="n">EventID</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The pandas equvalent would be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)]</span>
+    
+<span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Hostname&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hostname
+NASHUA.dmevals.local       61
+NEWYORK.dmevals.local      18
+SCRANTON.dmevals.local    359
+UTICA.dmevals.local         9
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use this technique and group Sysmon Event ID 1 events by the process name.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)]</span>
+    
+<span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Image&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+    <tr>
+      <th>Image</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>C:\Packages\Plugins\Microsoft.Azure.NetworkWatcher.NetworkWatcherAgentWindows\1.4.1421.1\NetworkWatcherAgent\NetworkWatcherAgent.exe</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>C:\Packages\Plugins\Microsoft.Azure.Security.IaaSAntimalware\1.5.5.9\AntimalwareConfig.exe</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>C:\Packages\Plugins\Microsoft.Compute.CustomScriptExtension\1.10.5\bin\CustomScriptHandler.exe</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>C:\Packages\Plugins\Microsoft.Compute.JsonADDomainExtension\1.3.2\bin\JsonADDomainExtension.exe</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>C:\Program Files (x86)\Google\Update\1.3.35.452\GoogleCrashHandler.exe</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\Temp\python.exe</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\Temp\sdelete64.exe</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\WinSxS\amd64_microsoft-windows-servicingstack_31bf3856ad364e35_10.0.18362.710_none_5f52d84058d0677f\TiWorker.exe</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\explorer.exe</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\servicing\TrustedInstaller.exe</th>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>106 rows × 1 columns</p>
+</div></div></div>
+</div>
+<p>In the previous example, I used <strong>size()</strong> and not <strong>count()</strong>. This is because <strong>count()</strong> applies the function to every column and the result does not consider <strong>null records</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)]</span>
+    
+<span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Hostname&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Channel</th>
+      <th>EventTime</th>
+      <th>EventID</th>
+      <th>CommandLine</th>
+      <th>Image</th>
+      <th>CommandLineLength</th>
+    </tr>
+    <tr>
+      <th>Hostname</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>NASHUA.dmevals.local</th>
+      <td>61</td>
+      <td>61</td>
+      <td>61</td>
+      <td>61</td>
+      <td>61</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>NEWYORK.dmevals.local</th>
+      <td>18</td>
+      <td>18</td>
+      <td>18</td>
+      <td>18</td>
+      <td>18</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>SCRANTON.dmevals.local</th>
+      <td>359</td>
+      <td>359</td>
+      <td>359</td>
+      <td>358</td>
+      <td>358</td>
+      <td>358</td>
+    </tr>
+    <tr>
+      <th>UTICA.dmevals.local</th>
+      <td>9</td>
+      <td>9</td>
+      <td>9</td>
+      <td>9</td>
+      <td>9</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Alternatively, we can also use the <strong>count()</strong> method to a specific column. In the example below, we are doing it on the <strong>CommandLine</strong> column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)]</span>
+    
+<span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Hostname&#39;</span><span class="p">)[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hostname
+NASHUA.dmevals.local       61
+NEWYORK.dmevals.local      18
+SCRANTON.dmevals.local    358
+UTICA.dmevals.local         9
+Name: CommandLine, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="multiple-functions">
+<h3>Multiple Functions<a class="headerlink" href="#multiple-functions" title="Permalink to this headline">¶</a></h3>
+<p>We can use multiple functions at once for a specific column. For instance, we can apply the <strong>len()</strong> and <strong>avg()</strong> functions to the field <strong>CommandLineLength</strong>. Then, we can group the results by the <strong>Hostname</strong> field.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventTime</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span> <span class="n">CommandLine</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span>
+       <span class="nb">len</span><span class="p">(</span><span class="n">CommandLine</span><span class="p">)</span> <span class="k">as</span> <span class="n">CommandLineLength</span><span class="p">,</span> <span class="n">AVG</span><span class="p">(</span><span class="n">CommandLine_Length</span><span class="p">),</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">GROUP</span> <span class="n">BY</span> <span class="n">Hostname</span>
+<span class="n">WHERE</span> <span class="n">Channel</span> <span class="o">=</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span> <span class="n">AND</span> <span class="n">EventID</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)]</span>
+    
+<span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Hostname&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;CommandLineLength&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="s1">&#39;Channel&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">})</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CommandLineLength</th>
+      <th>Channel</th>
+    </tr>
+    <tr>
+      <th>Hostname</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>NASHUA.dmevals.local</th>
+      <td>60.360656</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>NEWYORK.dmevals.local</th>
+      <td>50.888889</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>SCRANTON.dmevals.local</th>
+      <td>88.296089</td>
+      <td>359</td>
+    </tr>
+    <tr>
+      <th>UTICA.dmevals.local</th>
+      <td>51.111111</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="grouping-by-more-than-one-column">
+<h3>Grouping By more than one column<a class="headerlink" href="#grouping-by-more-than-one-column" title="Permalink to this headline">¶</a></h3>
+<p>Grouping by more than one column is done by passing a list of columns to the <strong>groupby()</strong> method.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Channel</span><span class="p">,</span> <span class="n">EventTime</span><span class="p">,</span> <span class="n">EventID</span><span class="p">,</span> <span class="n">CommandLine</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span>
+       <span class="nb">len</span><span class="p">(</span><span class="n">CommandLine</span><span class="p">)</span> <span class="k">as</span> <span class="n">CommandLineLength</span><span class="p">,</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="n">AVG</span><span class="p">(</span><span class="n">CommandLine_Length</span><span class="p">)</span>
+<span class="n">FROM</span> <span class="n">apt29</span>
+<span class="n">GROUP</span> <span class="n">BY</span> <span class="n">Hostname</span><span class="p">,</span> <span class="n">Image</span>
+<span class="n">WHERE</span> <span class="n">Channel</span> <span class="o">=</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span> <span class="n">AND</span> <span class="n">EventID</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">LIMIT</span> <span class="mi">20</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">apt29</span><span class="p">[[</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Channel&#39;</span><span class="p">,</span><span class="s1">&#39;EventTime&#39;</span><span class="p">,</span><span class="s1">&#39;EventID&#39;</span><span class="p">,</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">]]</span>
+
+<span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">CommandLineLength</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">())</span>
+    
+<span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Microsoft-Windows-Sysmon/Operational&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)]</span>
+    
+<span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Hostname&#39;</span><span class="p">,</span><span class="s1">&#39;Image&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;CommandLineLength&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">]})</span>
+
+<span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th colspan="2" halign="left">CommandLineLength</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th>mean</th>
+      <th>size</th>
+    </tr>
+    <tr>
+      <th>Hostname</th>
+      <th>Image</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="20" valign="top">NASHUA.dmevals.local</th>
+      <th>C:\WindowsAzure\Packages\CollectGuestLogs.exe</th>
+      <td>119.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\PSEXESVC.exe</th>
+      <td>23.000000</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\BackgroundTransferHost.exe</th>
+      <td>65.000000</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\RuntimeBroker.exe</th>
+      <td>48.000000</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\SearchFilterHost.exe</th>
+      <td>66.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\SearchProtocolHost.exe</th>
+      <td>308.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\UsoClient.exe</th>
+      <td>43.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\WerFault.exe</th>
+      <td>56.000000</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</th>
+      <td>14.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\backgroundTaskHost.exe</th>
+      <td>101.000000</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\cmd.exe</th>
+      <td>16.000000</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\conhost.exe</th>
+      <td>55.000000</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\consent.exe</th>
+      <td>37.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\dllhost.exe</th>
+      <td>81.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\dsregcmd.exe</th>
+      <td>56.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\gpupdate.exe</th>
+      <td>29.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\rundll32.exe</th>
+      <td>140.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\sppsvc.exe</th>
+      <td>30.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\svchost.exe</th>
+      <td>52.000000</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>C:\Windows\System32\taskhostw.exe</th>
+      <td>20.333333</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="join">
+<h2>JOIN<a class="headerlink" href="#join" title="Permalink to this headline">¶</a></h2>
+<p>JOINs can be performed with <strong>join()</strong> or <strong>merge()</strong>. By default, join() will join the DataFrames on their indices if a type of join is not specified. Each method has parameters allowing you to specify the type of join to perform <strong>(LEFT, RIGHT, INNER, FULL)</strong> or the columns to join on <strong>(column names or indices)</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dataframe with information of Security event 4624: An account was successfully logged on</span>
+<span class="n">Security4624</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">apt29</span><span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;security&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4624</span><span class="p">)]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">Security4624</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(297, 55)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dataframe with information of Security event 4688: A new process has been created</span>
+<span class="n">Security4688</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">apt29</span><span class="p">[(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;security&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4688</span><span class="p">)]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">Security4688</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(460, 42)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a dataframe with information of Security event 4697: A service was installed in the system</span>
+<span class="n">Security4697</span> <span class="o">=</span> <span class="n">apt29</span><span class="p">[</span>
+    <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;Channel&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;security&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">apt29</span><span class="p">[</span><span class="s1">&#39;EventID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4697</span><span class="p">)</span>
+<span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="n">Security4697</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(23, 37)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="inner-join">
+<h3>INNER JOIN<a class="headerlink" href="#inner-join" title="Permalink to this headline">¶</a></h3>
+<p>In the example below, we are looking for <strong>New Processes</strong> being created by accounts that were authenticated over the network (Logon Type 3). This query looks for potential <strong>Lateral Movement</strong> techniques. Without looking for <strong>“wsmprovhost.exe”</strong> which is an indication of <strong>PSRemoting</strong>, I was able to get there by focusing on the behavior of accounts authenticating over the network and creating new processes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># merge performs an INNER JOIN by default</span>
+<span class="p">(</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4688</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
+         <span class="n">on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+<span class="p">[[</span><span class="s1">&#39;NewProcessId&#39;</span><span class="p">,</span><span class="s1">&#39;NewProcessName&#39;</span><span class="p">,</span><span class="s1">&#39;ProcessId_x&#39;</span><span class="p">,</span><span class="s1">&#39;ParentProcessName&#39;</span><span class="p">,</span><span class="s1">&#39;TargetUserName_y&#39;</span><span class="p">,</span><span class="s1">&#39;IpAddress&#39;</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NewProcessId</th>
+      <th>NewProcessName</th>
+      <th>ProcessId_x</th>
+      <th>ParentProcessName</th>
+      <th>TargetUserName_y</th>
+      <th>IpAddress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0x1e28</td>
+      <td>C:\Windows\System32\wsmprovhost.exe</td>
+      <td>0x374</td>
+      <td>C:\Windows\System32\svchost.exe</td>
+      <td>pbeesly</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>When the column names where we are performing the join on are different, we need to use the <strong>left_on</strong> and <strong>right_on</strong> parameters as shown below. In this example, we are looking for <strong>New Services</strong> being installed by accounts that were authenticated over the network (Logon Type 3). This query looks for potential <strong>Lateral Movement</strong> techniques. I was able to identify the use pf PSEXEC in the dataset. Once again, I was not looking for the specific service name. I was focusing on the behavior of accounts that authenticate over the network and installing new services.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">x</span><span class="o">.</span><span class="n">ServiceName</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">ServiceFileName</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">IpAddress</span>
+<span class="n">FROM</span> <span class="n">Security4697</span> <span class="n">x</span>
+<span class="n">INNER</span> <span class="n">JOIN</span> <span class="p">(</span><span class="n">FROM</span> <span class="n">Security4624</span> <span class="n">WHERE</span> <span class="n">LogonType</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="n">y</span>
+  <span class="n">ON</span> <span class="n">x</span><span class="o">.</span><span class="n">SubjectLogonId</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">TargetLogonId</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># merge performs an INNER JOIN by default</span>
+<span class="p">(</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4697</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
+         <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;SubjectLogonId&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+<span class="p">[[</span><span class="s1">&#39;ServiceName&#39;</span><span class="p">,</span> <span class="s1">&#39;ServiceFileName&#39;</span><span class="p">,</span><span class="s1">&#39;IpAddress&#39;</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ServiceName</th>
+      <th>ServiceFileName</th>
+      <th>IpAddress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="left-outer-join">
+<h3>LEFT OUTER JOIN<a class="headerlink" href="#left-outer-join" title="Permalink to this headline">¶</a></h3>
+<p>Same query as before, but in the example below we use the <strong>LEFT</strong> join type for the <strong>how</strong> parameter. We can see a new service installed named <strong>javamtsup</strong>. If you look at the emulation plan for Day 1, we know tha the javamtsup service was installed locally and not over the network. That service was used for persistence.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4697</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
+         <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;SubjectLogonId&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="p">[[</span><span class="s1">&#39;ServiceName&#39;</span><span class="p">,</span> <span class="s1">&#39;ServiceFileName&#39;</span><span class="p">,</span><span class="s1">&#39;IpAddress&#39;</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ServiceName</th>
+      <th>ServiceFileName</th>
+      <th>IpAddress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>javamtsup</td>
+      <td>C:\Windows\System32\javamtsup.exe</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>AarSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k AarSvcGroup -p</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>BcastDVRUserService_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k BcastDVRUserService</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>BluetoothUserService_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k BthAppGroup -p</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>CaptureService_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k LocalService -p</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>cbdhsvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k ClipboardSvcGroup -p</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>CDPUserSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k UnistackSvcGroup</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>ConsentUxUserSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k DevicesFlow</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>CredentialEnrollmentManagerUserSvc_13619b</td>
+      <td>C:\windows\system32\CredentialEnrollmentManager.exe</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>DeviceAssociationBrokerSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k DevicesFlow -p</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>DevicePickerUserSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k DevicesFlow</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>DevicesFlowUserSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k DevicesFlow</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>MessagingService_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k UnistackSvcGroup</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>OneSyncSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k UnistackSvcGroup</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>PimIndexMaintenanceSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k UnistackSvcGroup</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>PrintWorkflowUserSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k PrintWorkflow</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>UnistoreSvc_13619b</td>
+      <td>C:\windows\System32\svchost.exe -k UnistackSvcGroup</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>UserDataSvc_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k UnistackSvcGroup</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>WpnUserService_13619b</td>
+      <td>C:\windows\system32\svchost.exe -k UnistackSvcGroup</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="right-join">
+<h3>RIGHT JOIN<a class="headerlink" href="#right-join" title="Permalink to this headline">¶</a></h3>
+<p>Same query as before, but in the example below we use the <strong>RIGHT</strong> join type for the <strong>how</strong> parameter. We can see also a new service installing</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4697</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
+         <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;SubjectLogonId&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="p">[[</span><span class="s1">&#39;ServiceName&#39;</span><span class="p">,</span> <span class="s1">&#39;ServiceFileName&#39;</span><span class="p">,</span><span class="s1">&#39;IpAddress&#39;</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ServiceName</th>
+      <th>ServiceFileName</th>
+      <th>IpAddress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>::1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>fe80::e40c:95b6:b0a7:6429</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>fe80::e40c:95b6:b0a7:6429</td>
+    </tr>
+    <tr>
+      <th>215</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>fe80::e40c:95b6:b0a7:6429</td>
+    </tr>
+    <tr>
+      <th>216</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>::1</td>
+    </tr>
+    <tr>
+      <th>217</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>::1</td>
+    </tr>
+  </tbody>
+</table>
+<p>218 rows × 3 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="full-join">
+<h3>FULL JOIN<a class="headerlink" href="#full-join" title="Permalink to this headline">¶</a></h3>
+<p>pandas also allows for FULL JOINs, which display both sides of the dataset, whether or not the joined columns find a match. As of writing, FULL JOINs are not supported in all RDBMS (MySQL).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">Security4697</span><span class="p">,</span> <span class="n">Security4624</span><span class="p">[</span><span class="n">Security4624</span><span class="p">[</span><span class="s1">&#39;LogonType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span>
+         <span class="n">left_on</span> <span class="o">=</span> <span class="s1">&#39;SubjectLogonId&#39;</span><span class="p">,</span> <span class="n">right_on</span> <span class="o">=</span> <span class="s1">&#39;TargetLogonId&#39;</span><span class="p">,</span> <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+<span class="p">[[</span><span class="s1">&#39;ServiceName&#39;</span><span class="p">,</span> <span class="s1">&#39;ServiceFileName&#39;</span><span class="p">,</span><span class="s1">&#39;IpAddress&#39;</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ServiceName</th>
+      <th>ServiceFileName</th>
+      <th>IpAddress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>javamtsup</td>
+      <td>C:\Windows\System32\javamtsup.exe</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PSEXESVC</td>
+      <td>%SystemRoot%\PSEXESVC.exe</td>
+      <td>10.0.1.4</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>232</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>fe80::e40c:95b6:b0a7:6429</td>
+    </tr>
+    <tr>
+      <th>233</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>fe80::e40c:95b6:b0a7:6429</td>
+    </tr>
+    <tr>
+      <th>234</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>fe80::e40c:95b6:b0a7:6429</td>
+    </tr>
+    <tr>
+      <th>235</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>::1</td>
+    </tr>
+    <tr>
+      <th>236</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>::1</td>
+    </tr>
+  </tbody>
+</table>
+<p>237 rows × 3 columns</p>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="thank-you-i-hope-you-enjoyed-it">
+<h2>Thank you! I hope you enjoyed it!<a class="headerlink" href="#thank-you-i-hope-you-enjoyed-it" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "OTRF/infosec-jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./fundamentals/libraries"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g, Jose Rodriguez (@Cyb3rPandaH)<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../../_static/js/index.js"></script>
+    
+  </body>
+</html>
