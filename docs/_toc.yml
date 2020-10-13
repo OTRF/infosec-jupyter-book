@@ -2,6 +2,8 @@
 - part: Getting Started
   chapters:
   - file: getting-started/what_is_jupyter
+    sections:
+    - file: getting-started/ipython_vs_python
   - file: getting-started/architecture
   - file: getting-started/installation
     sections:
@@ -36,7 +38,8 @@
 - part: Community Projects
   chapters:
   - file: community-projects/threat-hunter-playbook
-  - header: Community Workshops
+- part: Community Workshops
+  chapters:
   - file: community-workshops/defcon_btv_2020/intro
     sections:
     - file: community-workshops/defcon_btv_2020/basic-concepts/intro

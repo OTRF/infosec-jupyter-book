@@ -2,7 +2,7 @@
 # Author: Roberto Rodriguez (@Cyb3rWard0g)
 # License: GPL-3.0
 
-FROM cyb3rward0g/jupyter-pyspark:0.0.5
+FROM cyb3rward0g/jupyter-pyspark:0.0.6
 LABEL maintainer="Roberto Rodriguez @Cyb3rWard0g"
 LABEL description="Dockerfile Infosec Jupyter Book Project."
 
@@ -22,7 +22,7 @@ RUN adduser --disabled-password \
 
 USER ${NB_USER}
 
-RUN python3 -m pip install openhunt==1.6.8 bokeh==2.1.1 seaborn==0.10.1 --user
+RUN python3 -m pip install openhunt==1.6.8 bokeh==2.1.1 seaborn==0.10.1 msticpy==0.8.2 --user
 
 COPY docs ${HOME}/docs
 

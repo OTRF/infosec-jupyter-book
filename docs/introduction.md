@@ -5,7 +5,7 @@
 
 The Infosec Community Definitive Guide to Jupyter Notebooks to empower other researchers around the world to share, collaborate and help others through interactive environments. This is a community-driven project and contains documentation about the installation of a Jupyter Notebook server and interesting use cases for security research.
 
-## Goals:
+## Goals
 
 * Expedite the time it takes to start working with Jupyter Notebooks
 * Share use cases in different areas of InfoSec where notebooks can help
