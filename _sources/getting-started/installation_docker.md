@@ -14,37 +14,49 @@ You just have to install the community edition of Docker, so that you can pull a
 
 **Community Docker Images**
 
-* Jupyter Docker Stacks: https://github.com/jupyter/docker-stacks
-* Jupyter Docker Base Image: https://hub.docker.com/r/jupyter/base-notebook/
-* Hunters Forge Images: https://github.com/hunters-forge/notebooks-forge
+* [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks)_
+* [Jupyter Docker Base Image](https://hub.docker.com/r/jupyter/base-notebook/)
+* [Hunters Forge Images](https://github.com/hunters-forge/notebooks-forge)
+
+
+![](../images/JUPYTER_DOCKER_GH_MINIMAL.png)
+
 
 ## Downloading and Running a Jupyter Notebook Server
 
 ```bash
-docker run -p 8888:8888 jupyter/minimal-notebook:3b1f4f5e6cc1
+docker run -p 8888:8888 jupyter/minimal-notebook:latest
 ```
+
+
+![](../images/JUPYTER_DOCKER_MINIMAL_RUN.png)
+
 
 ### Demo Video
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KVR1_cVlLRE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Using Hunters Forge Docker Images
+## Using Open Threat Research (OTRF) Docker Images
 
 ```bash
-git clone https://github.com/hunters-forge/notebooks-forge
+git clone https://github.com/OTRF/notebooks-forge
 ```
 
 ### Build & Run Docker Image
 
 ```bash
-cd notebooks-forge/blob/master/docker/jupyter-base
-docker-compose -f docker-compose.yml up --build -d
+cd notebooks-forge/docker/jupyter-base
+docker build -t jupyter-base .
+docker run -d -ti -p 8888:8888 --name jupyter-base jupyter-base
 ```
 
 ### Get Notebook Server Link
 
 ```bash
 docker exec -i jupyter-base jupyter notebook list
+
+Currently running servers:
+http://0.0.0.0:8888/?token=bcd90816a041fa1f966829d1d46027e4524f40d97b96b8e0 :: /opt/jupyter/notebooks
 ```
 
 ### Browse to Link

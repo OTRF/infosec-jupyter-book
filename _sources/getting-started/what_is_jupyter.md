@@ -52,6 +52,8 @@ Uses include:
 
 Think of a notebook as a document that you can access via a web interface that allows you to save input (i.e. live code) and output (i.e. code execution results / evaluated code output) of interactive sessions as well as important notes needed to explain the methodology and steps taken to perform specific tasks (i.e data analysis).
 
+![](../images/JUPYTER_NOTEBOOK_BASIC_VIEW.png)
+
 ## References
 * https://ipython.readthedocs.io/en/stable/about/history.html
 * https://ipython.readthedocs.io/en/stable/interactive/python-ipython-diff.html

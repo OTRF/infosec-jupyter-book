@@ -294,8 +294,8 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#using-hunters-forge-docker-images">
-   Using Hunters Forge Docker Images
+  <a class="reference internal nav-link" href="#using-open-threat-research-otrf-docker-images">
+   Using Open Threat Research (OTRF) Docker Images
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -341,36 +341,42 @@
 </ul>
 <p><strong>Community Docker Images</strong></p>
 <ul class="simple">
-<li><p>Jupyter Docker Stacks: https://github.com/jupyter/docker-stacks</p></li>
-<li><p>Jupyter Docker Base Image: https://hub.docker.com/r/jupyter/base-notebook/</p></li>
-<li><p>Hunters Forge Images: https://github.com/hunters-forge/notebooks-forge</p></li>
+<li><p><a class="reference external" href="https://github.com/jupyter/docker-stacks">Jupyter Docker Stacks</a>_</p></li>
+<li><p><a class="reference external" href="https://hub.docker.com/r/jupyter/base-notebook/">Jupyter Docker Base Image</a></p></li>
+<li><p><a class="reference external" href="https://github.com/hunters-forge/notebooks-forge">Hunters Forge Images</a></p></li>
 </ul>
+<p><img alt="" src="../_images/JUPYTER_DOCKER_GH_MINIMAL.png" /></p>
 </div>
 <div class="section" id="downloading-and-running-a-jupyter-notebook-server">
 <h2>Downloading and Running a Jupyter Notebook Server<a class="headerlink" href="#downloading-and-running-a-jupyter-notebook-server" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -p <span class="m">8888</span>:8888 jupyter/minimal-notebook:3b1f4f5e6cc1
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -p <span class="m">8888</span>:8888 jupyter/minimal-notebook:latest
 </pre></div>
 </div>
+<p><img alt="" src="../_images/JUPYTER_DOCKER_MINIMAL_RUN.png" /></p>
 <div class="section" id="demo-video">
 <h3>Demo Video<a class="headerlink" href="#demo-video" title="Permalink to this headline">¶</a></h3>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KVR1_cVlLRE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 </div>
-<div class="section" id="using-hunters-forge-docker-images">
-<h2>Using Hunters Forge Docker Images<a class="headerlink" href="#using-hunters-forge-docker-images" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/hunters-forge/notebooks-forge
+<div class="section" id="using-open-threat-research-otrf-docker-images">
+<h2>Using Open Threat Research (OTRF) Docker Images<a class="headerlink" href="#using-open-threat-research-otrf-docker-images" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/OTRF/notebooks-forge
 </pre></div>
 </div>
 <div class="section" id="build-run-docker-image">
 <h3>Build &amp; Run Docker Image<a class="headerlink" href="#build-run-docker-image" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> notebooks-forge/blob/master/docker/jupyter-base
-docker-compose -f docker-compose.yml up --build -d
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> notebooks-forge/docker/jupyter-base
+docker build -t jupyter-base .
+docker run -d -ti -p <span class="m">8888</span>:8888 --name jupyter-base jupyter-base
 </pre></div>
 </div>
 </div>
 <div class="section" id="get-notebook-server-link">
 <h3>Get Notebook Server Link<a class="headerlink" href="#get-notebook-server-link" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -i jupyter-base jupyter notebook list
+
+Currently running servers:
+http://0.0.0.0:8888/?token<span class="o">=</span>bcd90816a041fa1f966829d1d46027e4524f40d97b96b8e0 :: /opt/jupyter/notebooks
 </pre></div>
 </div>
 </div>

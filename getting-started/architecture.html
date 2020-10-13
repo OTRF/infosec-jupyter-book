@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Installation" href="installation.html" />
-    <link rel="prev" title="What Is Jupyter?" href="what_is_jupyter.html" />
+    <link rel="prev" title="IPython vs Python" href="ipython_vs_python.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -275,8 +275,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#jupyter-notebook-document">
-   Jupyter Notebook Document
+  <a class="reference internal nav-link" href="#jupyter-notebook-document-format">
+   Jupyter Notebook Document Format
   </a>
  </li>
 </ul>
@@ -301,6 +301,11 @@
 <li><p>From a REPL perspective, the client does the read and print operations.</p></li>
 <li><p>Notebooks are hosted by a Jupyter web server which uses Tornado to serve HTTP requests.</p></li>
 </ul>
+<p><strong>Running Code</strong></p>
+<p><img alt="" src="../_images/JUPYTER_CLIENT_NOTEBOOK.png" /></p>
+<p><strong>Execution</strong></p>
+<p><img alt="" src="../_images/JUPYTER_CLIENT_EXEC_REQUEST.png" /></p>
+<p><img alt="" src="../_images/JUPYTER_CLIENT_EXEC_STREAM.png" /></p>
 </div>
 <div class="section" id="jupyter-kernel">
 <h2>Jupyter Kernel<a class="headerlink" href="#jupyter-kernel" title="Permalink to this headline">¶</a></h2>
@@ -308,12 +313,80 @@
 <li><p>It receives the code sent by the client, executes it, and returns the results back to the client for display. A kernel process can have multiple clients communicating with it which is why this model is also referred as the decoupled two-process model.</p></li>
 <li><p>From a REPL perspective, the kernel does the evaluate operation.</p></li>
 <li><p>kernel and clients communicate via an interactive computing protocol based on an asynchronous messaging library named ZeroMQ (low-level transport layer) and WebSockets (TCP-based)</p></li>
+<li><p>Makes Jupyter a language agnostic application (Julia, Python, R, etc.)</p></li>
 </ul>
+<p>A kernel identifies itself to IPython by creating a directory, the name of which is used as an identifier for the kernel. These may be created in a number of locations:</p>
+<p><img alt="" src="../_images/JUPYTER_KERNEL_LOCATION.png" /></p>
+<p>Mine is in the following location (MAC) <code class="docutils literal notranslate"><span class="pre">~/Library/Jupyter/kernels/python37664bite09a6f3cbf7b46ec803618408bcaece5</span></code>, and you find similar files:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>kernel.json     logo-32x32.png  logo-64x64.png
+</pre></div>
 </div>
-<div class="section" id="jupyter-notebook-document">
-<h2>Jupyter Notebook Document<a class="headerlink" href="#jupyter-notebook-document" title="Permalink to this headline">¶</a></h2>
+<p>Sample of a default Python kernel json file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;argv&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;/usr/local/opt/python/bin/python3.7&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;-m&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ipykernel_launcher&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="si">{connection_file}</span><span class="s2">&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Python 3.7.6 64-bit&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;env&quot;</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;interpreter&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;architecture&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+      <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/opt/python/bin/python3.7&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;loose&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+          <span class="s2">&quot;includePrerelease&quot;</span><span class="p">:</span> <span class="n">false</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;loose&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+        <span class="s2">&quot;raw&quot;</span><span class="p">:</span> <span class="s2">&quot;3.7.6-final&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="s2">&quot;patch&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="s2">&quot;prerelease&quot;</span><span class="p">:</span> <span class="p">[</span>
+          <span class="s2">&quot;final&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;build&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;3.7.6-final&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;sysPrefix&quot;</span><span class="p">:</span> <span class="s2">&quot;/usr/local/Cellar/python/3.7.6_1/Frameworks/Python.framework/Versions/3.7&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;fileHash&quot;</span><span class="p">:</span> <span class="s2">&quot;1eaf1f22773a15c8adb7d37641dd5c88999c181add7c1d97a004dd33a2c824657b1b4cfb6ca19d4b7804b18eb454d5c34b3df1bdc53c2c93f4116419ce72d1a8&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Python 3.7.6 64-bit&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;__store&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span><span class="o">%</span>
+</pre></div>
+</div>
+<p>You can build your own. I built mine to run PySpark through my Jupyter Notebook as shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;PySpark_Python3&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;argv&quot;</span><span class="p">:</span> <span class="p">[</span>
+   <span class="s2">&quot;/opt/conda/bin/python3&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;-m&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;ipykernel_launcher&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;</span><span class="si">{connection_file}</span><span class="s2">&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;env&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;SPARK_HOME&quot;</span><span class="p">:</span> <span class="s2">&quot;/opt/jupyter/spark/&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;PYTHONPATH&quot;</span><span class="p">:</span> <span class="s2">&quot;/opt/jupyter/spark/python/:/opt/jupyter/spark/python/lib/py4j-0.10.9-src.zip:/opt/jupyter/spark/graphframes.zip&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;PYSPARK_PYTHON&quot;</span><span class="p">:</span> <span class="s2">&quot;/opt/conda/bin/python3&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="jupyter-notebook-document-format">
+<h2>Jupyter Notebook Document Format<a class="headerlink" href="#jupyter-notebook-document-format" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>Notebooks are automatically saved and stored on disk in the open source JavaScript Object Notation (JSON) format and with a .ipynb extension.</p></li>
+<li><p>Notebooks are automatically saved and stored on disk in the open source JavaScript Object Notation (JSON) format and with a <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> extension.</p></li>
 </ul>
 </div>
 </div>
@@ -346,7 +419,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="what_is_jupyter.html" title="previous page">What Is Jupyter?</a>
+    <a class='left-prev' id="prev-link" href="ipython_vs_python.html" title="previous page">IPython vs Python</a>
     <a class='right-next' id="next-link" href="installation.html" title="next page">Installation</a>
 
     </div>

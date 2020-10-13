@@ -30,10 +30,4 @@ This website was built via the [Jupyter Books](https://jupyterbook.org/intro.htm
 
 Right after that you will see the following Binder page preparing and launching the Jupyter Notebook server:
 
-![](../images/JUPYTER_NOTEBOOK_BINDERHUB.png)
-
-Next, you can browse to the following path `content/tutorials` and you will find the folder for this tutorial
-
-![](../images/JUPYTER_NOTEBOOK_TUTORIALS.png)
-
 That's it! Now you will be able to use the notebooks available in this project! The advantage of this service is that you can share your notebooks this way with others without deploying or installing a Jupyter notebook server.
