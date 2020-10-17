@@ -38,11 +38,23 @@ docker run -p 8888:8888 jupyter/minimal-notebook:latest
 
 ## Using Open Threat Research (OTRF) Docker Images
 
+### Running Latest Images
+
+You can simply download and run a docker image already created by the OTR Community. The Docker images are under the following account: [https://hub.docker.com/u/cyb3rward0g](https://hub.docker.com/u/cyb3rward0g). Look for the docker image names that start with `jupyter-`. If we want to download and run the `jupyter-base` image, you can do it with the following command:
+
+```bash
+docker run -p 8888:8888 cyb3rward0g/jupyter-base:latest
+```
+
+### Building Latest Images
+
+Clone OTR notebooks-forge repository
+
 ```bash
 git clone https://github.com/OTRF/notebooks-forge
 ```
 
-### Build & Run Docker Image
+Build & Run Docker Image
 
 ```bash
 cd notebooks-forge/docker/jupyter-base
