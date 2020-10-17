@@ -299,8 +299,13 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#build-run-docker-image">
-     Build &amp; Run Docker Image
+    <a class="reference internal nav-link" href="#running-latest-images">
+     Running Latest Images
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#building-latest-images">
+     Building Latest Images
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -360,11 +365,20 @@
 </div>
 <div class="section" id="using-open-threat-research-otrf-docker-images">
 <h2>Using Open Threat Research (OTRF) Docker Images<a class="headerlink" href="#using-open-threat-research-otrf-docker-images" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-latest-images">
+<h3>Running Latest Images<a class="headerlink" href="#running-latest-images" title="Permalink to this headline">¶</a></h3>
+<p>You can simply download and run a docker image already created by the OTR Community. The Docker images are under the following account: <a class="reference external" href="https://hub.docker.com/u/cyb3rward0g">https://hub.docker.com/u/cyb3rward0g</a>. Look for the docker image names that start with <code class="docutils literal notranslate"><span class="pre">jupyter-</span></code>. If we want to download and run the <code class="docutils literal notranslate"><span class="pre">jupyter-base</span></code> image, you can do it with the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -p <span class="m">8888</span>:8888 cyb3rward0g/jupyter-base:latest
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-latest-images">
+<h3>Building Latest Images<a class="headerlink" href="#building-latest-images" title="Permalink to this headline">¶</a></h3>
+<p>Clone OTR notebooks-forge repository</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/OTRF/notebooks-forge
 </pre></div>
 </div>
-<div class="section" id="build-run-docker-image">
-<h3>Build &amp; Run Docker Image<a class="headerlink" href="#build-run-docker-image" title="Permalink to this headline">¶</a></h3>
+<p>Build &amp; Run Docker Image</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> notebooks-forge/docker/jupyter-base
 docker build -t jupyter-base .
 docker run -d -ti -p <span class="m">8888</span>:8888 --name jupyter-base jupyter-base
